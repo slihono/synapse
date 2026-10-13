@@ -71,10 +71,17 @@ export function validateCode(code: string) {
 
 export function parseParameters(code: string) {
   const get = (name: string, fallback: number) => {
-    const match = code.match(new RegExp(`${name}\\s*=\\s*(-?[0-9.]+)`))
+    const match = code.match(new RegExp(`(?:^|\\n)\\s*${name}\\s*=\\s*(-?[0-9.]+)`, 'm'))
     return match ? Number(match[1]) : fallback
   }
-  return { w: get('w', 0.2), b: get('b', 0), learningRate: get('learning_rate', 0.1), steps: Math.max(1, Math.min(100, Math.round(get('training_steps', 20)))) }
+  return {
+    x: get('x', 2),
+    y: get('y', 1),
+    w: get('w', 0.2),
+    b: get('b', 0),
+    learningRate: get('learning_rate', 0.1),
+    steps: Math.max(1, Math.min(100, Math.round(get('training_steps', 20)))),
+  }
 }
 
 export const quiz = [
