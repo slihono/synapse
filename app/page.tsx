@@ -49,14 +49,17 @@ function ManualActivity({ onContinue, onRestart }: { onContinue: () => void; onR
     { title: 'Descente de gradient', text: 'Mets à jour les paramètres avec nouveau = ancien − η × gradient, en utilisant η = 0,1.', values: [['w₁ →', `${format(nn.w1)} → ${format(nn.updated.w1)}`], ['b₁ →', `${format(nn.b1)} → ${format(nn.updated.b1)}`], ['w₂ →', `${format(nn.w2)} → ${format(nn.updated.w2)}`], ['b₂ →', `${format(nn.b2)} → ${format(nn.updated.b2)}`]], question: `Avec w₂ = 1 et ∂L/∂w₂ = ${format(nn.dw2)}, quel est le nouveau w₂ ?`, options: [`w₂ = ${format(nn.updated.w2)}`, 'w₂ = 0,9803', 'w₂ = 1,1966'], answer: 0 },
     { title: 'Vérifier le résultat', text: 'Compare les valeurs avant et après la mise à jour pour vérifier que le calcul est cohérent.', values: [['ancienne prédiction', format(nn.prediction)], ['nouvelle prédiction', format(nn.newPrediction)], ['ancienne perte', format(nn.loss)], ['nouvelle perte', format(nn.newLoss)]], question: `Après la mise à jour, combien vaut la nouvelle prédiction ŷ ?`, options: [`ŷ = ${format(nn.newPrediction)}`, 'ŷ = 0,7311', 'ŷ = 1,1058'], answer: 0 },
   ]
-  const [optionOrders] = useState(() => steps.map((item) => {
-    const order = item.options.map((_, index) => index)
-    for (let index = order.length - 1; index > 0; index -= 1) {
-      const randomIndex = Math.floor(Math.random() * (index + 1))
-      ;[order[index], order[randomIndex]] = [order[randomIndex], order[index]]
-    }
-    return order
-  }))
+  const [optionOrders, setOptionOrders] = useState(() => steps.map((item) => item.options.map((_, index) => index)))
+  useEffect(() => {
+    setOptionOrders(steps.map((item) => {
+      const order = item.options.map((_, index) => index)
+      for (let index = order.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1))
+        ;[order[index], order[randomIndex]] = [order[randomIndex], order[index]]
+      }
+      return order
+    }))
+  }, [])
   const currentStep = steps[step]
   const order = optionOrders[step]
   const current = { ...currentStep, options: order.map(index => currentStep.options[index]), answer: order.indexOf(currentStep.answer) }
