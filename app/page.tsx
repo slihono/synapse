@@ -151,10 +151,64 @@ const translations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
   }
 }
 
+const commonTranslations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
+  en: {
+    'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'The model learns: its prediction gets closer to the target and its loss decreases.',
+    'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.': 'The loss increases: this rate may be too high and the model is overshooting.',
+    'Pourquoi une simulation ?': 'Why a simulation?',
+    'Même mécanisme, autre objectif': 'Same mechanism, different focus',
+    'même moteur TypeScript que les graphiques': 'the same TypeScript engine as the charts',
+    'Aucun code arbitraire n’est exécuté dans le navigateur.': 'No arbitrary code is executed in the browser.',
+    'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'Modify the program, validate your formulas, and run a deterministic educational Python simulation.',
+    'ACTIVITÉ 1 · PAS À PAS': 'ACTIVITY 1 · STEP BY STEP',
+    'ACTIVITÉ 2 · SIMULATION': 'ACTIVITY 2 · SIMULATION',
+    'ÉTAPE FINALE · QUIZ': 'FINAL STEP · QUIZ',
+    'Vérifie tes connaissances': 'Check your knowledge',
+    'Cinq questions pour consolider le lien entre les calculs et l’intuition.': 'Five questions to connect the calculations with intuition.',
+    'À quoi sert la propagation avant ?': 'What is the purpose of the forward pass?',
+    'Que mesure la fonction de perte ?': 'What does the loss function measure?',
+    'Quelle est la différence principale entre rétropropagation et descente de gradient ?': 'What is the main difference between backpropagation and gradient descent?',
+    'Que signifie un gradient négatif ?': 'What does a negative gradient mean?',
+    'Que peut provoquer un taux d’apprentissage trop élevé ?': 'What can a learning rate that is too high cause?',
+    'À calculer une prédiction': 'To calculate a prediction',
+    'À modifier les poids': 'To modify the weights',
+    'À choisir un graphique': 'To choose a chart',
+    'La vitesse du navigateur': 'Browser speed',
+    'L’écart entre prédiction et cible': 'The gap between prediction and target',
+    'Le nombre de neurones': 'The number of neurons',
+    'Aucune': 'None',
+    'La rétropropagation calcule les gradients, la descente les utilise': 'Backpropagation calculates gradients; gradient descent uses them',
+    'La descente calcule les gradients': 'Gradient descent calculates the gradients',
+    'Le paramètre doit généralement augmenter': 'The parameter should generally increase',
+    'Le modèle est cassé': 'The model is broken',
+    'La perte est forcément nulle': 'The loss is necessarily zero',
+    'Toujours une meilleure solution': 'Always a better solution',
+    'Des oscillations ou une divergence': 'Oscillations or divergence',
+    'La suppression de la cible': 'Removing the target',
+    'Bonne réponse. ': 'Correct. ', 'Pas tout à fait. ': 'Not quite. ',
+    'Excellent travail, les mécanismes essentiels sont en place.': 'Excellent work, the key mechanisms are in place.',
+    'Relis les étapes et retente les questions pour consolider les bases.': 'Review the steps and try the questions again to reinforce the basics.',
+  },
+  es: {
+    'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'El modelo aprende: su predicción se acerca al objetivo y su pérdida disminuye.',
+    'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.': 'La pérdida aumenta: la tasa puede ser demasiado alta y el modelo se pasa.',
+    'Pourquoi une simulation ?': '¿Por qué una simulación?', 'Même mécanisme, autre objectif': 'Mismo mecanismo, enfoque diferente',
+    'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'Modifica el programa, valida tus fórmulas y ejecuta una simulación educativa determinista en Python.',
+    'Vérifie tes connaissances': 'Comprueba tus conocimientos', 'Cinq questions pour consolider le lien entre les calculs et l’intuition.': 'Cinco preguntas para relacionar los cálculos con la intuición.',
+    'À quoi sert la propagation avant ?': '¿Para qué sirve la propagación hacia adelante?', 'Que mesure la fonction de perte ?': '¿Qué mide la función de pérdida?',
+    'Quelle est la différence principale entre rétropropagation et descente de gradient ?': '¿Cuál es la diferencia entre retropropagación y descenso de gradiente?', 'Que signifie un gradient négatif ?': '¿Qué significa un gradiente negativo?', 'Que peut provoquer un taux d’apprentissage trop élevé ?': '¿Qué puede provocar una tasa de aprendizaje demasiado alta?',
+    'À calculer une prédiction': 'Calcular una predicción', 'À modifier les poids': 'Modificar los pesos', 'À choisir un graphique': 'Elegir un gráfico', 'La vitesse du navigateur': 'La velocidad del navegador', 'L’écart entre prédiction et cible': 'La diferencia entre predicción y objetivo', 'Le nombre de neurones': 'El número de neuronas', 'Aucune': 'Ninguna', 'La descente calcule les gradients': 'El descenso calcula los gradientes', 'Le modèle est cassé': 'El modelo está roto', 'La perte est forcément nulle': 'La pérdida necesariamente es cero', 'Toujours une meilleure solution': 'Siempre una solución mejor', 'Des oscillations ou une divergence': 'Oscilaciones o divergencia', 'La suppression de la cible': 'Eliminar el objetivo', 'Bonne réponse. ': 'Correcto. ', 'Pas tout à fait. ': 'No exactamente. ', 'Excellent travail, les mécanismes essentiels sont en place.': 'Excelente trabajo, los mecanismos esenciales están claros.', 'Relis les étapes et retente les questions pour consolider les bases.': 'Repasa los pasos e inténtalo de nuevo para reforzar las bases.'
+  },
+  ar: { 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'يتعلم النموذج: يقترب التنبؤ من الهدف وينخفض الخطأ.', 'Pourquoi une simulation ?': 'لماذا المحاكاة؟', 'Même mécanisme, autre objectif': 'الآلية نفسها، تركيز مختلف', 'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'عدّل البرنامج وتحقق من الصيغ وشغّل محاكاة تعليمية حتمية بلغة Python.', 'Vérifie tes connaissances': 'اختبر معرفتك', 'Cinq questions pour consolider le lien entre les calculs et l’intuition.': 'خمسة أسئلة لربط الحسابات بالحدس.', 'À quoi sert la propagation avant ?': 'ما فائدة الانتشار الأمامي؟', 'Que mesure la fonction de perte ?': 'ماذا تقيس دالة الخسارة؟', 'Que signifie un gradient négatif ?': 'ماذا يعني التدرج السالب؟', 'Bonne réponse. ': 'إجابة صحيحة. ', 'Pas tout à fait. ': 'ليست صحيحة تمامًا. ' },
+  hi: { 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'मॉडल सीखता है: उसका पूर्वानुमान लक्ष्य के करीब आता है और लॉस घटता है।', 'Pourquoi une simulation ?': 'सिमुलेशन क्यों?', 'Même mécanisme, autre objectif': 'वही तंत्र, अलग फोकस', 'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'प्रोग्राम बदलें, सूत्रों की जाँच करें और एक निश्चित शैक्षिक Python सिमुलेशन चलाएँ।', 'Vérifie tes connaissances': 'अपना ज्ञान जाँचें', 'À quoi sert la propagation avant ?': 'फॉरवर्ड पास का उद्देश्य क्या है?', 'Que mesure la fonction de perte ?': 'लॉस फ़ंक्शन क्या मापता है?', 'Bonne réponse. ': 'सही उत्तर। ', 'Pas tout à fait. ': 'पूरी तरह सही नहीं। ' },
+  tr: { 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'Model öğreniyor: tahmini hedefe yaklaşıyor ve kaybı azalıyor.', 'Pourquoi une simulation ?': 'Neden simülasyon?', 'Même mécanisme, autre objectif': 'Aynı mekanizma, farklı odak', 'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'Programı değiştirin, formüllerinizi doğrulayın ve belirlenmiş bir eğitsel Python simülasyonu çalıştırın.', 'Vérifie tes connaissances': 'Bilgini kontrol et', 'À quoi sert la propagation avant ?': 'İleri yayılım ne işe yarar?', 'Que mesure la fonction de perte ?': 'Kayıp fonksiyonu neyi ölçer?', 'Bonne réponse. ': 'Doğru cevap. ', 'Pas tout à fait. ': 'Tam olarak değil. ' },
+  pt: { 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.': 'O modelo aprende: a previsão aproxima-se do alvo e a perda diminui.', 'Pourquoi une simulation ?': 'Por que uma simulação?', 'Même mécanisme, autre objectif': 'Mesmo mecanismo, foco diferente', 'Modifie le programme, valide tes formules et exécute une simulation pédagogique Python déterministe.': 'Modifica o programa, valida as fórmulas e executa uma simulação educativa determinística em Python.', 'Vérifie tes connaissances': 'Verifica os teus conhecimentos', 'À quoi sert la propagation avant ?': 'Para que serve a propagação direta?', 'Que mesure la fonction de perte ?': 'O que mede a função de perda?', 'Bonne réponse. ': 'Resposta correta. ', 'Pas tout à fait. ': 'Não exatamente. ' },
+}
+
 const originalText = new WeakMap<Text, string>()
 
 const translateTree = (language: Language) => {
-  const dictionary = language === 'fr' ? {} : translations[language]
+  const dictionary = language === 'fr' ? {} : { ...translations[language], ...commonTranslations[language] }
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   const nodes: Text[] = []
   let node: Node | null
