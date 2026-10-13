@@ -21,8 +21,14 @@ export function trainLinear(learningRate: number, steps: number, initialW = 0.2,
 
 export function sigmoid(z: number) { return 1 / (1 + Math.exp(-z)) }
 
-export function manualNetwork() {
-  const x = 2, target = 1, w1 = 0.5, b1 = 0, w2 = 1, b2 = 0, lr = 0.1
+export function manualNetwork(variant = 0) {
+  const x = 2, target = 1, lr = 0.1
+  const variants = [
+    { w1: 0.5, b1: 0, w2: 1, b2: 0 },
+    { w1: 0.25, b1: 0.1, w2: 0.8, b2: 0.05 },
+    { w1: 0.75, b1: -0.1, w2: 0.9, b2: 0.02 },
+  ]
+  const { w1, b1, w2, b2 } = variants[variant % variants.length]
   const z1 = w1 * x + b1
   const h = sigmoid(z1)
   const prediction = w2 * h + b2
