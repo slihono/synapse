@@ -110,7 +110,7 @@ type Language = keyof typeof languageLabels
 
 const translations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
   en: {
-    'Parcours': 'Learning path', 'Session locale': 'Local session', 'Le réseau de départ': 'Starting network', 'Apprends à un réseau à corriger ses erreurs': 'Teach a network to correct its errors', 'ACTIVITÉ 1 · PAS À PAS': 'ACTIVITY 1 · STEP BY STEP', 'Propagation avant': 'Forward pass', 'Calculer la perte': 'Calculate the loss', 'Rétropropagation': 'Backpropagation', 'Descente de gradient': 'Gradient descent', 'Vérifier le résultat': 'Check the result', 'Étape suivante': 'Next step', 'Précédent': 'Previous', 'Bonne réponse. Tu peux avancer.': 'Correct answer. You can continue.', 'Ce n’est pas encore la bonne réponse, réessaie.': 'Not quite right, try again.', 'Choisis la bonne réponse avant de continuer': 'Choose the correct answer before continuing', 'Maintenant, fais apprendre le modèle toi-même': 'Now teach the model yourself', 'ACTIVITÉ 2 · SIMULATION': 'ACTIVITY 2 · SIMULATION', 'Exécuter': 'Run', 'Réinitialiser le code': 'Reset code', 'Visualise chaque mise à jour': 'Visualize every update', 'LABORATOIRE · VUE INTERNE': 'LAB · INTERNAL VIEW', 'Recommencer': 'Restart', 'Perte par étape': 'Loss by step', 'Prédiction et cible': 'Prediction and target', 'Poids et biais': 'Weights and bias', 'Historique d’entraînement': 'Training history', 'Vérifie tes connaissances': 'Check your knowledge', 'ÉTAPE FINALE · QUIZ': 'FINAL STEP · QUIZ', 'Bonne réponse. ': 'Correct. ', 'Pas tout à fait. ': 'Not quite. ', 'Comparer les trois taux': 'Compare the three rates', 'Taux intermédiaire': 'Middle rate', 'lent': 'slow', 'équilibré': 'balanced', 'rapide': 'fast', 'perte finale :': 'final loss:', 'Le fil rouge': 'The big picture', 'Étape': 'Step', 'Prédiction': 'Prediction', 'Perte': 'Loss', 'Poids': 'Weight', 'Biais': 'Bias', 'erreur': 'error', 'prédiction': 'prediction', 'perte': 'loss', 'LABORATOIRE INTERACTIF · 01': 'INTERACTIVE LAB · 01', 'Comprendre comment les modèles apprennent.': 'Understand how models learn.', 'Une expérience guidée pour passer des équations de rétropropagation à une simulation vivante de descente de gradient.': 'A guided experience from backpropagation equations to a living gradient descent simulation.', 'Commencer l’activité': 'Start the activity', 'Voir le modèle en action': 'See the model in action', 'Pars d’un exemple minuscule, suis chaque opération, puis observe la mise à jour des quatre paramètres.': 'Start with a tiny example, follow each operation, then observe the update of the four parameters.', 'Paramètres : x = 2 · cible y = 1 · η = 0,1': 'Parameters: x = 2 · target y = 1 · η = 0.1', 'Propagation :': 'Forward pass:', 'Perte :': 'Loss:', 'Mise à jour :': 'Update:', 'entrée = 2': 'input = 2', 'erreur = ': 'error = ', ' · perte = ': ' · loss = ', ' · gradient w = ': ' · gradient w = ', 'poids caché': 'hidden weight', 'poids sortie': 'output weight', 'biais caché': 'hidden bias', 'biais sortie': 'output bias', 'Calcule chaque valeur dans l’ordre : d’abord la combinaison, puis la sigmoïde, puis la prédiction.': 'Calculate each value in order: first the combination, then the sigmoid, then the prediction.', 'Même mécanisme, autre focale': 'Same mechanism, different focus', 'De 4 paramètres à 2 paramètres': 'From 4 parameters to 2 parameters', 'Le premier réseau contient un neurone caché sigmoïde et une sortie linéaire. Ici, un neurone linéaire isole le mécanisme de descente de gradient.': 'The first network contains a sigmoid hidden neuron and a linear output. Here, a linear neuron isolates the gradient descent mechanism.'
+    'Parcours': 'Learning path', 'Session locale': 'Local session', 'Le réseau de départ': 'Starting network', 'Apprends à un réseau à corriger ses erreurs': 'Teach a network to correct its errors', 'ACTIVITÉ 1 · PAS À PAS': 'ACTIVITY 1 · STEP BY STEP', 'Propagation avant': 'Forward pass', 'Calculer la perte': 'Calculate the loss', 'Rétropropagation': 'Backpropagation', 'Descente de gradient': 'Gradient descent', 'Vérifier le résultat': 'Check the result', 'Étape suivante': 'Next step', 'Précédent': 'Previous', 'Bonne réponse. Tu peux avancer.': 'Correct answer. You can continue.', 'Ce n’est pas encore la bonne réponse, réessaie.': 'Not quite right, try again.', 'Choisis la bonne réponse avant de continuer': 'Choose the correct answer before continuing', 'Maintenant, fais apprendre le modèle toi-même': 'Now teach the model yourself', 'ACTIVITÉ 2 · SIMULATION': 'ACTIVITY 2 · SIMULATION', 'Exécuter': 'Run', 'Réinitialiser le code': 'Reset code', 'Visualise chaque mise à jour': 'Visualize every update', 'LABORATOIRE · VUE INTERNE': 'LAB · INTERNAL VIEW', 'Recommencer': 'Restart', 'Perte par étape': 'Loss by step', 'Prédiction et cible': 'Prediction and target', 'Poids et biais': 'Weights and bias', 'Historique d’entraînement': 'Training history', 'Vérifie tes connaissances': 'Check your knowledge', 'ÉTAPE FINALE · QUIZ': 'FINAL STEP · QUIZ', 'Bonne réponse. ': 'Correct. ', 'Pas tout à fait. ': 'Not quite. ', 'Comparer les trois taux': 'Compare the three rates', 'Taux intermédiaire': 'Middle rate', 'lent': 'slow', 'équilibré': 'balanced', 'rapide': 'fast', 'perte finale :': 'final loss:', 'Le fil rouge': 'The big picture', 'Étape': 'Step', 'Prédiction': 'Prediction', 'Perte': 'Loss', 'Poids': 'Weight', 'Biais': 'Bias', 'erreur': 'error', 'prédiction': 'prediction', 'perte': 'loss', 'entrée': 'input', 'sortie': 'output', 'cible': 'target', 'Paramètres': 'Parameters', 'Mise à jour': 'Update', 'Propagation': 'Forward pass', 'sigmoïde': 'sigmoid', 'nouveau': 'new', 'ancien': 'old', 'gradient': 'gradient', 'Le modèle apprend': 'The model learns', 'sa prédiction se rapproche de la cible et sa perte diminue.': 'its prediction approaches the target and its loss decreases.', 'Sélectionne un instant': 'Select a moment', 'le diagramme, les métriques et l’historique utilisent exactement le même état calculé.': 'the diagram, metrics, and history use the same computed state.', 'Étape inspectée': 'Inspected step', 'vitesse': 'speed', 'Historique d’entraînement': 'Training history', 'Clique sur une ligne pour inspecter cet état dans le réseau.': 'Click a row to inspect this network state.', 'Mêmes paramètres de départ, trois tailles de pas différentes.': 'Same starting parameters, three different step sizes.', 'perte finale': 'final loss', 'LABORATOIRE INTERACTIF · 01': 'INTERACTIVE LAB · 01', 'Comprendre comment les modèles apprennent.': 'Understand how models learn.', 'Une expérience guidée pour passer des équations de rétropropagation à une simulation vivante de descente de gradient.': 'A guided experience from backpropagation equations to a living gradient descent simulation.', 'Commencer l’activité': 'Start the activity', 'Voir le modèle en action': 'See the model in action', 'Pars d’un exemple minuscule, suis chaque opération, puis observe la mise à jour des quatre paramètres.': 'Start with a tiny example, follow each operation, then observe the update of the four parameters.', 'Paramètres : x = 2 · cible y = 1 · η = 0,1': 'Parameters: x = 2 · target y = 1 · η = 0.1', 'Propagation :': 'Forward pass:', 'Perte :': 'Loss:', 'Mise à jour :': 'Update:', 'entrée = 2': 'input = 2', 'erreur = ': 'error = ', ' · perte = ': ' · loss = ', ' · gradient w = ': ' · gradient w = ', 'poids caché': 'hidden weight', 'poids sortie': 'output weight', 'biais caché': 'hidden bias', 'biais sortie': 'output bias', 'Calcule chaque valeur dans l’ordre : d’abord la combinaison, puis la sigmoïde, puis la prédiction.': 'Calculate each value in order: first the combination, then the sigmoid, then the prediction.', 'Même mécanisme, autre focale': 'Same mechanism, different focus', 'De 4 paramètres à 2 paramètres': 'From 4 parameters to 2 parameters', 'Le premier réseau contient un neurone caché sigmoïde et une sortie linéaire. Ici, un neurone linéaire isole le mécanisme de descente de gradient.': 'The first network contains a sigmoid hidden neuron and a linear output. Here, a linear neuron isolates the gradient descent mechanism.'
   },
   es: {
     'Parcours': 'Ruta de aprendizaje', 'Session locale': 'Sesión local', 'Le réseau de départ': 'Red inicial', 'Apprends à un réseau à corriger ses erreurs': 'Enseña a una red a corregir sus errores', 'ACTIVITÉ 1 · PAS À PAS': 'ACTIVIDAD 1 · PASO A PASO', 'Propagation avant': 'Propagación hacia adelante', 'Calculer la perte': 'Calcular la pérdida', 'Rétropropagation': 'Retropropagación', 'Descente de gradient': 'Descenso de gradiente', 'Vérifier le résultat': 'Comprobar el resultado', 'Étape suivante': 'Siguiente paso', 'Précédent': 'Anterior', 'Bonne réponse. Tu peux avancer.': 'Respuesta correcta. Puedes continuar.', 'Ce n’est pas encore la bonne réponse, réessaie.': 'No es correcto, inténtalo de nuevo.', 'Choisis la bonne réponse avant de continuer': 'Elige la respuesta correcta antes de continuar', 'Maintenant, fais apprendre le modèle toi-même': 'Ahora enseña al modelo tú mismo', 'ACTIVITÉ 2 · SIMULATION': 'ACTIVIDAD 2 · SIMULACIÓN', 'Exécuter': 'Ejecutar', 'Réinitialiser le code': 'Restablecer código', 'Visualise chaque mise à jour': 'Visualiza cada actualización', 'Vérifie tes connaissances': 'Comprueba tus conocimientos', 'ÉTAPE FINALE · QUIZ': 'PASO FINAL · CUESTIONARIO', 'Recommencer': 'Reiniciar', 'Comparer les trois taux': 'Compara las tres tasas', 'lent': 'lento', 'équilibré': 'equilibrado', 'rapide': 'rápido', 'Étape': 'Paso', 'Prédiction': 'Predicción', 'Perte': 'Pérdida', 'Poids': 'Peso', 'Biais': 'Sesgo'
@@ -129,26 +129,48 @@ const translations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
   }
 }
 
+const originalText = new WeakMap<Text, string>()
+
 const translateTree = (language: Language) => {
-  if (language === 'fr') return
-  const dictionary = translations[language]
+  const dictionary = language === 'fr' ? {} : translations[language]
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   const nodes: Text[] = []
   let node: Node | null
-  while ((node = walker.nextNode())) nodes.push(node as Text)
+  while ((node = walker.nextNode())) {
+    const textNode = node as Text
+    if (!originalText.has(textNode)) originalText.set(textNode, textNode.nodeValue ?? '')
+    nodes.push(textNode)
+  }
   nodes.forEach(textNode => {
-    const value = textNode.nodeValue?.trim()
-    if (!value || !dictionary[value]) return
-    textNode.nodeValue = textNode.nodeValue!.replace(value, dictionary[value])
+    const source = originalText.get(textNode) ?? ''
+    if (!source.trim()) return
+    let translated = source
+    if (language !== 'fr') {
+      Object.entries(dictionary).sort(([a], [b]) => b.length - a.length).forEach(([from, to]) => {
+        translated = translated.split(from).join(to)
+      })
+    }
+    if (textNode.nodeValue !== translated) textNode.nodeValue = translated
   })
 }
+
+const translationObserver = new MutationObserver(mutations => {
+  if (activeLanguageForTranslation) translateTree(activeLanguageForTranslation)
+})
+let activeLanguageForTranslation: Language | null = null
 
 export default function Page() {
   const [language, setLanguage] = useState<Language>('fr')
   useEffect(() => {
+    activeLanguageForTranslation = language
     document.documentElement.lang = language
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
     translateTree(language)
+    translationObserver.observe(document.body, { childList: true, subtree: true, characterData: true })
+    return () => {
+      translationObserver.disconnect()
+      activeLanguageForTranslation = null
+    }
   }, [language])
   const labels = languageLabels[language]
   const localizedNav = [
