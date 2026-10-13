@@ -154,9 +154,6 @@ const translateTree = (language: Language) => {
   })
 }
 
-const translationObserver = new MutationObserver(mutations => {
-  if (activeLanguageForTranslation) translateTree(activeLanguageForTranslation)
-})
 let activeLanguageForTranslation: Language | null = null
 
 export default function Page() {
@@ -166,6 +163,9 @@ export default function Page() {
     document.documentElement.lang = language
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
     translateTree(language)
+    const translationObserver = new MutationObserver(() => {
+      if (activeLanguageForTranslation) translateTree(activeLanguageForTranslation)
+    })
     translationObserver.observe(document.body, { childList: true, subtree: true, characterData: true })
     return () => {
       translationObserver.disconnect()
