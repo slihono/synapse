@@ -108,8 +108,48 @@ const languageLabels = {
 
 type Language = keyof typeof languageLabels
 
+const translations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
+  en: {
+    'Parcours': 'Learning path', 'Session locale': 'Local session', 'Le réseau de départ': 'Starting network', 'Apprends à un réseau à corriger ses erreurs': 'Teach a network to correct its errors', 'ACTIVITÉ 1 · PAS À PAS': 'ACTIVITY 1 · STEP BY STEP', 'Propagation avant': 'Forward pass', 'Calculer la perte': 'Calculate the loss', 'Rétropropagation': 'Backpropagation', 'Descente de gradient': 'Gradient descent', 'Vérifier le résultat': 'Check the result', 'Étape suivante': 'Next step', 'Précédent': 'Previous', 'Bonne réponse. Tu peux avancer.': 'Correct answer. You can continue.', 'Ce n’est pas encore la bonne réponse, réessaie.': 'Not quite right, try again.', 'Choisis la bonne réponse avant de continuer': 'Choose the correct answer before continuing', 'Maintenant, fais apprendre le modèle toi-même': 'Now teach the model yourself', 'ACTIVITÉ 2 · SIMULATION': 'ACTIVITY 2 · SIMULATION', 'Exécuter': 'Run', 'Réinitialiser le code': 'Reset code', 'Visualise chaque mise à jour': 'Visualize every update', 'LABORATOIRE · VUE INTERNE': 'LAB · INTERNAL VIEW', 'Recommencer': 'Restart', 'Perte par étape': 'Loss by step', 'Prédiction et cible': 'Prediction and target', 'Poids et biais': 'Weights and bias', 'Historique d’entraînement': 'Training history', 'Vérifie tes connaissances': 'Check your knowledge', 'ÉTAPE FINALE · QUIZ': 'FINAL STEP · QUIZ', 'Bonne réponse. ': 'Correct. ', 'Pas tout à fait. ': 'Not quite. ', 'Comparer les trois taux': 'Compare the three rates', 'Taux intermédiaire': 'Middle rate', 'lent': 'slow', 'équilibré': 'balanced', 'rapide': 'fast', 'perte finale :': 'final loss:', 'Le fil rouge': 'The big picture', 'Étape': 'Step', 'Prédiction': 'Prediction', 'Perte': 'Loss', 'Poids': 'Weight', 'Biais': 'Bias', 'erreur': 'error', 'prédiction': 'prediction', 'perte': 'loss', 'LABORATOIRE INTERACTIF · 01': 'INTERACTIVE LAB · 01', 'Comprendre comment les modèles apprennent.': 'Understand how models learn.', 'Une expérience guidée pour passer des équations de rétropropagation à une simulation vivante de descente de gradient.': 'A guided experience from backpropagation equations to a living gradient descent simulation.', 'Commencer l’activité': 'Start the activity', 'Voir le modèle en action': 'See the model in action', 'Pars d’un exemple minuscule, suis chaque opération, puis observe la mise à jour des quatre paramètres.': 'Start with a tiny example, follow each operation, then observe the update of the four parameters.', 'Paramètres : x = 2 · cible y = 1 · η = 0,1': 'Parameters: x = 2 · target y = 1 · η = 0.1', 'Propagation :': 'Forward pass:', 'Perte :': 'Loss:', 'Mise à jour :': 'Update:', 'entrée = 2': 'input = 2', 'erreur = ': 'error = ', ' · perte = ': ' · loss = ', ' · gradient w = ': ' · gradient w = ', 'poids caché': 'hidden weight', 'poids sortie': 'output weight', 'biais caché': 'hidden bias', 'biais sortie': 'output bias', 'Calcule chaque valeur dans l’ordre : d’abord la combinaison, puis la sigmoïde, puis la prédiction.': 'Calculate each value in order: first the combination, then the sigmoid, then the prediction.', 'Même mécanisme, autre focale': 'Same mechanism, different focus', 'De 4 paramètres à 2 paramètres': 'From 4 parameters to 2 parameters', 'Le premier réseau contient un neurone caché sigmoïde et une sortie linéaire. Ici, un neurone linéaire isole le mécanisme de descente de gradient.': 'The first network contains a sigmoid hidden neuron and a linear output. Here, a linear neuron isolates the gradient descent mechanism.'
+  },
+  es: {
+    'Parcours': 'Ruta de aprendizaje', 'Session locale': 'Sesión local', 'Le réseau de départ': 'Red inicial', 'Apprends à un réseau à corriger ses erreurs': 'Enseña a una red a corregir sus errores', 'ACTIVITÉ 1 · PAS À PAS': 'ACTIVIDAD 1 · PASO A PASO', 'Propagation avant': 'Propagación hacia adelante', 'Calculer la perte': 'Calcular la pérdida', 'Rétropropagation': 'Retropropagación', 'Descente de gradient': 'Descenso de gradiente', 'Vérifier le résultat': 'Comprobar el resultado', 'Étape suivante': 'Siguiente paso', 'Précédent': 'Anterior', 'Bonne réponse. Tu peux avancer.': 'Respuesta correcta. Puedes continuar.', 'Ce n’est pas encore la bonne réponse, réessaie.': 'No es correcto, inténtalo de nuevo.', 'Choisis la bonne réponse avant de continuer': 'Elige la respuesta correcta antes de continuar', 'Maintenant, fais apprendre le modèle toi-même': 'Ahora enseña al modelo tú mismo', 'ACTIVITÉ 2 · SIMULATION': 'ACTIVIDAD 2 · SIMULACIÓN', 'Exécuter': 'Ejecutar', 'Réinitialiser le code': 'Restablecer código', 'Visualise chaque mise à jour': 'Visualiza cada actualización', 'Vérifie tes connaissances': 'Comprueba tus conocimientos', 'ÉTAPE FINALE · QUIZ': 'PASO FINAL · CUESTIONARIO', 'Recommencer': 'Reiniciar', 'Comparer les trois taux': 'Compara las tres tasas', 'lent': 'lento', 'équilibré': 'equilibrado', 'rapide': 'rápido', 'Étape': 'Paso', 'Prédiction': 'Predicción', 'Perte': 'Pérdida', 'Poids': 'Peso', 'Biais': 'Sesgo'
+  },
+  ar: {
+    'Parcours': 'مسار التعلّم', 'Session locale': 'جلسة محلية', 'Le réseau de départ': 'الشبكة الابتدائية', 'Apprends à un réseau à corriger ses erreurs': 'علّم شبكة تصحيح أخطائها', 'ACTIVITÉ 1 · PAS À PAS': 'النشاط 1 · خطوة بخطوة', 'Propagation avant': 'الانتشار الأمامي', 'Calculer la perte': 'احسب الخسارة', 'Rétropropagation': 'الانتشار العكسي', 'Descente de gradient': 'انحدار التدرج', 'Vérifier le résultat': 'تحقق من النتيجة', 'Étape suivante': 'الخطوة التالية', 'Précédent': 'السابق', 'Exécuter': 'تشغيل', 'Réinitialiser le code': 'إعادة ضبط الكود', 'Visualise chaque mise à jour': 'تصوّر كل تحديث', 'Vérifie tes connaissances': 'اختبر معرفتك', 'Recommencer': 'إعادة البدء', 'Étape': 'خطوة', 'Prédiction': 'التنبؤ', 'Perte': 'الخسارة', 'Poids': 'الوزن', 'Biais': 'الانحياز'
+  },
+  hi: {
+    'Parcours': 'सीखने की यात्रा', 'Session locale': 'स्थानीय सत्र', 'Le réseau de départ': 'प्रारंभिक नेटवर्क', 'Apprends à un réseau à corriger ses erreurs': 'नेटवर्क को अपनी गलतियाँ सुधारना सिखाएँ', 'ACTIVITÉ 1 · PAS À PAS': 'गतिविधि 1 · चरण दर चरण', 'Propagation avant': 'फॉरवर्ड पास', 'Calculer la perte': 'लॉस की गणना करें', 'Rétropropagation': 'बैकप्रोपेगेशन', 'Descente de gradient': 'ग्रेडिएंट डिसेंट', 'Vérifier le résultat': 'परिणाम जाँचें', 'Étape suivante': 'अगला चरण', 'Précédent': 'पिछला', 'Exécuter': 'चलाएँ', 'Réinitialiser le code': 'कोड रीसेट करें', 'Visualise chaque mise à jour': 'हर अपडेट देखें', 'Vérifie tes connaissances': 'अपना ज्ञान जाँचें', 'Recommencer': 'फिर से शुरू करें', 'Étape': 'चरण', 'Prédiction': 'पूर्वानुमान', 'Perte': 'लॉस', 'Poids': 'भार', 'Biais': 'बायस'
+  },
+  tr: {
+    'Parcours': 'Öğrenme yolu', 'Session locale': 'Yerel oturum', 'Le réseau de départ': 'Başlangıç ağı', 'Apprends à un réseau à corriger ses erreurs': 'Bir ağa hatalarını düzeltmeyi öğret', 'ACTIVITÉ 1 · PAS À PAS': 'ETKİNLİK 1 · ADIM ADIM', 'Propagation avant': 'İleri yayılım', 'Calculer la perte': 'Kaybı hesapla', 'Rétropropagation': 'Geri yayılım', 'Descente de gradient': 'Gradyan inişi', 'Vérifier le résultat': 'Sonucu kontrol et', 'Étape suivante': 'Sonraki adım', 'Précédent': 'Önceki', 'Exécuter': 'Çalıştır', 'Réinitialiser le code': 'Kodu sıfırla', 'Visualise chaque mise à jour': 'Her güncellemeyi görselleştir', 'Vérifie tes connaissances': 'Bilgini kontrol et', 'Recommencer': 'Yeniden başlat', 'Étape': 'Adım', 'Prédiction': 'Tahmin', 'Perte': 'Kayıp', 'Poids': 'Ağırlık', 'Biais': 'Yanlılık'
+  },
+  pt: {
+    'Parcours': 'Percurso de aprendizagem', 'Session locale': 'Sessão local', 'Le réseau de départ': 'Rede inicial', 'Apprends à un réseau à corriger ses erreurs': 'Ensina uma rede a corrigir os seus erros', 'ACTIVITÉ 1 · PAS À PAS': 'ATIVIDADE 1 · PASSO A PASSO', 'Propagation avant': 'Propagação direta', 'Calculer la perte': 'Calcular a perda', 'Rétropropagation': 'Retropropagação', 'Descente de gradient': 'Descida do gradiente', 'Vérifier le résultat': 'Verificar o resultado', 'Étape suivante': 'Próximo passo', 'Précédent': 'Anterior', 'Exécuter': 'Executar', 'Réinitialiser le code': 'Repor código', 'Visualise chaque mise à jour': 'Visualiza cada atualização', 'Vérifie tes connaissances': 'Verifica os teus conhecimentos', 'Recommencer': 'Recomeçar', 'Étape': 'Passo', 'Prédiction': 'Previsão', 'Perte': 'Perda', 'Poids': 'Peso', 'Biais': 'Viés'
+  }
+}
+
+const translateTree = (language: Language) => {
+  if (language === 'fr') return
+  const dictionary = translations[language]
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+  const nodes: Text[] = []
+  let node: Node | null
+  while ((node = walker.nextNode())) nodes.push(node as Text)
+  nodes.forEach(textNode => {
+    const value = textNode.nodeValue?.trim()
+    if (!value || !dictionary[value]) return
+    textNode.nodeValue = textNode.nodeValue!.replace(value, dictionary[value])
+  })
+}
+
 export default function Page() {
   const [language, setLanguage] = useState<Language>('fr')
+  useEffect(() => {
+    document.documentElement.lang = language
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
+    translateTree(language)
+  }, [language])
   const labels = languageLabels[language]
   const localizedNav = [
     { label: labels.learn, icon: Network, href: '#learn' },
