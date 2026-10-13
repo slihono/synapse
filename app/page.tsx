@@ -92,7 +92,10 @@ function CodeLab({ onRun, unlocked }: { onRun: (history: History) => void; unloc
 function TrainingLab({ history, learningRate, setLearningRate }: { history: History; learningRate: number; setLearningRate: (v: number) => void }) {
   const [selected, setSelected] = useState(history.length - 1)
   const [playing, setPlaying] = useState(false)
-  useEffect(() => { setSelected(Math.min(selected, history.length - 1)) }, [history.length])
+  useEffect(() => {
+    setSelected(history.length - 1)
+    setPlaying(false)
+  }, [history])
   useEffect(() => { if (!playing) return; const timer = window.setInterval(() => setSelected(s => { if (s >= history.length - 1) { setPlaying(false); return s } return s + 1 }), 700); return () => window.clearInterval(timer) }, [playing, history.length])
   const state = history[selected]
   const status = history.at(-1)!.loss < history[0].loss ? 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.' : 'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.'

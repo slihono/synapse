@@ -65,6 +65,10 @@ for step in range(training_steps):
     w = w - learning_rate * grad_w
     b = b - learning_rate * grad_b
 
+# Même état que la dernière mise à jour visualisée
+prediction = w * x + b
+error = prediction - y
+loss = 0.5 * error ** 2
 print(prediction, loss)`
 
 export function validateCode(code: string) {
