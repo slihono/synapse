@@ -1,9 +1,9 @@
-export type LinearState = { step: number; w: number; b: number; prediction: number; loss: number; gradW: number; gradB: number }
+export type LinearState = { step: number; x: number; target: number; w: number; b: number; prediction: number; loss: number; gradW: number; gradB: number }
 
 export function linearState(w: number, b: number, x = 2, y = 1, step = 0): LinearState {
   const prediction = w * x + b
   const error = prediction - y
-  return { step, w, b, prediction, loss: 0.5 * error * error, gradW: error * x, gradB: error }
+  return { step, x, target: y, w, b, prediction, loss: 0.5 * error * error, gradW: error * x, gradB: error }
 }
 
 export function trainLinear(learningRate: number, steps: number, initialW = 0.2, initialB = 0, x = 2, y = 1) {
