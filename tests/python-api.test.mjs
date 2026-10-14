@@ -4,11 +4,11 @@ import { readFileSync } from 'node:fs'
 import ts from 'typescript'
 import { readHistory } from '../lib/python-report.ts'
 
-function createRoute(report = { stdout: '4\n', stderr: '', failed: false, history: [] }) {
+function createRoute(report = { stdout: '4\n', stderr: '', failed: false, history: [] }, command = { exitCode: 0 }) {
   let stopped = 0
   const sandbox = {
     writeFiles: async () => {},
-    runCommand: async () => ({ exitCode: 0, stdout: async () => JSON.stringify(report) }),
+    runCommand: async () => ({ ...command, stdout: async () => JSON.stringify(report) }),
     stop: async () => { stopped++ },
   }
   const source = readFileSync(new URL('../app/api/python/route.ts', import.meta.url), 'utf8')
@@ -78,4 +78,14 @@ test('API validates runtime parameter metadata', async () => {
   const bad = await (await invalid.post(request({ code: 'print(4)' }))).json()
   assert.equal(bad.learningRate, null)
   assert.equal(bad.trainingSteps, null)
+})
+
+test('a command terminated at its deadline is reported as a timeout, not a service failure', async () => {
+  const expired = createRoute({}, { exitCode: 137, durationMs: 12001 })
+  const response = await expired.post(request({ code: 'while True: pass' }))
+  assert.equal(response.status, 408)
+  assert.ok((await response.json()).error.includes('12 s'))
+  assert.equal(expired.stopped(), 1)
+  const immediateFailure = createRoute({}, { exitCode: 1, durationMs: 100 })
+  assert.equal((await immediateFailure.post(request({ code: 'print(4)' }))).status, 503)
 })

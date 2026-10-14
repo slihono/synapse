@@ -170,6 +170,7 @@ export async function POST(request: Request) {
   }
 
   let sandbox: Awaited<ReturnType<typeof Sandbox.create>> | undefined
+  let commandStartedAt: number | undefined
   try {
     sandbox = await Sandbox.create({
       resources: { vcpus: 1 },
@@ -181,12 +182,16 @@ export async function POST(request: Request) {
       { path: '/vercel/sandbox/runner.py', content: Buffer.from(runner) },
       { path: '/vercel/sandbox/user_code.py', content: Buffer.from(code) },
     ])
+    commandStartedAt = Date.now()
     const result = await sandbox.runCommand({
       cmd: 'python3',
       args: ['-I', '/vercel/sandbox/runner.py'],
       cwd: '/vercel/sandbox',
       timeoutMs: 12_000,
     })
+    if (result.exitCode !== 0 && (result.exitCode === 124 || (result.durationMs ?? 0) >= 11_500)) {
+      throw new Error('Python command timed out')
+    }
     const raw = await result.stdout()
     if (result.exitCode !== 0 || raw.length > 1_000_000) throw new Error('Invalid Python runner output')
     const report = JSON.parse(raw) as {
@@ -211,6 +216,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const detail = error instanceof Error ? error.message : ''
     const timedOut = /timed?\s*out|timeout|expired/i.test(detail)
+      || (commandStartedAt !== undefined && Date.now() - commandStartedAt >= 12_000)
     return Response.json({
       error: timedOut
         ? 'Temps limite atteint (12 s). Réduis la charge de calcul et réessaie.'
