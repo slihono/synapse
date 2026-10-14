@@ -57,7 +57,7 @@ namespace = {'__name__': '__main__', '__file__': filename}
 def finite_number(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
-def capture(frame, event):
+def capture(frame, event, arg=None):
     global last
     if event == 'line' and frame.f_code.co_filename == filename:
         values = frame.f_locals
