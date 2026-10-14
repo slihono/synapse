@@ -202,3 +202,7 @@ The sigmoid questions now render `e^(−z₁)` with a superscript instead of `ex
 At the learner’s request, all explicit fixed-decimal and significant-digit display rounding was removed from guided calculations, substitutions, validated results, animation values, metrics, history, and final comparison losses. The UI uses String(number), which preserves the program’s number in a round-trip decimal representation, including scientific notation when appropriate. Formula calculations retain their original floating-point precision.
 
 The old four-decimal answer tolerance was replaced with a relative numerical tolerance of 1e-9 for calculator differences. The precision note and error feedback are localized in all seven languages; the shared catalog now contains 182 messages. Long values wrap or scroll instead of being clipped. Euler’s constant is shown with the native available precision as well. These changes do not claim infinite mathematical precision.
+
+### Flexible answer precision
+
+Learners can now submit correctly rounded answers with one to eight decimal places, using either a decimal point or comma. Validation compares the submitted number with the expected value rounded to the number of decimal places entered. It does not accept an arbitrary nearby value. Full-precision answers remain supported, and displayed results and formula inputs remain unrounded. The precision guidance is translated in all seven languages.

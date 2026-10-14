@@ -35,5 +35,13 @@ export function manualSteps(n: ManualNetwork) {
 export function checkManualAnswer(input: string, expected: number) {
   const normalized = input.trim().replace(',', '.')
   if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(normalized)) return false
-  return Math.abs(Number(normalized) - expected) <= 1e-9 * Math.max(1, Math.abs(expected))
+  const answer = Number(normalized)
+  if (!Number.isFinite(answer) || !Number.isFinite(expected)) return false
+  // Match the rounding at the precision actually entered, rather than
+  // accepting every nearby number with a broad one-decimal tolerance.
+  const decimalPart = normalized.match(/\.([0-9]+)$/)?.[1]
+  if (decimalPart && decimalPart.length <= 8) {
+    return answer === Number(expected.toFixed(decimalPart.length))
+  }
+  return Math.abs(answer - expected) <= 1e-9 * Math.max(1, Math.abs(expected))
 }

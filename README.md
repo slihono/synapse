@@ -78,7 +78,7 @@ For a recorded state after initialization, the animation starts with the precedi
 
 The lesson now asks for z₁, h, and y-hat separately before moving to error and loss. It then derives each output and hidden-layer gradient, asks for all four parameter updates, and recalculates the hidden activation, prediction, and loss. Answers are entered numerically; unknown diagram values remain masked until validated.
 
-Partial derivatives are explained as sensitivities rather than ordinary division. Formula substitutions show why dL/dŷ = ŷ − y and dL/dw₂ = (ŷ − y)h. Displayed inputs use eight decimals; the engine retains full floating-point precision and accepts answers rounded to four decimals. Previously validated values can be inspected at full numerical precision.
+Partial derivatives are explained as sensitivities rather than ordinary division. Formula substitutions show why dL/dŷ = ŷ − y and dL/dw₂ = (ŷ − y)h. Displayed inputs retain full floating-point precision; correctly rounded answers with one to eight decimal places are accepted. Previously validated values can be inspected at full numerical precision.
 
 The Python example is explicitly identified as a separate linear model. Inspection begins at state zero rather than jumping to the final state. Predictions use more digits to distinguish convergence toward one from exact equality. Generated Python comments follow the selected language while custom comments and executable code remain unchanged.
 
@@ -86,4 +86,4 @@ The sigmoid formula displays Euler’s constant directly as `1 / (1 + e^(−z₁
 
 ## Unrounded numerical display
 
-Calculation results, formula inputs, animation values, metrics, and history now use the native full-precision number representation, without toFixed/toPrecision display limits. Calculator answers use a small relative numerical tolerance (1e-9), rather than the former four-decimal allowance. JavaScript and Python still use finite-precision floating-point arithmetic; this does not imply infinitely precise real-number arithmetic.
+Calculation results, formula inputs, animation values, metrics, and history now use the native full-precision number representation, without toFixed/toPrecision display limits. Answers rounded correctly to the entered precision of one to eight decimal places are accepted. Full-precision answers remain accepted with a small relative numerical tolerance (1e-9). JavaScript and Python still use finite-precision floating-point arithmetic; this does not imply infinitely precise real-number arithmetic.

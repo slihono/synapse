@@ -41,7 +41,7 @@ export function ManualActivity({ onContinue, onRestart }: { onContinue: () => vo
         </div>
         <p dir="ltr" className="font-mono text-sm">w₁ = {n.w1} · b₁ = {n.b1}<br />w₂ = {n.w2} · b₂ = {n.b2} · η = {n.lr}</p>
         <p className="text-sm leading-6 text-slate-600">{t('w₁ et w₂ sont des poids indépendants, donnés au départ.')}</p>
-        <div className="rounded-xl bg-blue-50 p-4 text-sm leading-6 text-blue-950">{t('Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.')}</div>
+        <div className="rounded-xl bg-blue-50 p-4 text-sm leading-6 text-blue-950">{t('Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.')}</div>
         <details className="text-sm text-slate-600"><summary className="cursor-pointer">{t('Valeurs validées en précision complète')}</summary><div className="mt-2 space-y-1 font-mono" dir="ltr">{steps.filter((_, i) => solved[i]).map(step => <p key={step.symbol}>{step.symbol} = {String(step.value)}</p>)}</div></details>
       </CardContent></Card>
       <Card className="border-violet-200"><CardHeader><div className="flex flex-wrap items-center justify-between gap-2"><CardTitle className="text-base">{t(stages[current.stage])}</CardTitle><span className="text-xs text-slate-600">{t('Étape')} {index + 1} / {steps.length}</span></div><Progress value={Object.keys(solved).length / steps.length * 100} /></CardHeader><CardContent className="space-y-5">

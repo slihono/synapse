@@ -75,8 +75,22 @@ test('sigmoid uses Euler exponent notation and the error has a separate symbol',
   assert.ok(steps[4].formula.includes('ε²'))
 })
 
-test('answers are not silently accepted at the old four-decimal precision', () => {
-  assert.equal(checkManualAnswer('0.7311', manualNetwork().h), false)
+test('answers accept correct rounding at each entered precision from one to eight decimals', () => {
+  for (let variant = 0; variant < 3; variant++) {
+    for (const step of manualSteps(manualNetwork(variant)).steps) {
+      for (let decimals = 1; decimals <= 8; decimals++) {
+        const rounded = step.value.toFixed(decimals)
+        assert.equal(checkManualAnswer(rounded, step.value), true)
+        assert.equal(checkManualAnswer(rounded.replace('.', ','), step.value), true)
+      }
+    }
+  }
+  assert.equal(checkManualAnswer('0.7311', manualNetwork().h), true)
+  assert.equal(checkManualAnswer('0.8', manualNetwork().h), false)
+  assert.equal(checkManualAnswer('0.70', manualNetwork().h), false)
+  assert.equal(checkManualAnswer('1', manualNetwork().h), false)
+  assert.equal(checkManualAnswer('-0.3', manualNetwork().h - 1), true)
+  assert.equal(checkManualAnswer('Infinity', 1), false)
 })
 
 test('formula inputs retain every digit of the computed values', () => {
