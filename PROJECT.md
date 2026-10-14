@@ -148,3 +148,21 @@ Execution status messages now retain a canonical message identifier so they are 
 Validation included five additional catalog regression tests, TypeScript checks, and a simulated React DOM exercise covering all seven languages, repeated switches, quiz feedback after switching, completing the guided lesson, running a mocked Python experiment, translating existing success/truncation notices, and preserving code and program output. The Node suite now contains 17 passing tests; the earlier six Python runner tests are unchanged. The simulated DOM is not a substitute for visual inspection in a real browser, which remains blocked by the browser tool's EPERM error.
 
 The follow-up source also completed a production Webpack build, including TypeScript validation and static page generation, using an isolated build directory and local filesystem compatibility adjustments outside the repository.
+
+## Further full-flow audit
+
+A subsequent audit identified and corrected these additional edge cases:
+
+| Case | Correction |
+| --- | --- |
+| A single state or constant loss was described as increasing loss | Classify loss as improving, increasing, or unchanged, with an unchanged message in all seven languages |
+| Calculated Python parameters such as `learning_rate = 2 / 10` were displayed using a parser fallback | Report actual finite runtime learning-rate and training-step values from Python |
+| The displayed training-step count could change to the number of distinct snapshots even though the program requested more iterations | Use runtime metadata or the literal program value for the editor control |
+| Controls could appear to modify parameters that were expressions or absent from the program | Disable literal-only controls when the relevant editable assignment is absent |
+| Code or reset actions could change the editor while a Python result was pending | Disable those controls during execution |
+| A result could arrive after the learner restarted and locked the exercise | Abort the client request and discard stale results |
+| The network diagram could clip on narrow screens | Make the diagram horizontally scrollable with a minimum internal width |
+
+The production site returned HTTP 200. Live API checks confirmed empty-program rejection, successful `print(2+2)` execution, and Python exception reporting through `failed` and `stderr`.
+
+Twenty Node tests and eight Python runner tests passed. Simulated React DOM checks additionally verified the locked exercise, sparse quiz scoring, computed runtime parameters, unchanged-loss feedback, disabled run controls, ignored stale responses, and continued support for all seven languages. The shared catalog now contains 139 messages. Real visual inspection of responsive layouts remains unverified because the browser tool cannot load in this environment.

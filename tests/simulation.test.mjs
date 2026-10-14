@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { trainLinear, manualNetwork, parseParameters, updateCodeParameter } from '../lib/simulation.ts'
+import { trainLinear, manualNetwork, parseParameters, readCodeParameter, trainingTrend, updateCodeParameter } from '../lib/simulation.ts'
 import { readHistory } from '../lib/python-report.ts'
 import { interpolate } from '../lib/i18n.ts'
 
@@ -46,4 +46,17 @@ test('divergent simulation never sends nonfinite values to charts', () => {
   const result = trainLinear(0.5, 100, 0.2, 0, 1e20)
   assert.ok(result.length < 101)
   assert.ok(result.every(state => Object.values(state).every(Number.isFinite)))
+})
+
+test('constant loss and a single snapshot are not reported as an increase', () => {
+  assert.equal(trainingTrend(trainLinear(0, 10)), 'unchanged')
+  assert.equal(trainingTrend(trainLinear(.1, 0)), 'unchanged')
+  assert.equal(trainingTrend(trainLinear(.1, 10)), 'improving')
+  assert.equal(trainingTrend(trainLinear(.5, 10)), 'increasing')
+})
+
+test('numeric controls distinguish literal parameters from expressions or absent variables', () => {
+  assert.equal(readCodeParameter('learning_rate = 2 / 10', 'learning_rate'), null)
+  assert.equal(readCodeParameter('print(4)', 'learning_rate'), null)
+  assert.equal(readCodeParameter('learning_rate = 2e-1', 'learning_rate'), .2)
 })

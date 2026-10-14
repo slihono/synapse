@@ -116,8 +116,7 @@ export function validateCode(code: string) {
 
 export function parseParameters(code: string) {
   const get = (name: string, fallback: number) => {
-    const match = code.match(new RegExp(`^\\s*${name}\\s*=\\s*([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?)\\s*(?:#.*)?$`, 'm'))
-    return match ? Number(match[1]) : fallback
+    return readCodeParameter(code, name) ?? fallback
   }
   return {
     x: get('x', 2),
@@ -127,6 +126,17 @@ export function parseParameters(code: string) {
     learningRate: get('learning_rate', 0.1),
     steps: get('training_steps', 20),
   }
+}
+
+export function readCodeParameter(code: string, name: string): number | null {
+  const match = code.match(new RegExp(`^[ \\t]*${name}\\s*=\\s*([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?)\\s*(?:#.*)?$`, 'm'))
+  const value = match ? Number(match[1]) : NaN
+  return Number.isFinite(value) ? value : null
+}
+
+export function trainingTrend(history: History): 'improving' | 'increasing' | 'unchanged' {
+  const difference = history.at(-1)!.loss - history[0].loss
+  return difference < 0 ? 'improving' : difference > 0 ? 'increasing' : 'unchanged'
 }
 
 export function updateCodeParameter(code: string, name: 'learning_rate' | 'training_steps', value: number) {

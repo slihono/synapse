@@ -57,7 +57,10 @@ filename = '<synapse-user-code>'
 namespace = {'__name__': '__main__', '__file__': filename}
 
 def finite_number(value):
-    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    try:
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    except (OverflowError, ValueError):
+        return False
 
 def capture_state(values):
     global last
@@ -108,6 +111,8 @@ os.close(saved_stderr)
 os.close(null_fd)
 print(json.dumps({'stdout': stdout.getvalue(), 'stderr': stderr.getvalue(),
     'truncated': stdout.truncated or stderr.truncated, 'failed': failed,
+    'learningRate': float(namespace['learning_rate']) if finite_number(namespace.get('learning_rate')) else None,
+    'trainingSteps': int(namespace['training_steps']) if finite_number(namespace.get('training_steps')) and namespace['training_steps'] >= 0 and float(namespace['training_steps']).is_integer() else None,
     'history': points}, allow_nan=False, ensure_ascii=False))
 `
 
@@ -190,6 +195,8 @@ export async function POST(request: Request) {
       truncated: boolean
       history: unknown[]
       failed: boolean
+      learningRate?: unknown
+      trainingSteps?: unknown
     }
     if (!report || typeof report.stdout !== 'string' || typeof report.stderr !== 'string') throw new Error('Invalid Python report')
     return Response.json({
@@ -197,6 +204,8 @@ export async function POST(request: Request) {
       stderr: report.stderr.slice(0, 4000),
       truncated: Boolean(report.truncated) || report.stdout.length > MAX_OUTPUT_LENGTH || report.stderr.length > 4000,
       failed: Boolean(report.failed),
+      learningRate: typeof report.learningRate === 'number' && Number.isFinite(report.learningRate) ? report.learningRate : null,
+      trainingSteps: typeof report.trainingSteps === 'number' && Number.isSafeInteger(report.trainingSteps) && report.trainingSteps >= 0 ? report.trainingSteps : null,
       history: readHistory(report.history),
     })
   } catch (error) {

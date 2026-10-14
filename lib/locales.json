@@ -137,7 +137,8 @@
     "Étape suivante": "Étape suivante",
     "Étapes d’entraînement": "Étapes d’entraînement",
     "étape": "étape",
-    "… sortie tronquée": "… sortie tronquée"
+    "… sortie tronquée": "… sortie tronquée",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La perte est inchangée : aucune amélioration ni augmentation détectée."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -277,7 +278,8 @@
     "Étape suivante": "Next step",
     "Étapes d’entraînement": "Training steps",
     "étape": "step",
-    "… sortie tronquée": "… output truncated"
+    "… sortie tronquée": "… output truncated",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Loss is unchanged: no improvement or increase was detected."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -417,7 +419,8 @@
     "Étape suivante": "Paso siguiente",
     "Étapes d’entraînement": "Pasos de entrenamiento",
     "étape": "paso",
-    "… sortie tronquée": "… salida truncada"
+    "… sortie tronquée": "… salida truncada",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La pérdida no ha cambiado: no se detectó ninguna mejora ni aumento."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -557,7 +560,8 @@
     "Étape suivante": "الخطوة التالية",
     "Étapes d’entraînement": "خطوات التدريب",
     "étape": "خطوة",
-    "… sortie tronquée": "… تم اقتطاع المخرجات"
+    "… sortie tronquée": "… تم اقتطاع المخرجات",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "الخسارة لم تتغير: لم يُرصد تحسن أو زيادة."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -697,7 +701,8 @@
     "Étape suivante": "अगला चरण",
     "Étapes d’entraînement": "ट्रेनिंग चरण",
     "étape": "चरण",
-    "… sortie tronquée": "… आउटपुट छोटा किया गया"
+    "… sortie tronquée": "… आउटपुट छोटा किया गया",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "लॉस नहीं बदला है: कोई सुधार या बढ़ोतरी नहीं मिली।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -837,7 +842,8 @@
     "Étape suivante": "Sonraki adım",
     "Étapes d’entraînement": "Eğitim adımları",
     "étape": "adım",
-    "… sortie tronquée": "… çıktı kısaltıldı"
+    "… sortie tronquée": "… çıktı kısaltıldı",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Kayıp değişmedi: iyileşme veya artış tespit edilmedi."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -977,6 +983,7 @@
     "Étape suivante": "Passo seguinte",
     "Étapes d’entraînement": "Etapas de treino",
     "étape": "etapa",
-    "… sortie tronquée": "… saída truncada"
+    "… sortie tronquée": "… saída truncada",
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "A perda não mudou: não foi detetada melhoria nem aumento."
   }
 }

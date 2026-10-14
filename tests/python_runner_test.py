@@ -70,6 +70,16 @@ for step in range(2):
         self.assertFalse(result['failed'])
         self.assertEqual(result['history'], [])
 
+    def test_computed_parameters_report_actual_runtime_values(self):
+        result = run_fixture('learning_rate = 2 / 10\ntraining_steps = 5 * 20\nprint("ok")')
+        self.assertAlmostEqual(result['learningRate'], .2)
+        self.assertEqual(result['trainingSteps'], 100)
+
+    def test_invalid_parameter_metadata_does_not_break_report(self):
+        result = run_fixture('learning_rate = 10**1000\ntraining_steps = float("nan")\nprint("ok")')
+        self.assertIsNone(result['learningRate'])
+        self.assertIsNone(result['trainingSteps'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -48,7 +48,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Languages
 
-French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 138 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
+French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 139 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
 
 ## Technology
 
@@ -56,7 +56,7 @@ Next.js App Router, React, TypeScript, Tailwind CSS, Base UI, Recharts, Lucide i
 
 ## Python API
 
-`POST /api/python` accepts JSON with a `code` string. A successful response contains `stdout`, `stderr`, `failed`, `truncated`, and `history`. Python exceptions are reported through `failed` and `stderr`; infrastructure failures use an HTTP error status.
+`POST /api/python` accepts JSON with a `code` string. A successful response contains `stdout`, `stderr`, `failed`, `truncated`, `history`, and nullable runtime metadata (`learningRate`, `trainingSteps`). Python exceptions are reported through `failed` and `stderr`; infrastructure failures use an HTTP error status.
 
 Execution limits include 30,000 code characters, a 12-second command timeout, a 20-second Sandbox lifetime, bounded output, and at most 501 captured states. The Sandbox has no network access and is stopped after each request.
 

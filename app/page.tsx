@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from 'recharts'
 import { Activity, ArrowDown, ArrowRight, Check, ChevronLeft, ChevronRight, CircleHelp, Code2, Gauge, GitBranch, Languages, Lightbulb, Network, Pause, Play, RotateCcw, Sparkles, Target, TrendingDown, Trophy, Zap } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -18,7 +18,7 @@ import { readHistory } from '@/lib/python-report'
 import { interpolate } from '@/lib/i18n'
 import { TranslationProvider, useTranslation } from '@/lib/translation-context'
 import { translate } from '@/lib/translations'
-import { manualNetwork, format, parseParameters, updateCodeParameter, quiz, starterCode, trainLinear, type History } from '@/lib/simulation'
+import { manualNetwork, format, parseParameters, readCodeParameter, trainingTrend, updateCodeParameter, quiz, starterCode, trainLinear, type History } from '@/lib/simulation'
 
 const nav = [{ label: 'Apprendre', icon: Network }, { label: 'Expérimenter', icon: Code2 }, { label: 'Visualiser le modèle', icon: Activity }, { label: 'Vérifier mes connaissances', icon: CircleHelp }]
 
@@ -34,9 +34,9 @@ function NetworkDiagram({ state }: { state: ReturnType<typeof trainLinear>[numbe
 
   const active = state.step > 0
   const error = state.prediction - state.target
-  return <div dir="ltr" className="relative overflow-hidden rounded-2xl border bg-slate-950 px-5 py-7 text-white shadow-inner">
+  return <div dir="ltr" className="relative overflow-x-auto rounded-2xl border bg-slate-950 px-5 py-7 text-white shadow-inner">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,.18),transparent_32%),radial-gradient(circle_at_75%_80%,rgba(139,92,246,.15),transparent_35%)]" />
-    <div className="relative flex items-center justify-between gap-3 sm:gap-7">
+    <div className="relative flex min-w-[360px] items-center justify-between gap-3 sm:gap-7">
       <div className="z-10 flex flex-col items-center gap-2"><div className={`grid size-16 place-items-center rounded-full border-2 border-blue-400 bg-blue-500/20 font-mono text-lg ${active ? 'shadow-[0_0_24px_rgba(96,165,250,.7)]' : ''}`}>x</div><span className="text-xs text-slate-300">{t("entrée = ")}{format(state.x)}</span></div>
       <div className="relative min-w-16 flex-1"><div className="h-1 rounded-full bg-blue-400/70" /><div className="absolute -top-6 left-1/2 -translate-x-1/2 rounded bg-slate-800 px-2 py-1 font-mono text-xs text-blue-200">w = {format(state.w)}</div><ArrowRight className="absolute -right-2 -top-2 text-blue-300" /></div>
       <div className="z-10 flex flex-col items-center gap-2"><div className="grid size-16 place-items-center rounded-full border-2 border-violet-400 bg-violet-500/20 font-mono text-lg">Σ</div><span className="text-xs text-slate-300">+ b = {format(state.b)}</span></div>
@@ -109,7 +109,7 @@ function ManualActivity({ onContinue, onRestart, language }: { onContinue: () =>
   </section>
 }
 
-function CodeLab({ onRun, unlocked, language }: { onRun: (history: History, learningRate: number) => void; unlocked: boolean; language: Language }) {
+function CodeLab({ onRun, unlocked, language }: { onRun: (history: History, learningRate: number | null) => void; unlocked: boolean; language: Language }) {
   const t = useTranslation()
 
   const [code, setCode] = useState(starterCode)
@@ -117,7 +117,18 @@ function CodeLab({ onRun, unlocked, language }: { onRun: (history: History, lear
   const [output, setOutput] = useState('')
   const [outputTruncated, setOutputTruncated] = useState(false)
   const [running, setRunning] = useState(false)
-  const [params, setParams] = useState({ x: 2, y: 1, learningRate: .1, steps: 20 })
+  const [params, setParams] = useState<{ x: number; y: number; learningRate: number | null; steps: number }>({ x: 2, y: 1, learningRate: .1, steps: 20 })
+  const runController = useRef<AbortController | null>(null)
+  useEffect(() => {
+    if (!unlocked) {
+      runController.current?.abort()
+      setRunning(false)
+      setMessage('')
+    }
+    return () => runController.current?.abort()
+  }, [unlocked])
+  const rateEditable = readCodeParameter(code, 'learning_rate') !== null
+  const stepsEditable = readCodeParameter(code, 'training_steps') !== null
   const words = {
     fr: { running: 'Exécution en cours…', run: 'Exécuter', output: 'Sortie Python', reset: 'Réinitialiser le code', hint: 'Indice', params: 'Paramètres du programme', sync: 'Les résultats viennent maintenant du vrai interpréteur Python.', rate: 'Taux d’apprentissage', steps: 'Étapes d’entraînement', why: 'Exécution isolée', explain: 'Python 3 s’exécute dans un bac à sable temporaire. Le temps, la mémoire et la sortie sont limités. Les variables x, y, w et b relient un entraînement au diagramme et aux graphiques.', noTrace: 'Aucun état d’entraînement x, y, w, b détecté : la sortie Python est affichée ci-dessus.', success: 'Python exécuté : les états détectés alimentent le diagramme et les graphiques.', failure: 'Impossible d’exécuter Python pour le moment.', timeout: 'Temps limite atteint (12 s). Réduis la charge de calcul et réessaie.' },
     en: { running: 'Running…', run: 'Run', output: 'Python output', reset: 'Reset code', hint: 'Hint', params: 'Program parameters', sync: 'Results now come from the Python interpreter.', rate: 'Learning rate', steps: 'Training steps', why: 'Isolated execution', explain: 'Python 3 runs in a temporary sandbox. Execution time, memory, and output are limited. Variables x, y, w, and b connect a training run to the diagram and charts.', noTrace: 'No training state with x, y, w, b was detected. Python output is shown above.', success: 'Python ran: detected states now power the diagram and charts.', failure: 'Python could not run right now.', timeout: 'Time limit reached (12 s). Reduce the workload and try again.' },
@@ -129,13 +140,17 @@ function CodeLab({ onRun, unlocked, language }: { onRun: (history: History, lear
   }[language]
   const run = async () => {
     if (!unlocked || running) return
+    const controller = new AbortController()
+    runController.current = controller
+    const timeout = window.setTimeout(() => controller.abort(new DOMException('Request timed out', 'TimeoutError')), 55_000)
     setRunning(true)
     setMessage('')
     setOutput('')
     setOutputTruncated(false)
     try {
-      const response = await fetch('/api/python', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code }), signal: AbortSignal.timeout(55_000) })
-      const result = await response.json() as { error?: string; stdout?: string; stderr?: string; truncated?: boolean; failed?: boolean; history?: History }
+      const response = await fetch('/api/python', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code }), signal: controller.signal })
+      const result = await response.json() as { error?: string; stdout?: string; stderr?: string; truncated?: boolean; failed?: boolean; learningRate?: number | null; trainingSteps?: number | null; history?: History }
+      if (controller.signal.aborted && controller.signal.reason?.name !== 'TimeoutError') return
       if (!response.ok || result.error) {
         const sourceError = result.error ?? ''
         throw new Error(response.status === 408 ? 'Temps limite atteint (12 s). Réduis la charge de calcul et réessaie.' : sourceError || 'Impossible d’exécuter Python pour le moment.')
@@ -145,23 +160,25 @@ function CodeLab({ onRun, unlocked, language }: { onRun: (history: History, lear
       setOutputTruncated(Boolean(result.truncated))
       if (nextHistory.length > 0) {
         const last = nextHistory.at(-1)!
-        const parsed = parseParameters(code)
-        setParams({ x: last.x, y: last.target, learningRate: parsed.learningRate, steps: Math.max(1, nextHistory.length - 1) })
-        onRun(nextHistory, parsed.learningRate)
+        const actualRate = typeof result.learningRate === 'number' && Number.isFinite(result.learningRate) ? result.learningRate : readCodeParameter(code, 'learning_rate')
+        setParams({ x: last.x, y: last.target, learningRate: actualRate, steps: typeof result.trainingSteps === 'number' && Number.isSafeInteger(result.trainingSteps) && result.trainingSteps >= 0 ? result.trainingSteps : readCodeParameter(code, 'training_steps') ?? Math.max(1, nextHistory.length - 1) })
+        onRun(nextHistory, actualRate)
         setMessage(result.failed ? 'Impossible d’exécuter Python pour le moment.' : 'Python exécuté : les états détectés alimentent le diagramme et les graphiques.')
       } else {
         setMessage(result.failed ? 'Impossible d’exécuter Python pour le moment.' : 'Aucun état d’entraînement x, y, w, b détecté : la sortie Python est affichée ci-dessus.')
       }
     } catch (error) {
+      if (controller.signal.aborted && controller.signal.reason?.name !== 'TimeoutError') return
       setMessage(error instanceof Error ? (error.name === 'TimeoutError' ? 'Temps limite atteint (12 s). Réduis la charge de calcul et réessaie.' : (error instanceof TypeError || error instanceof SyntaxError) ? 'Impossible d’exécuter Python pour le moment.' : error.message) : 'Impossible d’exécuter Python pour le moment.')
     } finally {
-      setRunning(false)
+      window.clearTimeout(timeout)
+      if (runController.current === controller) { runController.current = null; setRunning(false) }
     }
   }
-  return <section id="experiment" className="scroll-mt-6 space-y-5"><div><Badge className="mb-3 bg-violet-100 text-violet-700 hover:bg-violet-100">{t("ACTIVITÉ 2 · SIMULATION")}</Badge> {!unlocked && <Alert className="mt-4 border-orange-200 bg-orange-50"><AlertDescription><strong>{t("Exercice verrouillé :")}</strong>{t(" tu ne peux pas faire cet exercice tant que le réseau de départ n’est pas terminé. Termine les 5 étapes et leurs réponses avant de continuer.")}</AlertDescription></Alert>}<h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Maintenant, fais apprendre le modèle toi-même")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.")}</p></div><Card className="overflow-hidden border-slate-200 shadow-sm"><div className="grid lg:grid-cols-[1.2fr_.8fr]"><div className="border-b bg-[#101827] p-4 lg:border-b-0 lg:border-r"><div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2 text-sm font-medium text-slate-200"><Code2 className="text-violet-300" /> exercice.py</div><Badge variant="outline" className="border-violet-400/40 bg-violet-400/10 text-violet-200">Python 3 · Vercel Sandbox</Badge></div><Textarea dir="ltr" value={code} onChange={e => { const next = e.target.value; setCode(next); const parsed = parseParameters(next); setParams({ x: parsed.x, y: parsed.y, learningRate: parsed.learningRate, steps: parsed.steps }) }} aria-label={t("Code Python de l'exercice")} className="min-h-[390px] resize-y border-slate-700 bg-slate-950 font-mono text-[13px] leading-6 text-slate-200 placeholder:text-slate-500 focus-visible:ring-violet-400" spellCheck={false} /><div className="mt-3 flex flex-wrap gap-2"><Button onClick={run} disabled={!unlocked || running} className="bg-violet-500 text-white hover:bg-violet-600"><Play data-icon="inline-start" />{running ? words.running : words.run}</Button><Button variant="outline" onClick={() => { setCode(starterCode); setParams({ x: 2, y: 1, learningRate: .1, steps: 20 }); setMessage(''); setOutput(''); setOutputTruncated(false) }} className="border-slate-600 bg-transparent text-slate-200 hover:bg-slate-800"><RotateCcw data-icon="inline-start" />{words.reset}</Button><Button variant="ghost" onClick={() => setMessage('Indice : vérifie prediction, loss, grad_w, grad_b et les deux formules de mise à jour.')} className="text-slate-300"><Lightbulb data-icon="inline-start" />{words.hint}</Button></div>{output && <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-3 text-slate-200"><p className="mb-2 text-xs font-semibold text-violet-300">{words.output}</p><pre dir="ltr" className="max-h-48 overflow-auto whitespace-pre-wrap break-words font-mono text-xs">{output}</pre>{outputTruncated && <p className="mt-2 text-xs text-slate-400">{t('… sortie tronquée')}</p>}</div>}</div><div className="space-y-5 p-5"><div><p className="text-sm font-semibold text-slate-900">{words.params}</p><p className="mt-1 text-xs text-muted-foreground">{words.sync}</p></div><div className="grid grid-cols-2 gap-3"><Metric label="x" value={format(params.x)} /><Metric label="y" value={format(params.y)} tone="violet" /></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1"><label className="grid gap-1 text-sm"><span className="text-muted-foreground">{words.rate}</span><Input type="number" min="0.001" max="2" step="0.01" value={params.learningRate} onChange={e => { const v = Number(e.target.value); if (!Number.isFinite(v) || v <= 0 || v > 2) return; setCode(c => updateCodeParameter(c, 'learning_rate', v)); setParams(p => ({ ...p, learningRate: v })) }} /></label><label className="grid gap-1 text-sm"><span className="text-muted-foreground">{words.steps}</span><Input type="number" min="1" max="100" value={params.steps} onChange={e => { const v = Number(e.target.value); if (!Number.isInteger(v) || v < 1 || v > 100) return; setCode(c => updateCodeParameter(c, 'training_steps', v)); setParams(p => ({ ...p, steps: v })) }} /></label></div>{message && <Alert className={message === 'Python exécuté : les états détectés alimentent le diagramme et les graphiques.' ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><AlertDescription>{t(message)}</AlertDescription></Alert>}<div className="rounded-xl bg-slate-50 p-4 text-sm leading-6 text-muted-foreground"><p className="font-medium text-slate-800">{words.why}</p><p className="mt-1">{words.explain}</p></div></div></div></Card></section>
+  return <section id="experiment" className="scroll-mt-6 space-y-5"><div><Badge className="mb-3 bg-violet-100 text-violet-700 hover:bg-violet-100">{t("ACTIVITÉ 2 · SIMULATION")}</Badge> {!unlocked && <Alert className="mt-4 border-orange-200 bg-orange-50"><AlertDescription><strong>{t("Exercice verrouillé :")}</strong>{t(" tu ne peux pas faire cet exercice tant que le réseau de départ n’est pas terminé. Termine les 5 étapes et leurs réponses avant de continuer.")}</AlertDescription></Alert>}<h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Maintenant, fais apprendre le modèle toi-même")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.")}</p></div><Card className="overflow-hidden border-slate-200 shadow-sm"><div className="grid lg:grid-cols-[1.2fr_.8fr]"><div className="border-b bg-[#101827] p-4 lg:border-b-0 lg:border-r"><div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2 text-sm font-medium text-slate-200"><Code2 className="text-violet-300" /> exercice.py</div><Badge variant="outline" className="border-violet-400/40 bg-violet-400/10 text-violet-200">Python 3 · Vercel Sandbox</Badge></div><Textarea dir="ltr" disabled={running} value={code} onChange={e => { const next = e.target.value; setCode(next); const parsed = parseParameters(next); setParams({ x: parsed.x, y: parsed.y, learningRate: readCodeParameter(next, 'learning_rate'), steps: parsed.steps }) }} aria-label={t("Code Python de l'exercice")} className="min-h-[390px] resize-y border-slate-700 bg-slate-950 font-mono text-[13px] leading-6 text-slate-200 placeholder:text-slate-500 focus-visible:ring-violet-400" spellCheck={false} /><div className="mt-3 flex flex-wrap gap-2"><Button onClick={run} disabled={!unlocked || running} className="bg-violet-500 text-white hover:bg-violet-600"><Play data-icon="inline-start" />{running ? words.running : words.run}</Button><Button variant="outline" disabled={running} onClick={() => { setCode(starterCode); setParams({ x: 2, y: 1, learningRate: .1, steps: 20 }); setMessage(''); setOutput(''); setOutputTruncated(false) }} className="border-slate-600 bg-transparent text-slate-200 hover:bg-slate-800"><RotateCcw data-icon="inline-start" />{words.reset}</Button><Button variant="ghost" onClick={() => setMessage('Indice : vérifie prediction, loss, grad_w, grad_b et les deux formules de mise à jour.')} className="text-slate-300"><Lightbulb data-icon="inline-start" />{words.hint}</Button></div>{output && <div className="mt-4 rounded-xl border border-slate-700 bg-slate-950 p-3 text-slate-200"><p className="mb-2 text-xs font-semibold text-violet-300">{words.output}</p><pre dir="ltr" className="max-h-48 overflow-auto whitespace-pre-wrap break-words font-mono text-xs">{output}</pre>{outputTruncated && <p className="mt-2 text-xs text-slate-400">{t('… sortie tronquée')}</p>}</div>}</div><div className="space-y-5 p-5"><div><p className="text-sm font-semibold text-slate-900">{words.params}</p><p className="mt-1 text-xs text-muted-foreground">{words.sync}</p></div><div className="grid grid-cols-2 gap-3"><Metric label="x" value={format(params.x)} /><Metric label="y" value={format(params.y)} tone="violet" /></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1"><label className="grid gap-1 text-sm"><span className="text-muted-foreground">{words.rate}</span><Input type="number" min="0.001" max="2" step="0.01" value={params.learningRate ?? ''} disabled={running || !rateEditable} onChange={e => { const v = Number(e.target.value); if (!Number.isFinite(v) || v <= 0 || v > 2) return; setCode(c => updateCodeParameter(c, 'learning_rate', v)); setParams(p => ({ ...p, learningRate: v })) }} /></label><label className="grid gap-1 text-sm"><span className="text-muted-foreground">{words.steps}</span><Input type="number" min="1" max="100" value={params.steps} disabled={running || !stepsEditable} onChange={e => { const v = Number(e.target.value); if (!Number.isInteger(v) || v < 1 || v > 100) return; setCode(c => updateCodeParameter(c, 'training_steps', v)); setParams(p => ({ ...p, steps: v })) }} /></label></div>{message && <Alert className={message === 'Python exécuté : les états détectés alimentent le diagramme et les graphiques.' ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><AlertDescription>{t(message)}</AlertDescription></Alert>}<div className="rounded-xl bg-slate-50 p-4 text-sm leading-6 text-muted-foreground"><p className="font-medium text-slate-800">{words.why}</p><p className="mt-1">{words.explain}</p></div></div></div></Card></section>
 }
 
-function TrainingLab({ history, learningRate, setLearningRate, language }: { history: History; learningRate: number; setLearningRate: (v: number) => void; language: Language }) {
+function TrainingLab({ history, learningRate, setLearningRate, language }: { history: History; learningRate: number | null; setLearningRate: (v: number) => void; language: Language }) {
   const t = useTranslation()
 
   const [selected, setSelected] = useState(history.length - 1)
@@ -178,12 +195,13 @@ function TrainingLab({ history, learningRate, setLearningRate, language }: { his
   }, [playing, selected, history.length])
   const selectedIndex = Math.min(selected, history.length - 1)
   const state = history[selectedIndex]
-  const status = history.at(-1)!.loss < history[0].loss ? 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.' : 'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.'
+  const trend = trainingTrend(history)
+  const status = trend === 'unchanged' ? 'La perte est inchangée : aucune amélioration ni augmentation détectée.' : trend === 'improving' ? 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.' : 'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.'
   return <section id="visualize" className="scroll-mt-6 space-y-5"><div className="flex flex-wrap items-end justify-between gap-4"><div><Badge className="mb-3 bg-orange-100 text-orange-700 hover:bg-orange-100">{t("LABORATOIRE · VUE INTERNE")}</Badge><h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Visualise chaque mise à jour")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Sélectionne un instant : le diagramme, les métriques et l’historique utilisent exactement le même état calculé.")}</p></div><div className="flex items-center gap-2 rounded-xl border bg-white p-2"><Button size="icon" variant="outline" onClick={() => setSelected(Math.max(0, selected - 1))} aria-label={t("Étape précédente")}><ChevronLeft /></Button><Button size="icon" onClick={() => { if (!playing && selectedIndex === history.length - 1) setSelected(0); setPlaying(v => !v) }} aria-label={t(playing ? 'Pause' : 'Lecture')}>{playing ? <Pause /> : <Play />}</Button><Button size="icon" variant="outline" onClick={() => setSelected(Math.min(history.length - 1, selected + 1))} aria-label={t("Étape suivante")}><ChevronRight /></Button><Button size="sm" variant="ghost" onClick={() => setSelected(0)}><RotateCcw data-icon="inline-start" />{t("Recommencer")}</Button></div></div>
     <NetworkDiagram state={state} />
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8"><Metric label={t("étape")} value={`${state.step}`} tone="violet" /><Metric label={t("prédiction")} value={format(state.prediction)} tone="blue" /><Metric label={t("perte")} value={format(state.loss)} tone="orange" /><Metric label={t("erreur")} value={format(state.prediction - state.target)} tone="orange" /><Metric label={t("gradient w")} value={format(state.gradW)} tone="violet" /><Metric label={t("gradient b")} value={format(state.gradB)} tone="violet" /><Metric label={t("poids w")} value={format(state.w)} tone="emerald" /><Metric label={t("biais b")} value={format(state.b)} tone="emerald" /></div>
       <Card className="border-slate-200 shadow-sm"><CardContent className="space-y-3 pt-6"><div className="flex items-center justify-between text-sm"><span className="font-medium">{t("Étape inspectée : ")}{state.step} / {history.length - 1}</span><span className="text-muted-foreground">{t("vitesse : 0,7 s")}</span></div><Slider value={[selectedIndex]} min={0} max={Math.max(1, history.length - 1)} disabled={history.length < 2} step={1} onValueChange={v => setSelected(Array.isArray(v) ? v[0] : v)} aria-label={t("Étape d'entraînement")} /></CardContent></Card>
-    <Alert className={history.at(-1)!.loss < history[0].loss ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><TrendingDown className="text-emerald-600" /><AlertDescription>{t(status)}</AlertDescription></Alert>
+    <Alert className={trend === 'improving' ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><TrendingDown className={trend === 'improving' ? 'text-emerald-600' : 'text-orange-600'} /><AlertDescription>{t(status)}</AlertDescription></Alert>
     <div className="grid gap-5 xl:grid-cols-3"><ChartCard title={t("Perte par étape")} data={history} dataKey="loss" color="var(--color-loss)" type="area" /><ChartCard title={t("Prédiction et cible")} data={history.map(s => ({ ...s, target: s.target }))} dataKey="prediction" color="var(--color-prediction)" target /><ChartCard title={t("Poids et biais")} data={history} dataKey="w" color="var(--color-weight)" bias /></div>
     <Card className="border-slate-200 shadow-sm"><CardHeader><CardTitle className="text-base">{t("Historique d’entraînement")}</CardTitle><CardDescription>{t("Clique sur une ligne pour inspecter cet état dans le réseau.")}</CardDescription></CardHeader><CardContent><div className="overflow-x-auto"><Table><TableHeader><TableRow><TableHead>{t("Étape")}</TableHead><TableHead>{t("Prédiction")}</TableHead><TableHead>{t("Perte")}</TableHead><TableHead>{t("Poids")}</TableHead><TableHead>{t("Biais")}</TableHead><TableHead>{t("Gradient w")}</TableHead></TableRow></TableHeader><TableBody>{history.filter((_, i) => i === 0 || i % 2 === 0 || i === history.length - 1).map(row => <TableRow key={row.step} aria-selected={row.step === selectedIndex} tabIndex={0} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelected(row.step) } }} className={`cursor-pointer transition-colors hover:bg-muted/50 ${row.step === selectedIndex ? 'bg-violet-100' : ''}`} style={row.step === selectedIndex ? { backgroundColor: '#ede9fe', color: '#1e1b4b', boxShadow: 'inset 4px 0 #7c3aed' } : undefined} onClick={() => setSelected(row.step)}><TableCell className="font-medium">{row.step === 0 ? t('Init.') : row.step}</TableCell><TableCell>{format(row.prediction)}</TableCell><TableCell>{format(row.loss)}</TableCell><TableCell>{format(row.w)}</TableCell><TableCell>{format(row.b)}</TableCell><TableCell className={row.step === selectedIndex ? "font-medium text-violet-900" : "text-violet-700"}>{format(row.gradW)}</TableCell></TableRow>)}</TableBody></Table></div></CardContent></Card>
     <RateComparison initial={history[0]} steps={history.length - 1} active={learningRate} onSelect={setLearningRate} language={language} />
@@ -196,7 +214,7 @@ function ChartCard({ title, data, dataKey, color, type, target, bias }: { title:
   return <Card className="min-w-0 border-slate-200 shadow-sm"><CardHeader className="pb-2"><CardTitle className="text-sm">{t(title)}</CardTitle></CardHeader><CardContent className="h-56 pl-1 pr-4"><ResponsiveContainer width="100%" height="100%"><LineChart data={data}><CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" /><XAxis dataKey="step" tickLine={false} axisLine={false} fontSize={11} /><YAxis tickLine={false} axisLine={false} fontSize={11} width={36} /><ChartTooltip labelFormatter={step => `${t('Étape')} ${step}`} contentStyle={{ borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 12 }} /><Line type="monotone" dataKey={dataKey} name={t(dataKey === 'prediction' ? 'Prédiction' : dataKey === 'loss' ? 'Perte' : 'Poids')} stroke={color} strokeWidth={2.5} dot={false} /><>{target && <Line type="monotone" dataKey="target" name={t('cible')} stroke="#94a3b8" strokeDasharray="4 4" dot={false} />}{bias && <Line type="monotone" dataKey="b" name={t('Biais')} stroke="var(--color-bias)" strokeWidth={2} dot={false} />}</></LineChart></ResponsiveContainer></CardContent></Card>
 }
 
-function RateComparison({ initial, steps, active, onSelect, language }: { initial: History[number]; steps: number; active: number; onSelect: (v: number) => void; language: Language }) {
+function RateComparison({ initial, steps, active, onSelect, language }: { initial: History[number]; steps: number; active: number | null; onSelect: (v: number) => void; language: Language }) {
   const t = useTranslation()
 
   const rates = [.01, .1, .5]
@@ -249,10 +267,10 @@ export default function Page() {
     { label: labels.quiz, icon: CircleHelp, href: '#quiz' },
   ]
   const [history, setHistory] = useState(() => trainLinear(.1, 20))
-  const [learningRate, setLearningRate] = useState(.1)
+  const [learningRate, setLearningRate] = useState<number | null>(.1)
   const [manualDone, setManualDone] = useState(false)
   const [active, setActive] = useState('#learn')
-  const run = (next: History, nextLearningRate: number) => { setHistory(next); setLearningRate(nextLearningRate); setHasRun(true); document.getElementById('visualize')?.scrollIntoView({ behavior: 'smooth' }) }
+  const run = (next: History, nextLearningRate: number | null) => { setHistory(next); setLearningRate(nextLearningRate); setHasRun(true); document.getElementById('visualize')?.scrollIntoView({ behavior: 'smooth' }) }
   const [quizAnswered, setQuizAnswered] = useState(0)
   const [hasRun, setHasRun] = useState(false)
   const progress = (manualDone ? 40 : 0) + (hasRun ? 30 : 0) + quizAnswered * 6

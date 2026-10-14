@@ -68,3 +68,14 @@ test('API limits untrusted reports and always releases the sandbox', async () =>
   assert.deepEqual(report.history, [])
   assert.equal(route.stopped(), 1)
 })
+
+test('API validates runtime parameter metadata', async () => {
+  const route = createRoute({ stdout: '', stderr: '', failed: false, history: [], learningRate: .2, trainingSteps: 100 })
+  const report = await (await route.post(request({ code: 'print(4)' }))).json()
+  assert.equal(report.learningRate, .2)
+  assert.equal(report.trainingSteps, 100)
+  const invalid = createRoute({ stdout: '', stderr: '', failed: false, history: [], learningRate: '0.2', trainingSteps: -1 })
+  const bad = await (await invalid.post(request({ code: 'print(4)' }))).json()
+  assert.equal(bad.learningRate, null)
+  assert.equal(bad.trainingSteps, null)
+})
