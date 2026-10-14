@@ -196,3 +196,9 @@ All new teaching copy is available in seven languages; the shared catalog contai
 ### Sigmoid notation clarification
 
 The sigmoid questions now render `e^(−z₁)` with a superscript instead of `exp(−z₁)`. A localized calculator hint defines Euler’s constant (approximately 2.718281828), explains that exp(a) = eᵃ, and places the minus sign in the exponent. The prediction error is labeled ε (epsilon) in the guided exercise so it cannot be confused with Euler’s constant e. The mathematics and expected answers are unchanged. The shared catalog now has 180 messages.
+
+### Removal of display rounding
+
+At the learner’s request, all explicit fixed-decimal and significant-digit display rounding was removed from guided calculations, substitutions, validated results, animation values, metrics, history, and final comparison losses. The UI uses String(number), which preserves the program’s number in a round-trip decimal representation, including scientific notation when appropriate. Formula calculations retain their original floating-point precision.
+
+The old four-decimal answer tolerance was replaced with a relative numerical tolerance of 1e-9 for calculator differences. The precision note and error feedback are localized in all seven languages; the shared catalog now contains 182 messages. Long values wrap or scroll instead of being clipped. Euler’s constant is shown with the native available precision as well. These changes do not claim infinite mathematical precision.

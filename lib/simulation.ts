@@ -48,7 +48,7 @@ export function manualNetwork(variant = 0) {
   return { x, target, w1, b1, w2, b2, lr, z1, h, prediction, loss, dw2, db2, dw1, db1, updated, newPrediction, newLoss: 0.5 * (newPrediction - target) ** 2 }
 }
 
-export function format(value: number) { return value.toFixed(4) }
+export function format(value: number) { return String(value) }
 
 export const starterCode = `# Modèle linéaire — complète les expressions manquantes
 x = 2.0

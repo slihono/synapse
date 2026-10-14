@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { trainLinear, manualNetwork, parseParameters, readCodeParameter, trainingTrend, updateCodeParameter } from '../lib/simulation.ts'
+import { trainLinear, manualNetwork, parseParameters, format, readCodeParameter, trainingTrend, updateCodeParameter } from '../lib/simulation.ts'
 import { readHistory } from '../lib/python-report.ts'
 import { interpolate } from '../lib/i18n.ts'
 
@@ -59,4 +59,10 @@ test('numeric controls distinguish literal parameters from expressions or absent
   assert.equal(readCodeParameter('learning_rate = 2 / 10', 'learning_rate'), null)
   assert.equal(readCodeParameter('print(4)', 'learning_rate'), null)
   assert.equal(readCodeParameter('learning_rate = 2e-1', 'learning_rate'), .2)
+})
+
+test('number formatting does not round displayed results', () => {
+  const value = manualNetwork().h
+  assert.equal(format(value), String(value))
+  assert.equal(format(1e-15), '1e-15')
 })

@@ -22,12 +22,12 @@ test('h and y-hat coincide only for the relevant starting parameters', () => {
   assert.equal(otherModel.prediction, otherModel.w2 * otherModel.h + otherModel.b2)
 })
 
-test('answers accept full calculator precision, decimal commas, and four-decimal rounding', () => {
+test('answers accept program values, decimal commas, and calculator precision', () => {
   for (let variant = 0; variant < 3; variant++) {
     for (const step of manualSteps(manualNetwork(variant)).steps) {
       assert.equal(checkManualAnswer(String(step.value), step.value), true)
-      assert.equal(checkManualAnswer(step.value.toFixed(4), step.value), true)
-      assert.equal(checkManualAnswer(step.value.toFixed(4).replace('.', ','), step.value), true)
+      assert.equal(checkManualAnswer(step.value.toFixed(10), step.value), true)
+      assert.equal(checkManualAnswer(step.value.toFixed(10).replace('.', ','), step.value), true)
       assert.equal(checkManualAnswer(String(step.value + .1), step.value), false)
     }
   }
@@ -73,4 +73,16 @@ test('sigmoid uses Euler exponent notation and the error has a separate symbol',
   assert.ok(steps[17].formula.includes('e^(−'))
   assert.equal(steps[3].symbol, 'ε')
   assert.ok(steps[4].formula.includes('ε²'))
+})
+
+test('answers are not silently accepted at the old four-decimal precision', () => {
+  assert.equal(checkManualAnswer('0.7311', manualNetwork().h), false)
+})
+
+test('formula inputs retain every digit of the computed values', () => {
+  const n = manualNetwork()
+  const { steps } = manualSteps(n)
+  assert.ok(steps[2].formula.includes(String(n.h)))
+  assert.ok(steps[6].formula.includes(String(n.prediction - n.target)))
+  assert.ok(steps[14].formula.includes(String(n.dw2)))
 })

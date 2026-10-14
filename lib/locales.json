@@ -179,7 +179,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Vérifie la formule et utilise les valeurs complètes, puis réessaie."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -361,7 +363,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 is Euler’s constant. exp(a) = eᵃ: use eˣ or exp on your calculator. The minus sign is part of the exponent."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 is Euler’s constant. exp(a) = eᵃ: use eˣ or exp on your calculator. The minus sign is part of the exponent.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "Displayed values retain the program’s full available precision, without display rounding. A calculator may differ in the last digits, so a small numerical tolerance is retained.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Check the formula and use the full values, then try again."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -543,7 +547,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 es la constante de Euler. exp(a) = eᵃ: usa eˣ o exp en la calculadora. El signo menos pertenece al exponente."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 es la constante de Euler. exp(a) = eᵃ: usa eˣ o exp en la calculadora. El signo menos pertenece al exponente.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "Los valores conservan toda la precisión disponible del programa, sin redondear la visualización. La calculadora puede diferir en los últimos dígitos; se mantiene una pequeña tolerancia numérica.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Comprueba la fórmula y usa los valores completos; inténtalo de nuevo."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -725,7 +731,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 هو ثابت أويلر. exp(a) = eᵃ: استخدم eˣ أو exp في الآلة الحاسبة. إشارة السالب جزء من الأس."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 هو ثابت أويلر. exp(a) = eᵃ: استخدم eˣ أو exp في الآلة الحاسبة. إشارة السالب جزء من الأس.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "تحتفظ القيم بكل الدقة المتاحة للبرنامج دون تقريب العرض. قد تختلف الآلة الحاسبة في الأرقام الأخيرة، لذلك تُحفظ سماحية عددية صغيرة.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "راجع الصيغة واستخدم القيم الكاملة ثم حاول مجددًا."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -907,7 +915,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 ऑयलर स्थिरांक है। exp(a) = eᵃ: कैलकुलेटर में eˣ या exp लें। ऋण चिह्न घात का हिस्सा है।"
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 ऑयलर स्थिरांक है। exp(a) = eᵃ: कैलकुलेटर में eˣ या exp लें। ऋण चिह्न घात का हिस्सा है।",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "दिखाए गए मान प्रोग्राम की पूरी उपलब्ध सटीकता रखते हैं, बिना डिस्प्ले राउंडिंग। कैलकुलेटर के अंतिम अंक अलग हो सकते हैं, इसलिए छोटी संख्यात्मक सहनशीलता रखी गई है।",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "सूत्र जाँचें और पूरे मान लेकर फिर कोशिश करें।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -1089,7 +1099,9 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 Euler sabitidir. exp(a) = eᵃ: hesap makinesinde eˣ veya exp kullan. Eksi işareti üssün parçasıdır."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 Euler sabitidir. exp(a) = eᵃ: hesap makinesinde eˣ veya exp kullan. Eksi işareti üssün parçasıdır.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "Gösterilen değerler yuvarlanmadan programın tüm mevcut hassasiyetini korur. Hesap makinesinde son basamaklar farklı olabilir; küçük bir sayısal tolerans korunur.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Formülü kontrol et ve tam değerlerle yeniden dene."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -1271,6 +1283,8 @@
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
-    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 é a constante de Euler. exp(a) = eᵃ: usa eˣ ou exp na calculadora. O sinal negativo faz parte do expoente."
+    "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 é a constante de Euler. exp(a) = eᵃ: usa eˣ ou exp na calculadora. O sinal negativo faz parte do expoente.",
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Une calculatrice peut différer dans les derniers chiffres : une petite tolérance numérique est conservée.": "Os valores mantêm toda a precisão disponível do programa, sem arredondamento de apresentação. A calculadora pode diferir nos últimos dígitos; mantém-se uma pequena tolerância numérica.",
+    "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Verifica a fórmula e usa os valores completos; tenta novamente."
   }
 }

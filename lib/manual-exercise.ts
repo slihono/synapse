@@ -6,7 +6,7 @@ export function manualSteps(n: ManualNetwork) {
   const dz = dh * n.h * (1 - n.h)
   const newZ = n.updated.w1 * n.x + n.updated.b1
   const newH = 1 / (1 + Math.exp(-newZ))
-  const f = (v: number) => Number.isInteger(v) ? String(v) : v.toFixed(8)
+  const f = (v: number) => String(v)
   const step = (stage: number, symbol: string, value: number, formula: string, explanation: string) => ({ stage, symbol, value, formula, explanation })
   return { network: n, steps: [
     step(0, 'z₁', n.z1, `z₁ = w₁ × x + b₁ = ${f(n.w1)} × ${f(n.x)} + ${f(n.b1)}`, "w₁ et w₂ sont des poids indépendants, donnés au départ."),
@@ -35,5 +35,5 @@ export function manualSteps(n: ManualNetwork) {
 export function checkManualAnswer(input: string, expected: number) {
   const normalized = input.trim().replace(',', '.')
   if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(normalized)) return false
-  return Math.abs(Number(normalized) - expected) <= 0.00005 + 1e-12
+  return Math.abs(Number(normalized) - expected) <= 1e-9 * Math.max(1, Math.abs(expected))
 }
