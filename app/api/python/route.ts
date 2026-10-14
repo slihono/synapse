@@ -1,12 +1,15 @@
 import { Sandbox } from '@vercel/sandbox'
+import { readHistory } from '@/lib/python-report'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
 
 const MAX_CODE_LENGTH = 30_000
 const MAX_OUTPUT_LENGTH = 16_000
+const MAX_REQUEST_BYTES = MAX_CODE_LENGTH * 6 + 100
 
-const runner = String.raw`import contextlib
+const runner = String.raw`import ast
+import contextlib
 import io
 import json
 import math
@@ -51,20 +54,16 @@ os.dup2(null_fd, 2)
 points = []
 last = None
 filename = '<synapse-user-code>'
-source_lines = source.splitlines()
 namespace = {'__name__': '__main__', '__file__': filename}
 
 def finite_number(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
-def capture(frame, event, arg=None):
+def capture_state(values):
     global last
-    if event == 'line' and frame.f_code.co_filename == filename:
-        values = frame.f_locals
+    try:
         names = ('x', 'y', 'w', 'b')
-        previous_line = source_lines[frame.f_lineno - 2].strip() if frame.f_lineno > 1 and frame.f_lineno - 2 < len(source_lines) else ''
-        bias_update_finished = previous_line.replace(' ', '').startswith(('b=', 'b+=', 'b-=', 'b*=', 'b/='))
-        if (last is None or bias_update_finished) and all(name in values and finite_number(values[name]) for name in names):
+        if all(name in values and finite_number(values[name]) for name in names):
             x, y, w, b = (float(values[name]) for name in names)
             marker = (x, y, w, b)
             if marker != last and len(points) < MAX_POINTS:
@@ -77,16 +76,29 @@ def capture(frame, event, arg=None):
                     points.append({'step': step, 'x': x, 'target': y, 'w': w, 'b': b,
                         'prediction': prediction, 'loss': loss, 'gradW': grad_w, 'gradB': error})
                     last = marker
-    return capture
+    except (OverflowError, ValueError):
+        pass
+
+class TrainingCapture(ast.NodeTransformer):
+    def visit_loop(self, node):
+        self.generic_visit(node)
+        snapshot = ast.parse('__synapse_capture__(locals())').body[0]
+        node.body.append(ast.copy_location(snapshot, node))
+        initial = ast.copy_location(ast.parse('__synapse_capture__(locals())').body[0], node)
+        return [initial, node]
+    visit_For = visit_loop
+    visit_While = visit_loop
+
+namespace['__synapse_capture__'] = capture_state
 
 try:
     with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
-        sys.settrace(capture)
-        exec(compile(source, filename, 'exec'), namespace, namespace)
-        sys.settrace(None)
+        tree = TrainingCapture().visit(ast.parse(source, filename=filename))
+        ast.fix_missing_locations(tree)
+        exec(compile(tree, filename, 'exec'), namespace, namespace)
+        capture_state(namespace)
 except BaseException:
     failed = True
-    sys.settrace(None)
     traceback.print_exc(file=stderr)
 
 os.dup2(saved_stdout, 1)
@@ -108,18 +120,18 @@ export async function POST(request: Request) {
   const now = Date.now()
   const recentRequests = (requestsByIp.get(clientIp) ?? []).filter(timestamp => now - timestamp < 60_000)
   if (recentRequests.length >= REQUESTS_PER_MINUTE) {
-    return Response.json({ error: 'Trop d’exécutions. Réessaie dans une minute.' }, { status: 429 })
+    return Response.json({ error: 'Trop d’exécutions. Réessaie dans une minute.' }, { status: 429, headers: { 'Retry-After': '60' } })
   }
-  recentRequests.push(now)
-  requestsByIp.set(clientIp, recentRequests)
-  if (requestsByIp.size > 1000) {
+  if (requestsByIp.size >= 1000) {
     for (const [ip, timestamps] of requestsByIp) {
       if (!timestamps.some(timestamp => now - timestamp < 60_000)) requestsByIp.delete(ip)
     }
   }
-  if (requestsByIp.size > 1000 && !requestsByIp.has(clientIp)) {
+  if (requestsByIp.size >= 1000 && !requestsByIp.has(clientIp)) {
     return Response.json({ error: 'Service momentanément occupé. Réessaie plus tard.' }, { status: 503 })
   }
+  recentRequests.push(now)
+  requestsByIp.set(clientIp, recentRequests)
 
   let payload: unknown
   try {
@@ -132,7 +144,7 @@ export async function POST(request: Request) {
       const { done, value } = await reader.read()
       if (done) break
       bytesRead += value.byteLength
-      if (bytesRead > MAX_CODE_LENGTH + 100) {
+      if (bytesRead > MAX_REQUEST_BYTES) {
         await reader.cancel()
         return Response.json({ error: 'Le code dépasse la limite de 30 000 caractères.' }, { status: 413 })
       }
@@ -171,13 +183,22 @@ export async function POST(request: Request) {
       timeoutMs: 12_000,
     })
     const raw = await result.stdout()
+    if (result.exitCode !== 0 || raw.length > 1_000_000) throw new Error('Invalid Python runner output')
     const report = JSON.parse(raw) as {
       stdout: string
       stderr: string
       truncated: boolean
       history: unknown[]
+      failed: boolean
     }
-    return Response.json(report)
+    if (!report || typeof report.stdout !== 'string' || typeof report.stderr !== 'string') throw new Error('Invalid Python report')
+    return Response.json({
+      stdout: report.stdout.slice(0, MAX_OUTPUT_LENGTH),
+      stderr: report.stderr.slice(0, 4000),
+      truncated: Boolean(report.truncated) || report.stdout.length > MAX_OUTPUT_LENGTH || report.stderr.length > 4000,
+      failed: Boolean(report.failed),
+      history: readHistory(report.history),
+    })
   } catch (error) {
     const detail = error instanceof Error ? error.message : ''
     const timedOut = /timed?\s*out|timeout|expired/i.test(detail)

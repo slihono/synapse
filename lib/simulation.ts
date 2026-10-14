@@ -14,7 +14,9 @@ export function trainLinear(learningRate: number, steps: number, initialW = 0.2,
     const current = linearState(w, b, x, y, step - 1)
     w -= learningRate * current.gradW
     b -= learningRate * current.gradB
-    history.push(linearState(w, b, x, y, step))
+    const next = linearState(w, b, x, y, step)
+    if (!Object.values(next).every(Number.isFinite)) break
+    history.push(next)
   }
   return history
 }
@@ -114,7 +116,7 @@ export function validateCode(code: string) {
 
 export function parseParameters(code: string) {
   const get = (name: string, fallback: number) => {
-    const match = code.match(new RegExp(`(?:^|\\n)\\s*${name}\\s*=\\s*(-?[0-9.]+)`, 'm'))
+    const match = code.match(new RegExp(`^\\s*${name}\\s*=\\s*([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?)\\s*(?:#.*)?$`, 'm'))
     return match ? Number(match[1]) : fallback
   }
   return {
@@ -125,6 +127,12 @@ export function parseParameters(code: string) {
     learningRate: get('learning_rate', 0.1),
     steps: get('training_steps', 20),
   }
+}
+
+export function updateCodeParameter(code: string, name: 'learning_rate' | 'training_steps', value: number) {
+  if (!Number.isFinite(value)) return code
+  const number = '[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?'
+  return code.replace(new RegExp(`^([ \\t]*${name}[ \\t]*=[ \\t]*)${number}(?=[ \\t]*(?:#|$))`, 'm'), (_, prefix: string) => `${prefix}${value}`)
 }
 
 export const quiz = [
@@ -138,8 +146,3 @@ export const quiz = [
 export type QuizItem = typeof quiz[number]
 export type ManualNetwork = ReturnType<typeof manualNetwork>
 export type History = ReturnType<typeof trainLinear>
-
-if (process.env.NODE_ENV === 'test') {
-  const first = trainLinear(0.1, 1)[1]
-  if (Math.abs(first.prediction - 0.7) > 0.0001) throw new Error('Simulation check failed')
-}

@@ -47,6 +47,10 @@
 
 :root {
   color-scheme: light;
+  --color-loss: #ea580c;
+  --color-prediction: #2563eb;
+  --color-weight: #059669;
+  --color-bias: #7c3aed;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -154,6 +158,9 @@
 }
 
 @layer base {
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
   * {
     @apply border-border outline-ring/50;
   }
