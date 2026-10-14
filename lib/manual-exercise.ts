@@ -32,6 +32,17 @@ export function manualSteps(n: ManualNetwork) {
   ] }
 }
 
+/** Stable choices keep their order while a learner selects and validates. */
+export function manualAnswerChoices(expected: number, questionIndex: number, variant: number) {
+  const choices = [expected]
+  for (const candidate of [-expected, expected * 2, expected / 2, expected + 1, expected - 1, expected + 2]) {
+    if (Number.isFinite(candidate) && !choices.includes(candidate)) choices.push(candidate)
+    if (choices.length === 4) break
+  }
+  const position = (questionIndex + variant) % choices.length
+  return [...choices.slice(choices.length - position), ...choices.slice(0, choices.length - position)]
+}
+
 export function checkManualAnswer(input: string, expected: number) {
   // Formulas and calculators may use a typographic minus instead of ASCII '-'.
   const normalized = input.trim().replace(/[−﹣－]/g, '-').replace(/^([+-])\s+/, '$1').replace(',', '.')

@@ -87,3 +87,7 @@ The sigmoid formula displays Euler’s constant directly as `1 / (1 + e^(−z₁
 ## Unrounded numerical display
 
 Calculation results, formula inputs, animation values, metrics, and history now use the native full-precision number representation, without toFixed/toPrecision display limits. Answers rounded correctly to the entered precision of one to eight decimal places are accepted. Full-precision answers remain accepted with a small relative numerical tolerance (1e-9). JavaScript and Python still use finite-precision floating-point arithmetic; this does not imply infinitely precise real-number arithmetic.
+
+### Multiple-choice questions from step 6
+
+Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision numeric choices, with one correct answer and three distinct alternatives. The correct option position varies between questions and exercise variants. Learners select an option and validate it before continuing; incorrect choices allow another attempt. Radio inputs support keyboard navigation, and instructions and feedback are translated in all seven languages.

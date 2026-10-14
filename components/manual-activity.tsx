@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { ArrowRight, Check, ChevronLeft } from 'lucide-react'
-import { manualSteps, checkManualAnswer } from '@/lib/manual-exercise'
+import { manualSteps, checkManualAnswer, manualAnswerChoices } from '@/lib/manual-exercise'
 import { manualNetwork } from '@/lib/simulation'
 import { useTranslation } from '@/lib/translation-context'
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,8 @@ export function ManualActivity({ onContinue, onRestart }: { onContinue: () => vo
   const [solved, setSolved] = useState<Record<number, boolean>>({})
   const [wrong, setWrong] = useState(false)
   const current = steps[index]
+  const multipleChoice = index >= 5
+  const choices = manualAnswerChoices(current.value, index, variant)
   const complete = steps.every((_, i) => solved[i])
   const known = (i: number) => solved[i] ? String(steps[i].value) : '?'
   const move = (next: number) => { setIndex(next); setWrong(false) }
@@ -48,11 +50,17 @@ export function ManualActivity({ onContinue, onRestart }: { onContinue: () => vo
         <p className="text-sm leading-6 text-slate-700">{t(current.explanation)}</p>
         <div dir="ltr" className="overflow-x-auto rounded-xl bg-violet-50 p-4 font-mono text-sm leading-7 text-violet-950"><Formula text={current.formula} /><br /><strong className="text-xl">{current.symbol} = ?</strong></div>
         {(current.symbol === 'h' || current.symbol === 'h′') && <p className="rounded-xl bg-blue-50 p-3 text-sm leading-6 text-blue-950">{t('e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.')}</p>}
-        <form className="space-y-3" onSubmit={event => { event.preventDefault(); const correct = checkManualAnswer(answers[index] ?? '', current.value); setWrong(!correct); if (correct) setSolved(previous => ({ ...previous, [index]: true })) }}>
-          <label className="grid gap-2 text-sm font-medium">{t('Ta réponse')}<Input dir="ltr" inputMode="decimal" autoComplete="off" aria-label={`${current.symbol} = ?`} value={answers[index] ?? ''} disabled={solved[index]} onChange={event => { setAnswers(previous => ({ ...previous, [index]: event.target.value })); setWrong(false) }} /></label>
-          {!solved[index] && <Button type="submit">{t('Vérifier ma réponse')}</Button>}
+        <form className="space-y-3" onSubmit={event => { event.preventDefault(); const answer = answers[index] ?? ''; const correct = multipleChoice ? answer !== '' && Number(answer) === current.value : checkManualAnswer(answer, current.value); setWrong(!correct); if (correct) setSolved(previous => ({ ...previous, [index]: true })) }}>
+          {multipleChoice ? <fieldset disabled={solved[index]} className="space-y-2">
+            <legend className="mb-2 text-sm font-medium">{t('Choisis une réponse')}</legend>
+            {choices.map((choice, optionIndex) => <label key={String(choice)} className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm ${answers[index] === String(choice) ? 'border-violet-500 bg-violet-50' : 'border-slate-200'} ${solved[index] ? 'cursor-default' : 'hover:border-violet-400'}`}>
+              <input type="radio" name={`manual-answer-${index}`} value={String(choice)} checked={answers[index] === String(choice)} onChange={() => { setAnswers(previous => ({ ...previous, [index]: String(choice) })); setWrong(false) }} className="mt-1 shrink-0 accent-violet-600" />
+              <span dir="ltr" className="break-all font-mono">{String.fromCharCode(65 + optionIndex)}. {String(choice)}</span>
+            </label>)}
+          </fieldset> : <label className="grid gap-2 text-sm font-medium">{t('Ta réponse')}<Input dir="ltr" inputMode="decimal" autoComplete="off" aria-label={`${current.symbol} = ?`} value={answers[index] ?? ''} disabled={solved[index]} onChange={event => { setAnswers(previous => ({ ...previous, [index]: event.target.value })); setWrong(false) }} /></label>}
+          {!solved[index] && <Button type="submit" disabled={multipleChoice && answers[index] === undefined}>{t('Vérifier ma réponse')}</Button>}
         </form>
-        {wrong && <p role="alert" className="text-sm text-rose-700">{t('Vérifie la formule et utilise les valeurs complètes, puis réessaie.')}</p>}
+        {wrong && <p role="alert" className="text-sm text-rose-700">{t(multipleChoice ? 'Vérifie la formule, puis choisis une autre réponse.' : 'Vérifie la formule et utilise les valeurs complètes, puis réessaie.')}</p>}
         {solved[index] && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm"><p className="flex gap-2 font-medium text-emerald-800"><Check className="size-4" />{t('Bonne réponse. Tu peux avancer.')}</p><p dir="ltr" className="mt-2 break-all font-mono">{current.symbol} = {String(current.value)}</p></div>}
         <div className="flex flex-wrap justify-between gap-2"><Button variant="outline" disabled={index === 0} onClick={() => move(index - 1)}><ChevronLeft />{t('Précédent')}</Button>{index < steps.length - 1 ? <Button disabled={!solved[index]} onClick={() => move(index + 1)}>{t('Étape suivante')}<ArrowRight /></Button> : <Button disabled={!complete} onClick={onContinue}>{t('Passer à l’expérience Python')}<ArrowRight /></Button>}</div>
         {complete && <Button variant="outline" onClick={() => { setVariant(value => value + 1); setIndex(0); setAnswers({}); setSolved({}); setWrong(false); onRestart() }}>{t('Faire un autre exercice')}</Button>}

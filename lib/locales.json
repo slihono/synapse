@@ -181,7 +181,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Vérifie la formule et utilise les valeurs complètes, puis réessaie.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.",
+    "Choisis une réponse": "Choisis une réponse",
+    "Vérifie la formule, puis choisis une autre réponse.": "Vérifie la formule, puis choisis une autre réponse."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -365,7 +367,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 is Euler’s constant. exp(a) = eᵃ: use eˣ or exp on your calculator. The minus sign is part of the exponent.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Check the formula and use the full values, then try again.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Displayed values retain the program’s full available precision, without display rounding. Correctly rounded answers with 1 to 8 decimal places are accepted. Use the full values for subsequent calculations."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Displayed values retain the program’s full available precision, without display rounding. Correctly rounded answers with 1 to 8 decimal places are accepted. Use the full values for subsequent calculations.",
+    "Choisis une réponse": "Choose an answer",
+    "Vérifie la formule, puis choisis une autre réponse.": "Check the formula, then choose another answer."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -549,7 +553,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 es la constante de Euler. exp(a) = eᵃ: usa eˣ o exp en la calculadora. El signo menos pertenece al exponente.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Comprueba la fórmula y usa los valores completos; inténtalo de nuevo.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Los valores conservan toda la precisión disponible del programa, sin redondear la visualización. Se aceptan respuestas correctamente redondeadas de 1 a 8 decimales. Usa los valores completos para los cálculos siguientes."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Los valores conservan toda la precisión disponible del programa, sin redondear la visualización. Se aceptan respuestas correctamente redondeadas de 1 a 8 decimales. Usa los valores completos para los cálculos siguientes.",
+    "Choisis une réponse": "Elige una respuesta",
+    "Vérifie la formule, puis choisis une autre réponse.": "Revisa la fórmula y elige otra respuesta."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -733,7 +739,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 هو ثابت أويلر. exp(a) = eᵃ: استخدم eˣ أو exp في الآلة الحاسبة. إشارة السالب جزء من الأس.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "راجع الصيغة واستخدم القيم الكاملة ثم حاول مجددًا.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "تحتفظ القيم المعروضة بكل الدقة المتاحة للبرنامج دون تقريب العرض. تُقبل الإجابات المقربة بشكل صحيح من منزلة عشرية واحدة إلى 8 منازل. استخدم القيم الكاملة في الحسابات التالية."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "تحتفظ القيم المعروضة بكل الدقة المتاحة للبرنامج دون تقريب العرض. تُقبل الإجابات المقربة بشكل صحيح من منزلة عشرية واحدة إلى 8 منازل. استخدم القيم الكاملة في الحسابات التالية.",
+    "Choisis une réponse": "اختر إجابة",
+    "Vérifie la formule, puis choisis une autre réponse.": "راجع الصيغة ثم اختر إجابة أخرى."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -917,7 +925,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828459045 ऑयलर स्थिरांक है। exp(a) = eᵃ: कैलकुलेटर में eˣ या exp लें। ऋण चिह्न घात का हिस्सा है।",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "सूत्र जाँचें और पूरे मान लेकर फिर कोशिश करें।",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "दिखाए गए मान बिना राउंडिंग के प्रोग्राम की पूरी उपलब्ध सटीकता रखते हैं। 1 से 8 दशमलव स्थानों तक सही ढंग से राउंड किए गए उत्तर स्वीकार किए जाते हैं। आगे की गणनाओं में पूरे मान इस्तेमाल करें।"
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "दिखाए गए मान बिना राउंडिंग के प्रोग्राम की पूरी उपलब्ध सटीकता रखते हैं। 1 से 8 दशमलव स्थानों तक सही ढंग से राउंड किए गए उत्तर स्वीकार किए जाते हैं। आगे की गणनाओं में पूरे मान इस्तेमाल करें।",
+    "Choisis une réponse": "एक उत्तर चुनें",
+    "Vérifie la formule, puis choisis une autre réponse.": "सूत्र जाँचें, फिर दूसरा उत्तर चुनें।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -1101,7 +1111,9 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 Euler sabitidir. exp(a) = eᵃ: hesap makinesinde eˣ veya exp kullan. Eksi işareti üssün parçasıdır.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Formülü kontrol et ve tam değerlerle yeniden dene.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Gösterilen değerler yuvarlanmadan programın tüm mevcut hassasiyetini korur. 1 ile 8 ondalık basamağa doğru yuvarlanmış yanıtlar kabul edilir. Sonraki hesaplamalarda tam değerleri kullanın."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Gösterilen değerler yuvarlanmadan programın tüm mevcut hassasiyetini korur. 1 ile 8 ondalık basamağa doğru yuvarlanmış yanıtlar kabul edilir. Sonraki hesaplamalarda tam değerleri kullanın.",
+    "Choisis une réponse": "Bir yanıt seç",
+    "Vérifie la formule, puis choisis une autre réponse.": "Formülü kontrol et, ardından başka bir yanıt seç."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -1285,6 +1297,8 @@
     "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
     "e ≈ 2,718281828459045 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828459045 é a constante de Euler. exp(a) = eᵃ: usa eˣ ou exp na calculadora. O sinal negativo faz parte do expoente.",
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Verifica a fórmula e usa os valores completos; tenta novamente.",
-    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Os valores mantêm toda a precisão disponível do programa, sem arredondamento de apresentação. São aceitas respostas corretamente arredondadas de 1 a 8 casas decimais. Use os valores completos nos cálculos seguintes."
+    "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Os valores mantêm toda a precisão disponível do programa, sem arredondamento de apresentação. São aceitas respostas corretamente arredondadas de 1 a 8 casas decimais. Use os valores completos nos cálculos seguintes.",
+    "Choisis une réponse": "Escolha uma resposta",
+    "Vérifie la formule, puis choisis une autre réponse.": "Confira a fórmula e escolha outra resposta."
   }
 }

@@ -210,3 +210,7 @@ Learners can now submit correctly rounded answers with one to eight decimal plac
 ### Negative answer input
 
 Answer validation now normalizes mathematical and full-width minus signs copied from formulas or calculators, and accepts whitespace between the leading sign and the number (for example, `− 0.2689`). Decimal commas and points remain supported. Spaces inside the digits and incorrect positive answers remain invalid.
+
+### Multiple-choice questions from step 6
+
+Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision numeric choices, with one correct answer and three distinct alternatives. The correct option position varies between questions and exercise variants. Learners select an option and validate it before continuing; incorrect choices allow another attempt. Radio inputs support keyboard navigation, and instructions and feedback are translated in all seven languages.
