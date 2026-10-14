@@ -40,7 +40,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Learning flow
 
-1. Complete five calculation exercises using a sigmoid hidden neuron and a linear output.
+1. Complete 20 numeric calculations across five phases using a sigmoid hidden neuron and a linear output.
 2. Unlock the Python editor, modify the example, and run it.
 3. Inspect the captured linear states in the network, metrics, charts, and history.
 4. Compare learning rates from the same initial state.
@@ -48,7 +48,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Languages
 
-French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 149 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
+French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 179 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
 
 ## Technology
 
@@ -73,3 +73,11 @@ The in-memory rate limit applies to one server instance. Public production deplo
 Selecting a training state plays five phases: forward calculation, loss, gradients, the observed parameter update, and the resulting prediction. Moving signals show forward and backward data flow. Pause/resume, replay, the slider, and history rows control the sequence. Continuous playback advances only after all five phases finish.
 
 For a recorded state after initialization, the animation starts with the preceding snapshot and ends at the inspected snapshot. It checks whether the observed update matches gradient descent at the known learning rate. Other Python updates are labeled as observed changes. The animation is a slowed mathematical explanation of the linear model, not a CPU profiler or a visualization of arbitrary neural-network architectures.
+
+## Guided calculations and precision
+
+The lesson now asks for z₁, h, and y-hat separately before moving to error and loss. It then derives each output and hidden-layer gradient, asks for all four parameter updates, and recalculates the hidden activation, prediction, and loss. Answers are entered numerically; unknown diagram values remain masked until validated.
+
+Partial derivatives are explained as sensitivities rather than ordinary division. Formula substitutions show why dL/dŷ = ŷ − y and dL/dw₂ = (ŷ − y)h. Displayed inputs use eight decimals; the engine retains full floating-point precision and accepts answers rounded to four decimals. Previously validated values can be inspected at full numerical precision.
+
+The Python example is explicitly identified as a separate linear model. Inspection begins at state zero rather than jumping to the final state. Predictions use more digits to distinguish convergence toward one from exact equality. Generated Python comments follow the selected language while custom comments and executable code remain unchanged.

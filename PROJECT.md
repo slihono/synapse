@@ -178,3 +178,17 @@ A selected state after initialization is reconstructed from its preceding record
 Controls support pause/resume, replaying the current step, previous/next inspection, slider navigation, keyboard-selectable history rows, and continuous playback that waits for each complete sequence. Signal motion reverses during backpropagation. A reduced-motion media query disables moving particles while retaining numerical phase inspection.
 
 Four mathematical/translation regression tests and simulated React DOM checks validate the first update (prediction 0.4 → 0.7, weight 0.2 → 0.32, bias 0 → 0.06), initialization, custom updates, phase progression, pause/resume, replay, automatic next-step selection, and Arabic labels. The animation explains the linear model's calculations at an educational pace; it does not represent processor timing or trace an arbitrary Python neural-network library.
+
+## Guided-calculation redesign
+
+A learner reported that the original five-question exercise revealed intermediate results too early, did not require computing h and y-hat separately, and did not explain partial-derivative notation or rounding. The replacement uses twenty numeric questions within the same five conceptual phases. A small network view shows question marks until the relevant calculation is validated.
+
+The sequence is z₁ → h → ŷ → error → loss → output gradient → output weight/bias gradients → hidden gradients → four parameter updates → new z₁ → new h → new prediction → new loss. Each question displays its formula and already-known numeric inputs. The default updated prediction remains approximately 0.77759405, not one. Variant exercises demonstrate that h and y-hat are distinct quantities even though they coincide for initial w₂ = 1 and b₂ = 0.
+
+Explanations identify ∂L/∂ŷ and ∂L/∂w₂ as partial derivatives, not loss divided by prediction or weight. The loss derivative explicitly cancels ½ × 2, and the chain rule shows multiplication by h. Updates use gradients computed before any parameter change.
+
+Question inputs display eight decimal places, preserve full floating-point values internally, and accept correct answers rounded to four decimals with a 0.00005 tolerance. A full-precision panel reveals only validated quantities. Numeric tests cover every question for all three variants, including decimal commas and wrong-answer rejection. A finite-difference check independently verifies the output-weight derivative.
+
+The Python editor explains that its one-weight linear model is a separate experiment with twenty default updates. Training inspection now starts at state zero, and displayed predictions retain enough digits to avoid showing the default near-one result as exact one. Known generated comments are localized on language changes and reset; executable lines, modified parameters, and custom comments are preserved.
+
+All new teaching copy is available in seven languages; the shared catalog contains 179 messages. Seven new regression tests and simulated React DOM checks cover masked answers, all twenty submissions, progression gates, unlock/reset behavior, and English/French Python comments.
