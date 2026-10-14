@@ -152,8 +152,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ et w₂ sont des poids indépendants, donnés au départ.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = cible ; ŷ = prédiction ; e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² mesure l’erreur au carré.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = cible ; ŷ = prédiction ; ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² mesure l’erreur au carré.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.",
     "On remonte vers la sortie cachée h.": "On remonte vers la sortie cachée h.",
@@ -178,7 +178,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -333,8 +334,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ and w₂ are independent weights given as starting values.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) is the hidden output. exp(a) means eᵃ.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h is the hidden output; ŷ (y-hat) is the final prediction. Here, h = ŷ only because w₂ = 1 and b₂ = 0.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = target; ŷ = prediction; e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² measures the squared error.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = target; ŷ = prediction; ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² measures the squared error.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ is a partial derivative, not division. It measures how L changes when ŷ changes. The derivative of ½(ŷ − y)² is ŷ − y: ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ is the weight gradient, not L/w₂. Since ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. The chain rule multiplies these derivatives.",
     "On remonte vers la sortie cachée h.": "Work backward toward the hidden output h.",
@@ -359,7 +360,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 is Euler’s constant. exp(a) = eᵃ: use eˣ or exp on your calculator. The minus sign is part of the exponent."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -514,8 +516,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ y w₂ son pesos independientes dados al inicio.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) es la salida oculta. exp(a) significa eᵃ.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h es la salida oculta; ŷ es la predicción final. Aquí h = ŷ solo porque w₂ = 1 y b₂ = 0.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = objetivo; ŷ = predicción; e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² mide el error al cuadrado.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = objetivo; ŷ = predicción; ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² mide el error al cuadrado.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ es una derivada parcial, no una división. Mide cómo cambia L cuando cambia ŷ. La derivada de ½(ŷ − y)² es ŷ − y: ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ es el gradiente del peso, no L/w₂. Como ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La regla de la cadena multiplica estas derivadas.",
     "On remonte vers la sortie cachée h.": "Retrocede hacia la salida oculta h.",
@@ -540,7 +542,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 es la constante de Euler. exp(a) = eᵃ: usa eˣ o exp en la calculadora. El signo menos pertenece al exponente."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -695,8 +698,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ وw₂ وزنان مستقلان معطيان في البداية.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) هو المخرج المخفي. exp(a) تعني eᵃ.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h هو المخرج المخفي؛ ŷ هو التنبؤ النهائي. هنا h = ŷ فقط لأن w₂ = 1 وb₂ = 0.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = الهدف؛ ŷ = التنبؤ؛ e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² تقيس مربع الخطأ.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = الهدف؛ ŷ = التنبؤ؛ ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² تقيس مربع الخطأ.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ مشتقة جزئية وليست قسمة. تقيس تغير L عند تغير ŷ. مشتقة ½(ŷ − y)² هي ŷ − y لأن ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ تدرج الوزن وليس L/w₂. بما أن ŷ = w₂h + b₂ فإن ∂ŷ/∂w₂ = h. تضرب قاعدة السلسلة هذه المشتقات.",
     "On remonte vers la sortie cachée h.": "نعود إلى المخرج المخفي h.",
@@ -721,7 +724,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 هو ثابت أويلر. exp(a) = eᵃ: استخدم eˣ أو exp في الآلة الحاسبة. إشارة السالب جزء من الأس."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -876,8 +880,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ और w₂ अलग भार हैं, जो शुरुआत में दिए गए हैं।",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) हिडन आउटपुट है। exp(a) का मतलब eᵃ है।",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h हिडन आउटपुट है; ŷ अंतिम अनुमान है। यहाँ h = ŷ केवल इसलिए है क्योंकि w₂ = 1 और b₂ = 0।",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = लक्ष्य; ŷ = अनुमान; e = ŷ − y।",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² वर्ग त्रुटि मापता है।",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = लक्ष्य; ŷ = अनुमान; ε = ŷ − y।",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² वर्ग त्रुटि मापता है।",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ आंशिक अवकलज है, भाग नहीं। यह ŷ बदलने पर L का बदलाव मापता है। ½(ŷ − y)² का अवकलज ŷ − y है: ½ × 2 = 1।",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ भार का ग्रेडिएंट है, L/w₂ नहीं। ŷ = w₂h + b₂ होने से ∂ŷ/∂w₂ = h है। चेन रूल इन अवकलजों को गुणा करता है।",
     "On remonte vers la sortie cachée h.": "हिडन आउटपुट h की ओर पीछे जाएँ।",
@@ -902,7 +906,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2.718281828 ऑयलर स्थिरांक है। exp(a) = eᵃ: कैलकुलेटर में eˣ या exp लें। ऋण चिह्न घात का हिस्सा है।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -1057,8 +1062,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ ve w₂ başlangıçta verilen bağımsız ağırlıklardır.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) gizli çıktıdır. exp(a), eᵃ demektir.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h gizli çıktıdır; ŷ son tahmindir. Burada h = ŷ yalnızca w₂ = 1 ve b₂ = 0 olduğu içindir.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = hedef; ŷ = tahmin; e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² hatanın karesini ölçer.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = hedef; ŷ = tahmin; ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² hatanın karesini ölçer.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ bir kısmi türevdir, bölme değildir. ŷ değiştiğinde L'nin değişimini ölçer. ½(ŷ − y)² ifadesinin türevi ŷ − y'dir: ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ ağırlığın gradyanıdır, L/w₂ değildir. ŷ = w₂h + b₂ olduğundan ∂ŷ/∂w₂ = h olur. Zincir kuralı bu türevleri çarpar.",
     "On remonte vers la sortie cachée h.": "Gizli çıktı h'ye doğru geri ilerle.",
@@ -1083,7 +1088,8 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 Euler sabitidir. exp(a) = eᵃ: hesap makinesinde eˣ veya exp kullan. Eksi işareti üssün parçasıdır."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -1238,8 +1244,8 @@
     "w₁ et w₂ sont des poids indépendants, donnés au départ.": "w₁ e w₂ são pesos independentes dados no início.",
     "h = sigmoid(z₁) est la sortie cachée. exp(a) signifie eᵃ.": "h = sigmoid(z₁) é a saída oculta. exp(a) significa eᵃ.",
     "h est la sortie cachée ; ŷ (y-hat) est la prédiction finale. Ici, h = ŷ seulement parce que w₂ = 1 et b₂ = 0.": "h é a saída oculta; ŷ é a previsão final. Aqui h = ŷ apenas porque w₂ = 1 e b₂ = 0.",
-    "y = cible ; ŷ = prédiction ; e = ŷ − y.": "y = alvo; ŷ = previsão; e = ŷ − y.",
-    "L = ½e² mesure l’erreur au carré.": "L = ½e² mede o erro ao quadrado.",
+    "y = cible ; ŷ = prédiction ; ε = ŷ − y.": "y = alvo; ŷ = previsão; ε = ŷ − y.",
+    "L = ½ε² mesure l’erreur au carré.": "L = ½ε² mede o erro ao quadrado.",
     "∂L/∂ŷ est une dérivée partielle, pas une division. Elle mesure la variation de L quand ŷ change. La dérivée de ½(ŷ − y)² est ŷ − y : ½ × 2 = 1.": "∂L/∂ŷ é uma derivada parcial, não uma divisão. Mede como L varia quando ŷ muda. A derivada de ½(ŷ − y)² é ŷ − y: ½ × 2 = 1.",
     "∂L/∂w₂ est le gradient du poids, pas L/w₂. Comme ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. La règle de chaîne multiplie ces dérivées.": "∂L/∂w₂ é o gradiente do peso, não L/w₂. Como ŷ = w₂h + b₂, ∂ŷ/∂w₂ = h. A regra da cadeia multiplica estas derivadas.",
     "On remonte vers la sortie cachée h.": "Recua até à saída oculta h.",
@@ -1264,6 +1270,7 @@
     "∂z₁/∂b₁ = 1": "∂z₁/∂b₁ = 1",
     "b₁′ = b₁ − η × ∂L/∂b₁": "b₁′ = b₁ − η × ∂L/∂b₁",
     "b₂′ = b₂ − η × ∂L/∂b₂": "b₂′ = b₂ − η × ∂L/∂b₂",
-    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)"
+    "h′ = sigmoid(z₁′)": "h′ = sigmoid(z₁′)",
+    "e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.": "e ≈ 2,718281828 é a constante de Euler. exp(a) = eᵃ: usa eˣ ou exp na calculadora. O sinal negativo faz parte do expoente."
   }
 }

@@ -192,3 +192,7 @@ Question inputs display eight decimal places, preserve full floating-point value
 The Python editor explains that its one-weight linear model is a separate experiment with twenty default updates. Training inspection now starts at state zero, and displayed predictions retain enough digits to avoid showing the default near-one result as exact one. Known generated comments are localized on language changes and reset; executable lines, modified parameters, and custom comments are preserved.
 
 All new teaching copy is available in seven languages; the shared catalog contains 179 messages. Seven new regression tests and simulated React DOM checks cover masked answers, all twenty submissions, progression gates, unlock/reset behavior, and English/French Python comments.
+
+### Sigmoid notation clarification
+
+The sigmoid questions now render `e^(−z₁)` with a superscript instead of `exp(−z₁)`. A localized calculator hint defines Euler’s constant (approximately 2.718281828), explains that exp(a) = eᵃ, and places the minus sign in the exponent. The prediction error is labeled ε (epsilon) in the guided exercise so it cannot be confused with Euler’s constant e. The mathematics and expected answers are unchanged. The shared catalog now has 180 messages.

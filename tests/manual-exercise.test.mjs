@@ -8,7 +8,7 @@ import { catalogs, supportedLanguages } from '../lib/translations.ts'
 test('forward calculations must precede loss and all gradients and updates are separate questions', () => {
   const { steps } = manualSteps(manualNetwork())
   assert.equal(steps.length, 20)
-  assert.deepEqual(steps.slice(0, 5).map(step => step.symbol), ['z₁', 'h', 'ŷ', 'e', 'L'])
+  assert.deepEqual(steps.slice(0, 5).map(step => step.symbol), ['z₁', 'h', 'ŷ', 'ε', 'L'])
   assert.deepEqual(steps.map(step => step.stage), [0,0,0,1,1,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4])
   assert.ok(Math.abs(steps[18].value - .7775940526877725) < 1e-12)
   assert.ok(Math.abs(steps[19].value - .02473220269992466) < 1e-12)
@@ -65,4 +65,12 @@ test('every teaching explanation is available in all seven languages', () => {
   for (const step of manualSteps(manualNetwork()).steps) {
     for (const language of supportedLanguages) assert.ok(catalogs[language][step.explanation], `${language}: ${step.explanation}`)
   }
+})
+
+test('sigmoid uses Euler exponent notation and the error has a separate symbol', () => {
+  const { steps } = manualSteps(manualNetwork())
+  assert.equal(steps[1].formula, 'h = sigmoid(z₁) = 1 / (1 + e^(−1))')
+  assert.ok(steps[17].formula.includes('e^(−'))
+  assert.equal(steps[3].symbol, 'ε')
+  assert.ok(steps[4].formula.includes('ε²'))
 })

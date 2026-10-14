@@ -48,7 +48,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Languages
 
-French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 179 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
+French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 180 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
 
 ## Technology
 
@@ -81,3 +81,5 @@ The lesson now asks for z₁, h, and y-hat separately before moving to error and
 Partial derivatives are explained as sensitivities rather than ordinary division. Formula substitutions show why dL/dŷ = ŷ − y and dL/dw₂ = (ŷ − y)h. Displayed inputs use eight decimals; the engine retains full floating-point precision and accepts answers rounded to four decimals. Previously validated values can be inspected at full numerical precision.
 
 The Python example is explicitly identified as a separate linear model. Inspection begins at state zero rather than jumping to the final state. Predictions use more digits to distinguish convergence toward one from exact equality. Generated Python comments follow the selected language while custom comments and executable code remain unchanged.
+
+The sigmoid formula displays Euler’s constant directly as `1 / (1 + e^(−z₁))`, with the exponent typeset above e. The guided lesson names the prediction error ε (epsilon) to distinguish it from Euler’s constant e.

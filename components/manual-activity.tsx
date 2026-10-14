@@ -12,6 +12,12 @@ import { Progress } from '@/components/ui/progress'
 
 const stages = ['Propagation avant', 'Calculer la perte', 'Rétropropagation', 'Descente de gradient', 'Vérifier le résultat']
 
+function Formula({ text }: { text: string }) {
+  return <>{text.split(/e\^\(([^)]+)\)/g).map((part, index) => index % 2
+    ? <span key={index}>e<sup className="text-xs">{part}</sup></span>
+    : <span key={index}>{part}</span>)}</>
+}
+
 export function ManualActivity({ onContinue, onRestart }: { onContinue: () => void; onRestart: () => void }) {
   const t = useTranslation()
   const [variant, setVariant] = useState(0)
@@ -40,7 +46,8 @@ export function ManualActivity({ onContinue, onRestart }: { onContinue: () => vo
       </CardContent></Card>
       <Card className="border-violet-200"><CardHeader><div className="flex flex-wrap items-center justify-between gap-2"><CardTitle className="text-base">{t(stages[current.stage])}</CardTitle><span className="text-xs text-slate-600">{t('Étape')} {index + 1} / {steps.length}</span></div><Progress value={Object.keys(solved).length / steps.length * 100} /></CardHeader><CardContent className="space-y-5">
         <p className="text-sm leading-6 text-slate-700">{t(current.explanation)}</p>
-        <div dir="ltr" className="overflow-x-auto rounded-xl bg-violet-50 p-4 font-mono text-sm leading-7 text-violet-950">{current.formula}<br /><strong className="text-xl">{current.symbol} = ?</strong></div>
+        <div dir="ltr" className="overflow-x-auto rounded-xl bg-violet-50 p-4 font-mono text-sm leading-7 text-violet-950"><Formula text={current.formula} /><br /><strong className="text-xl">{current.symbol} = ?</strong></div>
+        {(current.symbol === 'h' || current.symbol === 'h′') && <p className="rounded-xl bg-blue-50 p-3 text-sm leading-6 text-blue-950">{t('e ≈ 2,718281828 est la constante d’Euler. exp(a) = eᵃ : utilise eˣ ou exp sur la calculatrice. Le signe moins appartient à l’exposant.')}</p>}
         <form className="space-y-3" onSubmit={event => { event.preventDefault(); const correct = checkManualAnswer(answers[index] ?? '', current.value); setWrong(!correct); if (correct) setSolved(previous => ({ ...previous, [index]: true })) }}>
           <label className="grid gap-2 text-sm font-medium">{t('Ta réponse')}<Input dir="ltr" inputMode="decimal" autoComplete="off" aria-label={`${current.symbol} = ?`} value={answers[index] ?? ''} disabled={solved[index]} onChange={event => { setAnswers(previous => ({ ...previous, [index]: event.target.value })); setWrong(false) }} /></label>
           {!solved[index] && <Button type="submit">{t('Vérifier ma réponse')}</Button>}
