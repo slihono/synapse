@@ -113,14 +113,14 @@ Browser / React page
 - TypeScript validation passed with `tsc --noEmit`.
 - A production build of an intermediate correction revision succeeded using Next.js 16.4.0 with Webpack, including type validation and static page generation. Subsequent final-source builds were blocked by Windows filesystem permissions; the final source passed TypeScript and regression checks.
 
-The live HTTP checks describe the deployment present at the start of the audit. They do not establish that the corrected source has already been deployed.
+The initial live HTTP checks describe the deployment present at the start of the audit. After pushing correction commit `de6d6ce` to `main`, the production homepage served the new light-theme markup. A real request to the production Python endpoint with `x=2.; y=1.; w=.2; b=0.` returned one captured state with prediction `0.4` and loss `0.18`, confirming the updated final-state capture behavior in the deployed application.
 
 ## Verification limits and remaining considerations
 
 - Interactive browser inspection was blocked by an EPERM module-resolution error in the browser tool. Responsive layouts, screen-reader behavior, language switching, and playback have not been confirmed in a real browser during this audit.
-- Turbopack could not canonicalize the workspace path in the restricted Windows environment. Webpack built an intermediate revision, but subsequent builds failed while creating generated chunk directories. Final production compilation must be confirmed in CI/Vercel. The production build command remains `next build`.
+- Turbopack could not canonicalize the workspace path in the restricted Windows environment. Webpack built an intermediate revision, but subsequent local builds failed while creating generated chunk directories. The corrected application was subsequently observed running in production after the GitHub push; deployment build logs were not available in this audit. The production build command remains `next build`.
 - Local dependency installation used npm for diagnostics because pnpm's project symlink was blocked by the Windows sandbox. The repository's pnpm lockfile was retained. A frozen pnpm installation should be checked in normal CI.
-- The local API regression tests mock Vercel Sandbox. They validate request/report handling and cleanup without validating Vercel authentication or actual VM creation for the corrected code.
+- The local API regression tests mock Vercel Sandbox. A post-push production request additionally confirmed that the updated route can create a real Sandbox and return a captured state. Timeout, syntax-error, and UI interactions were not retested on the deployed revision.
 - The in-memory IP limit is per server instance. Multiple instances, cold starts, and a distributed attack require a shared/platform rate limit. Sandbox spending controls should be configured in the hosting account.
 - Session state is kept in memory and resets when the page is reloaded. There is no account, database, or saved learner progress.
 - Translation still uses a compatibility layer that changes DOM text. Dictionaries are incomplete and some languages fall back to English. A future React-native, key-based translation system would make localization easier to maintain.
