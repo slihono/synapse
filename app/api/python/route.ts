@@ -62,14 +62,14 @@ def finite_number(value):
     except (OverflowError, ValueError):
         return False
 
-def capture_state(values):
+def capture_state(values, force=False):
     global last
     try:
         names = ('x', 'y', 'w', 'b')
         if all(name in values and finite_number(values[name]) for name in names):
             x, y, w, b = (float(values[name]) for name in names)
             marker = (x, y, w, b)
-            if marker != last and len(points) < MAX_POINTS:
+            if (force or marker != last) and len(points) < MAX_POINTS:
                 prediction = w * x + b
                 error = prediction - y
                 loss = 0.5 * error * error
@@ -85,7 +85,7 @@ def capture_state(values):
 class TrainingCapture(ast.NodeTransformer):
     def visit_loop(self, node):
         self.generic_visit(node)
-        snapshot = ast.parse('__synapse_capture__(locals())').body[0]
+        snapshot = ast.parse('__synapse_capture__(locals(), force=True)').body[0]
         node.body.append(ast.copy_location(snapshot, node))
         initial = ast.copy_location(ast.parse('__synapse_capture__(locals())').body[0], node)
         return [initial, node]

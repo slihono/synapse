@@ -91,3 +91,7 @@ Calculation results, formula inputs, animation values, metrics, and history now 
 ### Multiple-choice questions from step 6
 
 Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision numeric choices, with one correct answer and three distinct alternatives. The correct option position varies between questions and exercise variants. Learners select an option and validate it before continuing; incorrect choices allow another attempt. Radio inputs support keyboard navigation, and instructions and feedback are translated in all seven languages.
+
+### Complete training history
+
+The history table now displays every captured iteration instead of every other row, in a scrollable container. Python loop snapshots preserve iterations even when parameters stop changing, so convergence no longer shortens the recorded training run. Initial and final snapshots remain deduplicated. The existing capture limit remains 500 iterations plus the initial state. The five animation phases describe operations within one iteration, not the number of training iterations.
