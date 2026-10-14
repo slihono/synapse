@@ -15,5 +15,6 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .next-audit/
+.next-languages/
 *.tsbuildinfo
 .DS_Store

@@ -46,6 +46,10 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 4. Compare learning rates from the same initial state.
 5. Answer the five-question quiz.
 
+## Languages
+
+French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 138 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
+
 ## Technology
 
 Next.js App Router, React, TypeScript, Tailwind CSS, Base UI, Recharts, Lucide icons, Vercel Analytics, and Vercel Sandbox.

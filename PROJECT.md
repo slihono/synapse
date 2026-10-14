@@ -60,6 +60,9 @@ Browser / React page
 | `app/api/python/route.ts` | Request limits, Sandbox lifecycle, Python capture, and report validation |
 | `lib/simulation.ts` | Linear training, manual-network gradients, parameter helpers, and quiz data |
 | `lib/python-report.ts` | Validation and normalization of captured training states |
+| `lib/locales.json` | Complete shared message catalog for seven languages |
+| `lib/translations.ts` | Exact message lookup without substring replacement or language fallback |
+| `lib/translation-context.tsx` | React language context shared by activity components |
 | `components/ui/` | Shared interface components |
 | `app/globals.css` | Theme, chart colors, and global styles |
 | `tests/` | Simulation, API, and Python runner regression tests |
@@ -123,7 +126,7 @@ The initial live HTTP checks describe the deployment present at the start of the
 - The local API regression tests mock Vercel Sandbox. A post-push production request additionally confirmed that the updated route can create a real Sandbox and return a captured state. Timeout, syntax-error, and UI interactions were not retested on the deployed revision.
 - The in-memory IP limit is per server instance. Multiple instances, cold starts, and a distributed attack require a shared/platform rate limit. Sandbox spending controls should be configured in the hosting account.
 - Session state is kept in memory and resets when the page is reloaded. There is no account, database, or saved learner progress.
-- Translation still uses a compatibility layer that changes DOM text. Dictionaries are incomplete and some languages fall back to English. A future React-native, key-based translation system would make localization easier to maintain.
+- The localization follow-up described below replaced the DOM compatibility layer with React rendering and completed the shared catalog. Linguistic review by native speakers and visual checks in an actual browser remain useful, particularly for Arabic layout.
 - The page contains substantial UI and translation code in one module. Separating activities and dictionaries would improve maintenance, but was not necessary to address the identified behavior defects.
 - Python history is a bounded sequence of detected linear states, not a universal neural-network debugger. Captures occur before loops, after normally completed iterations, and after program completion. `continue`, `break`, nested loops, repeated identical states, and more than 501 states affect the recorded sequence. Arbitrary models must provide their own interpretation of output.
 - The runner's instrumentation is not a security boundary. Isolation is provided by Vercel Sandbox, with networking denied, a short lifetime, and no credentials injected into the VM.
@@ -133,3 +136,15 @@ The initial live HTTP checks describe the deployment present at the start of the
 See [README.md](README.md) for installation, development, checks, and deployment instructions.
 
 No additional secrets, paid services, authentication provider, database, or external account integration were introduced by these corrections.
+
+## Localization follow-up
+
+The user reported mixed or incomplete translations after the initial audit. The main causes were incomplete dictionaries, fallback to English, substring replacements, and a DOM mutation observer translating text after React rendered it.
+
+The follow-up replaces that mechanism with a React language context and exact message lookups. All 138 shared messages are present in French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese. Quiz questions, answer feedback, explanations, buttons, metric labels, chart labels, hints, and known Python API errors are covered. Existing activity-specific localized prompts remain available.
+
+Execution status messages now retain a canonical message identifier so they are translated using the current language. Output-truncation notices are separate from program output, allowing language changes without altering printed Python text. Arabic activates RTL layout, while source code, output, and the network diagram retain LTR direction.
+
+Validation included five additional catalog regression tests, TypeScript checks, and a simulated React DOM exercise covering all seven languages, repeated switches, quiz feedback after switching, completing the guided lesson, running a mocked Python experiment, translating existing success/truncation notices, and preserving code and program output. The Node suite now contains 17 passing tests; the earlier six Python runner tests are unchanged. The simulated DOM is not a substitute for visual inspection in a real browser, which remains blocked by the browser tool's EPERM error.
+
+The follow-up source also completed a production Webpack build, including TypeScript validation and static page generation, using an isolated build directory and local filesystem compatibility adjustments outside the repository.
