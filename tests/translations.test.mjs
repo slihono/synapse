@@ -17,7 +17,8 @@ test('all seven languages contain the same complete message catalog', () => {
 })
 
 test('static translated messages in the page are covered by the catalog', () => {
-  const source = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8')
+  for (const filename of ['../app/page.tsx', '../components/network-animation.tsx']) {
+  const source = readFileSync(new URL(filename, import.meta.url), 'utf8')
   const file = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
   function visit(node) {
     if (ts.isCallExpression(node) && node.expression.getText(file) === 't') {
@@ -30,6 +31,7 @@ test('static translated messages in the page are covered by the catalog', () => 
   visit(file)
   assert.ok(!source.includes('MutationObserver'))
   assert.ok(!source.includes('createTreeWalker'))
+  }
 })
 
 test('translation is exact and preserves surrounding whitespace and Python code', () => {

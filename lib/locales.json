@@ -138,7 +138,17 @@
     "Étapes d’entraînement": "Étapes d’entraînement",
     "étape": "étape",
     "… sortie tronquée": "… sortie tronquée",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La perte est inchangée : aucune amélioration ni augmentation détectée."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La perte est inchangée : aucune amélioration ni augmentation détectée.",
+    "Propagation avant": "Propagation avant",
+    "Calculer la perte": "Calculer la perte",
+    "Rétropropagation": "Rétropropagation",
+    "Vérifier le résultat": "Vérifier le résultat",
+    "Rejouer cette étape": "Rejouer cette étape",
+    "Animation : 5 phases par étape": "Animation : 5 phases par étape",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Paramètres mis à jour dans Python ; le taux n’est pas connu."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -279,7 +289,17 @@
     "Étapes d’entraînement": "Training steps",
     "étape": "step",
     "… sortie tronquée": "… output truncated",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Loss is unchanged: no improvement or increase was detected."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Loss is unchanged: no improvement or increase was detected.",
+    "Propagation avant": "Forward pass",
+    "Calculer la perte": "Calculate the loss",
+    "Rétropropagation": "Backpropagation",
+    "Vérifier le résultat": "Check the result",
+    "Rejouer cette étape": "Replay this step",
+    "Animation : 5 phases par étape": "Animation: 5 phases per step",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "Calculations start from the previous state and finish at the inspected step.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "Initialization: calculate prediction and gradients without a parameter update.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "The update recorded in Python does not match a gradient step at this rate.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Parameters were updated in Python; the learning rate is unknown."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -420,7 +440,17 @@
     "Étapes d’entraînement": "Pasos de entrenamiento",
     "étape": "paso",
     "… sortie tronquée": "… salida truncada",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La pérdida no ha cambiado: no se detectó ninguna mejora ni aumento."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "La pérdida no ha cambiado: no se detectó ninguna mejora ni aumento.",
+    "Propagation avant": "Propagación hacia delante",
+    "Calculer la perte": "Calcular la pérdida",
+    "Rétropropagation": "Retropropagación",
+    "Vérifier le résultat": "Comprobar el resultado",
+    "Rejouer cette étape": "Repetir este paso",
+    "Animation : 5 phases par étape": "Animación: 5 fases por paso",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "Los cálculos parten del estado anterior y terminan en el paso inspeccionado.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "Inicialización: calcular la predicción y los gradientes sin actualizar parámetros.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "La actualización registrada en Python no coincide con un paso de gradiente a esta tasa.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Los parámetros se actualizaron en Python; se desconoce la tasa de aprendizaje."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -561,7 +591,17 @@
     "Étapes d’entraînement": "خطوات التدريب",
     "étape": "خطوة",
     "… sortie tronquée": "… تم اقتطاع المخرجات",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "الخسارة لم تتغير: لم يُرصد تحسن أو زيادة."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "الخسارة لم تتغير: لم يُرصد تحسن أو زيادة.",
+    "Propagation avant": "التمرير الأمامي",
+    "Calculer la perte": "حساب الخسارة",
+    "Rétropropagation": "الانتشار العكسي",
+    "Vérifier le résultat": "تحقق من النتيجة",
+    "Rejouer cette étape": "أعد تشغيل هذه الخطوة",
+    "Animation : 5 phases par étape": "التحريك: 5 مراحل لكل خطوة",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "تبدأ الحسابات من الحالة السابقة وتنتهي عند الخطوة المعروضة.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "التهيئة: حساب التنبؤ والتدرجات دون تحديث المعلمات.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "التحديث المسجل في Python لا يطابق خطوة انحدار متدرج بهذا المعدل.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "تم تحديث المعلمات في Python؛ معدل التعلّم غير معروف."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -702,7 +742,17 @@
     "Étapes d’entraînement": "ट्रेनिंग चरण",
     "étape": "चरण",
     "… sortie tronquée": "… आउटपुट छोटा किया गया",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "लॉस नहीं बदला है: कोई सुधार या बढ़ोतरी नहीं मिली।"
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "लॉस नहीं बदला है: कोई सुधार या बढ़ोतरी नहीं मिली।",
+    "Propagation avant": "फॉरवर्ड पास",
+    "Calculer la perte": "लॉस की गणना",
+    "Rétropropagation": "बैकप्रोपेगेशन",
+    "Vérifier le résultat": "परिणाम जाँचें",
+    "Rejouer cette étape": "यह चरण फिर चलाएँ",
+    "Animation : 5 phases par étape": "ऐनिमेशन: हर चरण में 5 भाग",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "गणना पिछले स्टेट से शुरू होकर देखे जा रहे चरण पर समाप्त होती है।",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "शुरुआत: पैरामीटर अपडेट किए बिना अनुमान और ग्रेडिएंट की गणना।",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "Python में दर्ज अपडेट इस दर से किए गए ग्रेडिएंट स्टेप से मेल नहीं खाता।",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Python में पैरामीटर अपडेट हुए; लर्निंग रेट ज्ञात नहीं है।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -843,7 +893,17 @@
     "Étapes d’entraînement": "Eğitim adımları",
     "étape": "adım",
     "… sortie tronquée": "… çıktı kısaltıldı",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Kayıp değişmedi: iyileşme veya artış tespit edilmedi."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "Kayıp değişmedi: iyileşme veya artış tespit edilmedi.",
+    "Propagation avant": "İleri yayılım",
+    "Calculer la perte": "Kaybı hesapla",
+    "Rétropropagation": "Geri yayılım",
+    "Vérifier le résultat": "Sonucu kontrol et",
+    "Rejouer cette étape": "Bu adımı yeniden oynat",
+    "Animation : 5 phases par étape": "Animasyon: adım başına 5 aşama",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "Hesaplar önceki durumdan başlar ve incelenen adımda biter.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "Başlangıç: parametre güncellemeden tahmin ve gradyan hesabı.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "Python içinde kaydedilen güncelleme bu orandaki gradyan adımıyla eşleşmiyor.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Parametreler Python içinde güncellendi; öğrenme oranı bilinmiyor."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -984,6 +1044,16 @@
     "Étapes d’entraînement": "Etapas de treino",
     "étape": "etapa",
     "… sortie tronquée": "… saída truncada",
-    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "A perda não mudou: não foi detetada melhoria nem aumento."
+    "La perte est inchangée : aucune amélioration ni augmentation détectée.": "A perda não mudou: não foi detetada melhoria nem aumento.",
+    "Propagation avant": "Propagação direta",
+    "Calculer la perte": "Calcular a perda",
+    "Rétropropagation": "Retropropagação",
+    "Vérifier le résultat": "Verificar o resultado",
+    "Rejouer cette étape": "Repetir este passo",
+    "Animation : 5 phases par étape": "Animação: 5 fases por passo",
+    "Les calculs partent de l’état précédent et se terminent à l’étape inspectée.": "Os cálculos começam no estado anterior e terminam no passo analisado.",
+    "Initialisation : calcul de la prédiction et des gradients, sans mise à jour.": "Inicialização: calcular a previsão e os gradientes sem atualizar parâmetros.",
+    "Mise à jour observée dans Python : elle ne correspond pas à un pas de gradient avec ce taux.": "A atualização registada em Python não corresponde a um passo de gradiente com esta taxa.",
+    "Paramètres mis à jour dans Python ; le taux n’est pas connu.": "Os parâmetros foram atualizados em Python; a taxa de aprendizagem é desconhecida."
   }
 }

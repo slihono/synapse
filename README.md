@@ -48,7 +48,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Languages
 
-French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 139 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
+French, English, Spanish, Arabic, Hindi, Turkish, and Portuguese are supported. Text is rendered directly by React using exact message lookups. The shared catalog contains 149 messages in every language; additional activity-specific prompts are localized in the page. Arabic uses right-to-left layout while Python source, output, and network formulas retain left-to-right direction.
 
 ## Technology
 
@@ -67,3 +67,9 @@ The visualization models `prediction = w * x + b` and `loss = 0.5 * (prediction 
 Import the repository into Vercel and use the declared Node.js engine. Keep the Python route on the Node.js runtime. Configure Sandbox access for the project. Verify real Python execution after deployment, including a timeout and a syntax error.
 
 The in-memory rate limit applies to one server instance. Public production deployments should additionally use a shared or platform rate limit and spending controls. See [PROJECT.md](PROJECT.md) for current verification limits.
+
+## Animated step inspection
+
+Selecting a training state plays five phases: forward calculation, loss, gradients, the observed parameter update, and the resulting prediction. Moving signals show forward and backward data flow. Pause/resume, replay, the slider, and history rows control the sequence. Continuous playback advances only after all five phases finish.
+
+For a recorded state after initialization, the animation starts with the preceding snapshot and ends at the inspected snapshot. It checks whether the observed update matches gradient descent at the known learning rate. Other Python updates are labeled as observed changes. The animation is a slowed mathematical explanation of the linear model, not a CPU profiler or a visualization of arbitrary neural-network architectures.

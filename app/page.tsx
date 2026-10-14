@@ -14,6 +14,8 @@ import { Slider } from '@/components/ui/slider'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
+import { NetworkAnimation } from '@/components/network-animation'
+import { PHASE_DURATION } from '@/lib/network-animation'
 import { readHistory } from '@/lib/python-report'
 import { interpolate } from '@/lib/i18n'
 import { TranslationProvider, useTranslation } from '@/lib/translation-context'
@@ -27,24 +29,6 @@ function Metric({ label, value, tone = 'blue' }: { label: string; value: string;
 
   const toneClasses = ({ blue: 'bg-blue-50/60 text-blue-800', violet: 'bg-violet-50/60 text-violet-800', orange: 'bg-orange-50/60 text-orange-800', emerald: 'bg-emerald-50/60 text-emerald-800' } as Record<string, string>)[tone] ?? 'bg-slate-50 text-slate-800'
   return <div className={`rounded-xl border p-3 ${toneClasses}`}><p className="text-xs font-semibold">{t(label)}</p><p className="mt-1 font-mono text-lg font-semibold">{value}</p></div>
-}
-
-function NetworkDiagram({ state }: { state: ReturnType<typeof trainLinear>[number] }) {
-  const t = useTranslation()
-
-  const active = state.step > 0
-  const error = state.prediction - state.target
-  return <div dir="ltr" className="relative overflow-x-auto rounded-2xl border bg-slate-950 px-5 py-7 text-white shadow-inner">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,.18),transparent_32%),radial-gradient(circle_at_75%_80%,rgba(139,92,246,.15),transparent_35%)]" />
-    <div className="relative flex min-w-[360px] items-center justify-between gap-3 sm:gap-7">
-      <div className="z-10 flex flex-col items-center gap-2"><div className={`grid size-16 place-items-center rounded-full border-2 border-blue-400 bg-blue-500/20 font-mono text-lg ${active ? 'shadow-[0_0_24px_rgba(96,165,250,.7)]' : ''}`}>x</div><span className="text-xs text-slate-300">{t("entrée = ")}{format(state.x)}</span></div>
-      <div className="relative min-w-16 flex-1"><div className="h-1 rounded-full bg-blue-400/70" /><div className="absolute -top-6 left-1/2 -translate-x-1/2 rounded bg-slate-800 px-2 py-1 font-mono text-xs text-blue-200">w = {format(state.w)}</div><ArrowRight className="absolute -right-2 -top-2 text-blue-300" /></div>
-      <div className="z-10 flex flex-col items-center gap-2"><div className="grid size-16 place-items-center rounded-full border-2 border-violet-400 bg-violet-500/20 font-mono text-lg">Σ</div><span className="text-xs text-slate-300">+ b = {format(state.b)}</span></div>
-      <div className="relative min-w-10 flex-1"><div className="h-1 rounded-full bg-violet-400/70" /><ArrowRight className="absolute -right-2 -top-2 text-violet-300" /></div>
-      <div className="z-10 flex flex-col items-center gap-2"><div className={`grid size-16 place-items-center rounded-full border-2 border-emerald-400 bg-emerald-500/20 font-mono text-lg ${active ? 'shadow-[0_0_24px_rgba(52,211,153,.6)]' : ''}`}>{format(state.prediction)}</div><span className="text-xs text-slate-300">{t("prédiction")}</span></div>
-    </div>
-    <div className="relative mt-8 flex items-center justify-center gap-3 text-xs text-slate-300"><ArrowDown className="text-orange-300" /><span>{t("erreur = ")}{format(error)}{t(" · perte = ")}{format(state.loss)}{t(" · gradient w = ")}{format(state.gradW)}{t(" · gradient b = ")}{format(state.gradB)}</span></div>
-  </div>
 }
 
 function ManualActivity({ onContinue, onRestart, language }: { onContinue: () => void; onRestart: () => void; language: Language }) {
@@ -183,27 +167,43 @@ function TrainingLab({ history, learningRate, setLearningRate, language }: { his
 
   const [selected, setSelected] = useState(history.length - 1)
   const [playing, setPlaying] = useState(false)
-  useEffect(() => {
-    setSelected(history.length - 1)
+  const [phase, setPhase] = useState(0)
+  const [animating, setAnimating] = useState(true)
+  const inspect = (index: number) => {
+    setSelected(Math.max(0, Math.min(history.length - 1, index)))
+    setPhase(0)
+    setAnimating(true)
     setPlaying(false)
-  }, [history])
+  }
+  useEffect(() => { setSelected(history.length - 1); setPlaying(false) }, [history])
+  useEffect(() => { setPhase(0); setAnimating(true) }, [selected, history])
   useEffect(() => {
-    if (!playing) return
-    if (selected >= history.length - 1) { setPlaying(false); return }
-    const timer = window.setTimeout(() => setSelected(index => Math.min(index + 1, history.length - 1)), 700)
+    if (!animating) return
+    const timer = window.setTimeout(() => {
+      if (phase < 4) setPhase(value => value + 1)
+      else if (playing && selected < history.length - 1) setSelected(index => index + 1)
+      else { setAnimating(false); setPlaying(false) }
+    }, PHASE_DURATION)
     return () => window.clearTimeout(timer)
-  }, [playing, selected, history.length])
+  }, [animating, phase, playing, selected, history.length])
+  const togglePlayback = () => {
+    if (animating) { setAnimating(false); setPlaying(false); return }
+    if (phase === 4) { setPhase(0); if (selected === history.length - 1) setSelected(0) }
+    setAnimating(true)
+    setPlaying(true)
+  }
   const selectedIndex = Math.min(selected, history.length - 1)
   const state = history[selectedIndex]
   const trend = trainingTrend(history)
   const status = trend === 'unchanged' ? 'La perte est inchangée : aucune amélioration ni augmentation détectée.' : trend === 'improving' ? 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.' : 'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.'
-  return <section id="visualize" className="scroll-mt-6 space-y-5"><div className="flex flex-wrap items-end justify-between gap-4"><div><Badge className="mb-3 bg-orange-100 text-orange-700 hover:bg-orange-100">{t("LABORATOIRE · VUE INTERNE")}</Badge><h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Visualise chaque mise à jour")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Sélectionne un instant : le diagramme, les métriques et l’historique utilisent exactement le même état calculé.")}</p></div><div className="flex items-center gap-2 rounded-xl border bg-white p-2"><Button size="icon" variant="outline" onClick={() => setSelected(Math.max(0, selected - 1))} aria-label={t("Étape précédente")}><ChevronLeft /></Button><Button size="icon" onClick={() => { if (!playing && selectedIndex === history.length - 1) setSelected(0); setPlaying(v => !v) }} aria-label={t(playing ? 'Pause' : 'Lecture')}>{playing ? <Pause /> : <Play />}</Button><Button size="icon" variant="outline" onClick={() => setSelected(Math.min(history.length - 1, selected + 1))} aria-label={t("Étape suivante")}><ChevronRight /></Button><Button size="sm" variant="ghost" onClick={() => setSelected(0)}><RotateCcw data-icon="inline-start" />{t("Recommencer")}</Button></div></div>
-    <NetworkDiagram state={state} />
+  return <section id="visualize" className="scroll-mt-6 space-y-5"><div className="flex flex-wrap items-end justify-between gap-4"><div><Badge className="mb-3 bg-orange-100 text-orange-700 hover:bg-orange-100">{t("LABORATOIRE · VUE INTERNE")}</Badge><h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Visualise chaque mise à jour")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Sélectionne un instant : le diagramme, les métriques et l’historique utilisent exactement le même état calculé.")}</p></div><div className="flex items-center gap-2 rounded-xl border bg-white p-2"><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex - 1)} aria-label={t("Étape précédente")}><ChevronLeft /></Button><Button size="icon" onClick={togglePlayback} aria-label={t(animating ? 'Pause' : 'Lecture')}>{animating ? <Pause /> : <Play />}</Button><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex + 1)} aria-label={t("Étape suivante")}><ChevronRight /></Button><Button size="sm" variant="ghost" onClick={() => inspect(0)}><RotateCcw data-icon="inline-start" />{t("Recommencer")}</Button></div></div>
+    <NetworkAnimation state={state} previous={selectedIndex > 0 ? history[selectedIndex - 1] : undefined} phase={phase} running={animating} learningRate={learningRate} />
+    <div className="flex justify-end"><Button variant="outline" size="sm" onClick={() => inspect(selectedIndex)}><RotateCcw data-icon="inline-start" />{t('Rejouer cette étape')}</Button></div>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8"><Metric label={t("étape")} value={`${state.step}`} tone="violet" /><Metric label={t("prédiction")} value={format(state.prediction)} tone="blue" /><Metric label={t("perte")} value={format(state.loss)} tone="orange" /><Metric label={t("erreur")} value={format(state.prediction - state.target)} tone="orange" /><Metric label={t("gradient w")} value={format(state.gradW)} tone="violet" /><Metric label={t("gradient b")} value={format(state.gradB)} tone="violet" /><Metric label={t("poids w")} value={format(state.w)} tone="emerald" /><Metric label={t("biais b")} value={format(state.b)} tone="emerald" /></div>
-      <Card className="border-slate-200 shadow-sm"><CardContent className="space-y-3 pt-6"><div className="flex items-center justify-between text-sm"><span className="font-medium">{t("Étape inspectée : ")}{state.step} / {history.length - 1}</span><span className="text-muted-foreground">{t("vitesse : 0,7 s")}</span></div><Slider value={[selectedIndex]} min={0} max={Math.max(1, history.length - 1)} disabled={history.length < 2} step={1} onValueChange={v => setSelected(Array.isArray(v) ? v[0] : v)} aria-label={t("Étape d'entraînement")} /></CardContent></Card>
+      <Card className="border-slate-200 shadow-sm"><CardContent className="space-y-3 pt-6"><div className="flex items-center justify-between text-sm"><span className="font-medium">{t("Étape inspectée : ")}{state.step} / {history.length - 1}</span><span className="text-muted-foreground">{t('Animation : 5 phases par étape')}</span></div><Slider value={[selectedIndex]} min={0} max={Math.max(1, history.length - 1)} disabled={history.length < 2} step={1} onValueChange={v => inspect(Array.isArray(v) ? v[0] : v)} aria-label={t("Étape d'entraînement")} /></CardContent></Card>
     <Alert className={trend === 'improving' ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><TrendingDown className={trend === 'improving' ? 'text-emerald-600' : 'text-orange-600'} /><AlertDescription>{t(status)}</AlertDescription></Alert>
     <div className="grid gap-5 xl:grid-cols-3"><ChartCard title={t("Perte par étape")} data={history} dataKey="loss" color="var(--color-loss)" type="area" /><ChartCard title={t("Prédiction et cible")} data={history.map(s => ({ ...s, target: s.target }))} dataKey="prediction" color="var(--color-prediction)" target /><ChartCard title={t("Poids et biais")} data={history} dataKey="w" color="var(--color-weight)" bias /></div>
-    <Card className="border-slate-200 shadow-sm"><CardHeader><CardTitle className="text-base">{t("Historique d’entraînement")}</CardTitle><CardDescription>{t("Clique sur une ligne pour inspecter cet état dans le réseau.")}</CardDescription></CardHeader><CardContent><div className="overflow-x-auto"><Table><TableHeader><TableRow><TableHead>{t("Étape")}</TableHead><TableHead>{t("Prédiction")}</TableHead><TableHead>{t("Perte")}</TableHead><TableHead>{t("Poids")}</TableHead><TableHead>{t("Biais")}</TableHead><TableHead>{t("Gradient w")}</TableHead></TableRow></TableHeader><TableBody>{history.filter((_, i) => i === 0 || i % 2 === 0 || i === history.length - 1).map(row => <TableRow key={row.step} aria-selected={row.step === selectedIndex} tabIndex={0} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelected(row.step) } }} className={`cursor-pointer transition-colors hover:bg-muted/50 ${row.step === selectedIndex ? 'bg-violet-100' : ''}`} style={row.step === selectedIndex ? { backgroundColor: '#ede9fe', color: '#1e1b4b', boxShadow: 'inset 4px 0 #7c3aed' } : undefined} onClick={() => setSelected(row.step)}><TableCell className="font-medium">{row.step === 0 ? t('Init.') : row.step}</TableCell><TableCell>{format(row.prediction)}</TableCell><TableCell>{format(row.loss)}</TableCell><TableCell>{format(row.w)}</TableCell><TableCell>{format(row.b)}</TableCell><TableCell className={row.step === selectedIndex ? "font-medium text-violet-900" : "text-violet-700"}>{format(row.gradW)}</TableCell></TableRow>)}</TableBody></Table></div></CardContent></Card>
+    <Card className="border-slate-200 shadow-sm"><CardHeader><CardTitle className="text-base">{t("Historique d’entraînement")}</CardTitle><CardDescription>{t("Clique sur une ligne pour inspecter cet état dans le réseau.")}</CardDescription></CardHeader><CardContent><div className="overflow-x-auto"><Table><TableHeader><TableRow><TableHead>{t("Étape")}</TableHead><TableHead>{t("Prédiction")}</TableHead><TableHead>{t("Perte")}</TableHead><TableHead>{t("Poids")}</TableHead><TableHead>{t("Biais")}</TableHead><TableHead>{t("Gradient w")}</TableHead></TableRow></TableHeader><TableBody>{history.filter((_, i) => i === 0 || i % 2 === 0 || i === history.length - 1).map(row => <TableRow key={row.step} aria-selected={row.step === selectedIndex} tabIndex={0} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); inspect(row.step) } }} className={`cursor-pointer transition-colors hover:bg-muted/50 ${row.step === selectedIndex ? 'bg-violet-100' : ''}`} style={row.step === selectedIndex ? { backgroundColor: '#ede9fe', color: '#1e1b4b', boxShadow: 'inset 4px 0 #7c3aed' } : undefined} onClick={() => inspect(row.step)}><TableCell className="font-medium">{row.step === 0 ? t('Init.') : row.step}</TableCell><TableCell>{format(row.prediction)}</TableCell><TableCell>{format(row.loss)}</TableCell><TableCell>{format(row.w)}</TableCell><TableCell>{format(row.b)}</TableCell><TableCell className={row.step === selectedIndex ? "font-medium text-violet-900" : "text-violet-700"}>{format(row.gradW)}</TableCell></TableRow>)}</TableBody></Table></div></CardContent></Card>
     <RateComparison initial={history[0]} steps={history.length - 1} active={learningRate} onSelect={setLearningRate} language={language} />
   </section>
 }

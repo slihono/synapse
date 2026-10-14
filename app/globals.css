@@ -168,3 +168,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes network-flow {
+  from { left: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  to { left: 100%; opacity: 0; }
+}
+
+.network-signal {
+  position: absolute;
+  top: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 16px currentColor;
+  animation: network-flow .8s linear infinite;
+}
+.network-signal-backward { animation-direction: reverse; }
+.network-node { transition: box-shadow .25s, background-color .25s; }
+.network-node-active { box-shadow: 0 0 28px rgb(167 139 250 / .55); background-color: rgb(139 92 246 / .3); }
+@media (prefers-reduced-motion: reduce) {
+  .network-signal { animation: none; left: 50%; }
+  .network-node { transition: none; }
+}

@@ -168,3 +168,13 @@ The production site returned HTTP 200. Live API checks confirmed empty-program r
 Twenty-one Node tests and eight Python runner tests passed. Simulated React DOM checks additionally verified the locked exercise, sparse quiz scoring, computed runtime parameters, unchanged-loss feedback, disabled run controls, ignored stale responses, and continued support for all seven languages. The shared catalog now contains 139 messages. Real visual inspection of responsive layouts remains unverified because the browser tool cannot load in this environment.
 
 A live timeout test exposed an additional issue: the SDK returned a terminated command rather than throwing an error containing the word "timeout", causing HTTP 503 and a generic message. The route now recognizes deadline termination using command duration/exit status and elapsed execution time, returns HTTP 408, and still stops the Sandbox. Immediate execution failures remain HTTP 503.
+
+## Animated network inspection
+
+The formerly static linear-network diagram now animates each inspected transition in five phases, with 900 milliseconds per phase: forward prediction, loss, backward gradients, parameter update, and result verification. Recorded parameter values and derivatives drive the displayed formulas. Phase labels and controls are translated in all seven languages; the shared catalog contains 149 messages.
+
+A selected state after initialization is reconstructed from its preceding recorded snapshot. The final animation frame matches the selected state used by the metrics and charts. Initialization has no invented update. If Python changed parameters using a different rule, or the learning rate is unknown, the view displays the actual recorded deltas and explains that distinction. It never invents gradient-descent updates.
+
+Controls support pause/resume, replaying the current step, previous/next inspection, slider navigation, keyboard-selectable history rows, and continuous playback that waits for each complete sequence. Signal motion reverses during backpropagation. A reduced-motion media query disables moving particles while retaining numerical phase inspection.
+
+Four mathematical/translation regression tests and simulated React DOM checks validate the first update (prediction 0.4 → 0.7, weight 0.2 → 0.32, bias 0 → 0.06), initialization, custom updates, phase progression, pause/resume, replay, automatic next-step selection, and Arabic labels. The animation explains the linear model's calculations at an educational pace; it does not represent processor timing or trace an arbitrary Python neural-network library.
