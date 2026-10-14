@@ -218,3 +218,5 @@ Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision 
 ### Complete training history
 
 The history table now displays every captured iteration instead of every other row, in a scrollable container. Python loop snapshots preserve iterations even when parameters stop changing, so convergence no longer shortens the recorded training run. Initial and final snapshots remain deduplicated. The existing capture limit remains 500 iterations plus the initial state. The five animation phases describe operations within one iteration, not the number of training iterations.
+
+New training histories automatically play through all captured iterations. The explicit "Play all training steps" control starts continuous playback even while the single inspected iteration is animating, and pauses continuous playback when active. Manual inspection and replay still animate one selected iteration. A localized label distinguishes five animation phases per iteration from the total training iteration count.

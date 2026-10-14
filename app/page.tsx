@@ -110,13 +110,19 @@ function TrainingLab({ history, learningRate, setLearningRate, language }: { his
   const [playing, setPlaying] = useState(false)
   const [phase, setPhase] = useState(0)
   const [animating, setAnimating] = useState(true)
+  const previousHistory = useRef(history)
   const inspect = (index: number) => {
     setSelected(Math.max(0, Math.min(history.length - 1, index)))
     setPhase(0)
     setAnimating(true)
     setPlaying(false)
   }
-  useEffect(() => { setSelected(0); setPlaying(false) }, [history])
+  useEffect(() => {
+    const newRun = previousHistory.current !== history
+    previousHistory.current = history
+    setSelected(0)
+    setPlaying(newRun)
+  }, [history])
   useEffect(() => { setPhase(0); setAnimating(true) }, [selected, history])
   useEffect(() => {
     if (!animating) return
@@ -128,7 +134,7 @@ function TrainingLab({ history, learningRate, setLearningRate, language }: { his
     return () => window.clearTimeout(timer)
   }, [animating, phase, playing, selected, history.length])
   const togglePlayback = () => {
-    if (animating) { setAnimating(false); setPlaying(false); return }
+    if (playing && animating) { setAnimating(false); setPlaying(false); return }
     if (phase === 4) { setPhase(0); if (selected === history.length - 1) setSelected(0) }
     setAnimating(true)
     setPlaying(true)
@@ -137,11 +143,11 @@ function TrainingLab({ history, learningRate, setLearningRate, language }: { his
   const state = history[selectedIndex]
   const trend = trainingTrend(history)
   const status = trend === 'unchanged' ? 'La perte est inchangée : aucune amélioration ni augmentation détectée.' : trend === 'improving' ? 'Le modèle apprend : sa prédiction se rapproche de la cible et sa perte diminue.' : 'La perte augmente : ce taux est peut-être trop élevé, le modèle dépasse la bonne direction.'
-  return <section id="visualize" className="scroll-mt-6 space-y-5"><div className="flex flex-wrap items-end justify-between gap-4"><div><Badge className="mb-3 bg-orange-100 text-orange-700 hover:bg-orange-100">{t("LABORATOIRE · VUE INTERNE")}</Badge><h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Visualise chaque mise à jour")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Sélectionne un instant : le diagramme, les métriques et l’historique utilisent exactement le même état calculé.")}</p></div><div className="flex items-center gap-2 rounded-xl border bg-white p-2"><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex - 1)} aria-label={t("Étape précédente")}><ChevronLeft /></Button><Button size="icon" onClick={togglePlayback} aria-label={t(animating ? 'Pause' : 'Lecture')}>{animating ? <Pause /> : <Play />}</Button><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex + 1)} aria-label={t("Étape suivante")}><ChevronRight /></Button><Button size="sm" variant="ghost" onClick={() => inspect(0)}><RotateCcw data-icon="inline-start" />{t("Recommencer")}</Button></div></div>
+  return <section id="visualize" className="scroll-mt-6 space-y-5"><div className="flex flex-wrap items-end justify-between gap-4"><div><Badge className="mb-3 bg-orange-100 text-orange-700 hover:bg-orange-100">{t("LABORATOIRE · VUE INTERNE")}</Badge><h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{t("Visualise chaque mise à jour")}</h2><p className="mt-2 max-w-2xl text-muted-foreground">{t("Sélectionne un instant : le diagramme, les métriques et l’historique utilisent exactement le même état calculé.")}</p></div><div className="flex flex-wrap items-center gap-2 rounded-xl border bg-white p-2"><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex - 1)} aria-label={t("Étape précédente")}><ChevronLeft /></Button><Button size="sm" onClick={togglePlayback}>{playing && animating ? <Pause /> : <Play />}{t(playing && animating ? 'Pause' : 'Lire toutes les étapes')}</Button><Button size="icon" variant="outline" onClick={() => inspect(selectedIndex + 1)} aria-label={t("Étape suivante")}><ChevronRight /></Button><Button size="sm" variant="ghost" onClick={() => inspect(0)}><RotateCcw data-icon="inline-start" />{t("Recommencer")}</Button></div></div>
     <NetworkAnimation state={state} previous={selectedIndex > 0 ? history[selectedIndex - 1] : undefined} phase={phase} running={animating} learningRate={learningRate} />
     <div className="flex justify-end"><Button variant="outline" size="sm" onClick={() => inspect(selectedIndex)}><RotateCcw data-icon="inline-start" />{t('Rejouer cette étape')}</Button></div>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8"><Metric label={t("étape")} value={`${state.step}`} tone="violet" /><Metric label={t("prédiction")} value={String(state.prediction)} tone="blue" /><Metric label={t("perte")} value={format(state.loss)} tone="orange" /><Metric label={t("erreur")} value={format(state.prediction - state.target)} tone="orange" /><Metric label={t("gradient w")} value={format(state.gradW)} tone="violet" /><Metric label={t("gradient b")} value={format(state.gradB)} tone="violet" /><Metric label={t("poids w")} value={format(state.w)} tone="emerald" /><Metric label={t("biais b")} value={format(state.b)} tone="emerald" /></div>
-      <Card className="border-slate-200 shadow-sm"><CardContent className="space-y-3 pt-6"><div className="flex items-center justify-between text-sm"><span className="font-medium">{t("Étape inspectée : ")}{state.step} / {history.length - 1}</span><span className="text-muted-foreground">{t('Animation : 5 phases par étape')}</span></div><Slider value={[selectedIndex]} min={0} max={Math.max(1, history.length - 1)} disabled={history.length < 2} step={1} onValueChange={v => inspect(Array.isArray(v) ? v[0] : v)} aria-label={t("Étape d'entraînement")} /></CardContent></Card>
+      <Card className="border-slate-200 shadow-sm"><CardContent className="space-y-3 pt-6"><div className="flex items-center justify-between text-sm"><span className="font-medium">{t("Étape inspectée : ")}{state.step} / {history.length - 1}</span><span className="text-muted-foreground">{t('Chaque étape d’entraînement contient 5 phases d’animation.')}</span></div><Slider value={[selectedIndex]} min={0} max={Math.max(1, history.length - 1)} disabled={history.length < 2} step={1} onValueChange={v => inspect(Array.isArray(v) ? v[0] : v)} aria-label={t("Étape d'entraînement")} /></CardContent></Card>
     <Alert className={trend === 'improving' ? 'border-emerald-200 bg-emerald-50' : 'border-orange-200 bg-orange-50'}><TrendingDown className={trend === 'improving' ? 'text-emerald-600' : 'text-orange-600'} /><AlertDescription>{t(status)}</AlertDescription></Alert>
     <div className="grid gap-5 xl:grid-cols-3"><ChartCard title={t("Perte par étape")} data={history} dataKey="loss" color="var(--color-loss)" type="area" /><ChartCard title={t("Prédiction et cible")} data={history.map(s => ({ ...s, target: s.target }))} dataKey="prediction" color="var(--color-prediction)" target /><ChartCard title={t("Poids et biais")} data={history} dataKey="w" color="var(--color-weight)" bias /></div>
     <Card className="border-slate-200 shadow-sm"><CardHeader><CardTitle className="text-base">{t("Historique d’entraînement")}</CardTitle><CardDescription>{t("Clique sur une ligne pour inspecter cet état dans le réseau.")}</CardDescription></CardHeader><CardContent><div className="max-h-[32rem] overflow-auto"><Table><TableHeader><TableRow><TableHead>{t("Étape")}</TableHead><TableHead>{t("Prédiction")}</TableHead><TableHead>{t("Perte")}</TableHead><TableHead>{t("Poids")}</TableHead><TableHead>{t("Biais")}</TableHead><TableHead>{t("Gradient w")}</TableHead></TableRow></TableHeader><TableBody>{history.map(row => <TableRow key={row.step} aria-selected={row.step === selectedIndex} tabIndex={0} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); inspect(row.step) } }} className={`cursor-pointer transition-colors hover:bg-muted/50 ${row.step === selectedIndex ? 'bg-violet-100' : ''}`} style={row.step === selectedIndex ? { backgroundColor: '#ede9fe', color: '#1e1b4b', boxShadow: 'inset 4px 0 #7c3aed' } : undefined} onClick={() => inspect(row.step)}><TableCell className="font-medium">{row.step === 0 ? t('Init.') : row.step}</TableCell><TableCell>{format(row.prediction)}</TableCell><TableCell>{format(row.loss)}</TableCell><TableCell>{format(row.w)}</TableCell><TableCell>{format(row.b)}</TableCell><TableCell className={row.step === selectedIndex ? "font-medium text-violet-900" : "text-violet-700"}>{format(row.gradW)}</TableCell></TableRow>)}</TableBody></Table></div></CardContent></Card>

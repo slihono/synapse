@@ -183,7 +183,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Vérifie la formule et utilise les valeurs complètes, puis réessaie.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.",
     "Choisis une réponse": "Choisis une réponse",
-    "Vérifie la formule, puis choisis une autre réponse.": "Vérifie la formule, puis choisis une autre réponse."
+    "Vérifie la formule, puis choisis une autre réponse.": "Vérifie la formule, puis choisis une autre réponse.",
+    "Lire toutes les étapes": "Lire toutes les étapes",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "Chaque étape d’entraînement contient 5 phases d’animation."
   },
   "en": {
     "1 entrée · sigmoïde cachée": "1 input · sigmoid hidden",
@@ -369,7 +371,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Check the formula and use the full values, then try again.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Displayed values retain the program’s full available precision, without display rounding. Correctly rounded answers with 1 to 8 decimal places are accepted. Use the full values for subsequent calculations.",
     "Choisis une réponse": "Choose an answer",
-    "Vérifie la formule, puis choisis une autre réponse.": "Check the formula, then choose another answer."
+    "Vérifie la formule, puis choisis une autre réponse.": "Check the formula, then choose another answer.",
+    "Lire toutes les étapes": "Play all training steps",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "Each training step contains 5 animation phases."
   },
   "es": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -555,7 +559,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Comprueba la fórmula y usa los valores completos; inténtalo de nuevo.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Los valores conservan toda la precisión disponible del programa, sin redondear la visualización. Se aceptan respuestas correctamente redondeadas de 1 a 8 decimales. Usa los valores completos para los cálculos siguientes.",
     "Choisis une réponse": "Elige una respuesta",
-    "Vérifie la formule, puis choisis une autre réponse.": "Revisa la fórmula y elige otra respuesta."
+    "Vérifie la formule, puis choisis une autre réponse.": "Revisa la fórmula y elige otra respuesta.",
+    "Lire toutes les étapes": "Reproducir todos los pasos",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "Cada paso de entrenamiento contiene 5 fases de animación."
   },
   "ar": {
     "1 entrée · sigmoïde cachée": "مدخل واحد · سيغمويد مخفية",
@@ -741,7 +747,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "راجع الصيغة واستخدم القيم الكاملة ثم حاول مجددًا.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "تحتفظ القيم المعروضة بكل الدقة المتاحة للبرنامج دون تقريب العرض. تُقبل الإجابات المقربة بشكل صحيح من منزلة عشرية واحدة إلى 8 منازل. استخدم القيم الكاملة في الحسابات التالية.",
     "Choisis une réponse": "اختر إجابة",
-    "Vérifie la formule, puis choisis une autre réponse.": "راجع الصيغة ثم اختر إجابة أخرى."
+    "Vérifie la formule, puis choisis une autre réponse.": "راجع الصيغة ثم اختر إجابة أخرى.",
+    "Lire toutes les étapes": "تشغيل جميع خطوات التدريب",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "تحتوي كل خطوة تدريب على 5 مراحل للتحريك."
   },
   "hi": {
     "1 entrée · sigmoïde cachée": "1 इनपुट · सिग्मॉइड हिडन",
@@ -927,7 +935,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "सूत्र जाँचें और पूरे मान लेकर फिर कोशिश करें।",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "दिखाए गए मान बिना राउंडिंग के प्रोग्राम की पूरी उपलब्ध सटीकता रखते हैं। 1 से 8 दशमलव स्थानों तक सही ढंग से राउंड किए गए उत्तर स्वीकार किए जाते हैं। आगे की गणनाओं में पूरे मान इस्तेमाल करें।",
     "Choisis une réponse": "एक उत्तर चुनें",
-    "Vérifie la formule, puis choisis une autre réponse.": "सूत्र जाँचें, फिर दूसरा उत्तर चुनें।"
+    "Vérifie la formule, puis choisis une autre réponse.": "सूत्र जाँचें, फिर दूसरा उत्तर चुनें।",
+    "Lire toutes les étapes": "सभी प्रशिक्षण चरण चलाएँ",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "हर प्रशिक्षण चरण में ऐनिमेशन के 5 भाग होते हैं।"
   },
   "tr": {
     "1 entrée · sigmoïde cachée": "1 girdi · sigmoid gizli",
@@ -1113,7 +1123,9 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Formülü kontrol et ve tam değerlerle yeniden dene.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Gösterilen değerler yuvarlanmadan programın tüm mevcut hassasiyetini korur. 1 ile 8 ondalık basamağa doğru yuvarlanmış yanıtlar kabul edilir. Sonraki hesaplamalarda tam değerleri kullanın.",
     "Choisis une réponse": "Bir yanıt seç",
-    "Vérifie la formule, puis choisis une autre réponse.": "Formülü kontrol et, ardından başka bir yanıt seç."
+    "Vérifie la formule, puis choisis une autre réponse.": "Formülü kontrol et, ardından başka bir yanıt seç.",
+    "Lire toutes les étapes": "Tüm eğitim adımlarını oynat",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "Her eğitim adımı 5 animasyon aşaması içerir."
   },
   "pt": {
     "1 entrée · sigmoïde cachée": "1 entrada · sigmoide oculta",
@@ -1299,6 +1311,8 @@
     "Vérifie la formule et utilise les valeurs complètes, puis réessaie.": "Verifica a fórmula e usa os valores completos; tenta novamente.",
     "Les valeurs affichées conservent toute la précision disponible du programme, sans arrondi d’affichage. Les réponses correctement arrondies de 1 à 8 décimales sont acceptées. Utilise les valeurs complètes pour les calculs suivants.": "Os valores mantêm toda a precisão disponível do programa, sem arredondamento de apresentação. São aceitas respostas corretamente arredondadas de 1 a 8 casas decimais. Use os valores completos nos cálculos seguintes.",
     "Choisis une réponse": "Escolha uma resposta",
-    "Vérifie la formule, puis choisis une autre réponse.": "Confira a fórmula e escolha outra resposta."
+    "Vérifie la formule, puis choisis une autre réponse.": "Confira a fórmula e escolha outra resposta.",
+    "Lire toutes les étapes": "Reproduzir todas as etapas",
+    "Chaque étape d’entraînement contient 5 phases d’animation.": "Cada etapa de treinamento contém 5 fases de animação."
   }
 }
