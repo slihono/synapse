@@ -72,10 +72,43 @@ loss = 0.5 * error ** 2
 print(prediction, loss)`
 
 export function validateCode(code: string) {
-  const required = ['prediction =', 'loss =', 'grad_w =', 'grad_b =', 'w = w -', 'b = b -', 'learning_rate', 'training_steps']
-  const missing = required.filter(token => !code.includes(token))
-  if (missing.length) return { valid: false, message: `Il manque encore : ${missing.join(', ')}.` }
-  if (/import |from |exec\(|eval\(|__/.test(code)) return { valid: false, message: 'Cette simulation accepte uniquement les instructions de l’exercice.' }
+  const statements = code
+    .split(/\r?\n/)
+    .map(line => line.replace(/#.*$/, ''))
+    .filter(line => line.trim())
+  const expected = [
+    /^x\s*=\s*-?(?:\d+(?:\.\d*)?|\.\d+)$/,
+    /^y\s*=\s*-?(?:\d+(?:\.\d*)?|\.\d+)$/,
+    /^w\s*=\s*-?(?:\d+(?:\.\d*)?|\.\d+)$/,
+    /^b\s*=\s*-?(?:\d+(?:\.\d*)?|\.\d+)$/,
+    /^learning_rate\s*=\s*-?(?:\d+(?:\.\d*)?|\.\d+)$/,
+    /^training_steps\s*=\s*\d+$/,
+    /^for\s+step\s+in\s+range\(training_steps\):$/,
+    /^prediction\s*=\s*w\s*\*\s*x\s*\+\s*b$/,
+    /^error\s*=\s*prediction\s*-\s*y$/,
+    /^loss\s*=\s*0\.5\s*\*\s*error\s*\*\*\s*2$/,
+    /^grad_w\s*=\s*error\s*\*\s*x$/,
+    /^grad_b\s*=\s*error$/,
+    /^w\s*=\s*w\s*-\s*learning_rate\s*\*\s*grad_w$/,
+    /^b\s*=\s*b\s*-\s*learning_rate\s*\*\s*grad_b$/,
+    /^prediction\s*=\s*w\s*\*\s*x\s*\+\s*b$/,
+    /^error\s*=\s*prediction\s*-\s*y$/,
+    /^loss\s*=\s*0\.5\s*\*\s*error\s*\*\*\s*2$/,
+    /^print\(prediction\s*,\s*loss\)$/,
+  ]
+  const normalized = statements.map(line => line.trim())
+  const missing = normalized.length !== expected.length || expected.some((pattern, index) => !pattern.test(normalized[index] ?? ''))
+  if (missing) return { valid: false, message: 'Formule manquante ou non prise en charge. Garde les affectations, la boucle et les formules de l’exercice pour synchroniser la visualisation.' }
+  if (statements.slice(0, 7).some(line => /^\s/.test(line)) || statements.slice(7, 14).some(line => !/^ {4}\S/.test(line)) || statements.slice(14).some(line => /^\s/.test(line))) {
+    return { valid: false, message: 'Vérifie l’indentation : les sept calculs doivent être dans la boucle et l’affichage doit rester après celle-ci.' }
+  }
+  const parameters = parseParameters(code)
+  if (![parameters.x, parameters.y, parameters.w, parameters.b, parameters.learningRate].every(Number.isFinite)) {
+    return { valid: false, message: 'Les paramètres doivent être des nombres valides.' }
+  }
+  if (parameters.learningRate <= 0 || parameters.learningRate > 2 || !Number.isInteger(parameters.steps) || parameters.steps < 1 || parameters.steps > 100) {
+    return { valid: false, message: 'Choisis un taux entre 0 et 2 et entre 1 et 100 étapes.' }
+  }
   return { valid: true, message: 'Code reconnu : la simulation peut être exécutée en toute sécurité.' }
 }
 
@@ -90,7 +123,7 @@ export function parseParameters(code: string) {
     w: get('w', 0.2),
     b: get('b', 0),
     learningRate: get('learning_rate', 0.1),
-    steps: Math.max(1, Math.min(100, Math.round(get('training_steps', 20)))),
+    steps: get('training_steps', 20),
   }
 }
 
