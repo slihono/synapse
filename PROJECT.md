@@ -220,3 +220,15 @@ Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision 
 The history table now displays every captured iteration instead of every other row, in a scrollable container. Python loop snapshots preserve iterations even when parameters stop changing, so convergence no longer shortens the recorded training run. Initial and final snapshots remain deduplicated. The existing capture limit remains 500 iterations plus the initial state. The five animation phases describe operations within one iteration, not the number of training iterations.
 
 New training histories automatically play through all captured iterations. The explicit "Play all training steps" control starts continuous playback even while the single inspected iteration is animating, and pauses continuous playback when active. Manual inspection and replay still animate one selected iteration. A localized label distinguishes five animation phases per iteration from the total training iteration count.
+
+### Alignment with the class lecture
+
+The guided exercise follows the worked example in Backpropagation_20_Minute_Lecture.pptx. Separate post-update questions for z₁′ and h′ were removed because the lecture proceeds directly to the new prediction and loss. These intermediate values are still calculated internally as required for the output. The exercise now contains 18 questions; questions 6–18 remain multiple choice. The separate Python experiment still defaults to 20 training iterations.
+
+| Guided questions | Lecture slide | Topic |
+| --- | --- | --- |
+| 1–3 | 5 | z₁, hidden activation, prediction |
+| 4–6 | 6 | Prediction error, loss, loss sensitivity |
+| 7–9 | 8 | Output-layer gradients |
+| 10–12 | 9 | Hidden-layer gradients |
+| 13–18 | 10 | Four parameter updates, new prediction and loss |

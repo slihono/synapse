@@ -25,8 +25,6 @@ export function manualSteps(n: ManualNetwork) {
     step(3, 'b₁′', n.updated.b1, `b₁′ = ${f(n.b1)} − ${f(n.lr)} × (${f(n.db1)})`, "b₁′ = b₁ − η × ∂L/∂b₁"),
     step(3, 'w₂′', n.updated.w2, `w₂′ = w₂ − η × ∂L/∂w₂ = ${f(n.w2)} − ${f(n.lr)} × (${f(n.dw2)})`, "Un gradient négatif augmente le poids : on soustrait un nombre négatif."),
     step(3, 'b₂′', n.updated.b2, `b₂′ = ${f(n.b2)} − ${f(n.lr)} × (${f(n.db2)})`, "b₂′ = b₂ − η × ∂L/∂b₂"),
-    step(4, 'z₁′', newZ, `z₁′ = w₁′ × x + b₁′ = ${f(n.updated.w1)} × ${f(n.x)} + ${f(n.updated.b1)}`, "Recommence la propagation avec les nouveaux paramètres."),
-    step(4, 'h′', newH, `h′ = 1 / (1 + e^(−${f(newZ)}))`, "h′ = sigmoid(z₁′)"),
     step(4, 'ŷ′', n.newPrediction, `ŷ′ = w₂′ × h′ + b₂′ = ${f(n.updated.w2)} × ${f(newH)} + ${f(n.updated.b2)}`, "Une mise à jour rapproche ŷ de y ; elle ne donne pas automatiquement 1."),
     step(4, 'L′', n.newLoss, `L′ = ½ × (ŷ′ − y)² = ½ × (${f(n.newPrediction)} − ${f(n.target)})²`, "Compare L′ à L pour mesurer l’amélioration."),
   ] }

@@ -40,7 +40,7 @@ The Node tests use a mocked Sandbox to validate the API without spending Sandbox
 
 ## Learning flow
 
-1. Complete 20 numeric calculations across five phases using a sigmoid hidden neuron and a linear output.
+1. Complete 18 guided calculations across five phases using a sigmoid hidden neuron and a linear output.
 2. Unlock the Python editor, modify the example, and run it.
 3. Inspect the captured linear states in the network, metrics, charts, and history.
 4. Compare learning rates from the same initial state.
@@ -90,10 +90,22 @@ Calculation results, formula inputs, animation values, metrics, and history now 
 
 ### Multiple-choice questions from step 6
 
-Steps 1–5 retain numeric answer entry. Steps 6–20 offer four full-precision numeric choices, with one correct answer and three distinct alternatives. The correct option position varies between questions and exercise variants. Learners select an option and validate it before continuing; incorrect choices allow another attempt. Radio inputs support keyboard navigation, and instructions and feedback are translated in all seven languages.
+Steps 1–5 retain numeric answer entry. Steps 6–18 offer four full-precision numeric choices, with one correct answer and three distinct alternatives. The correct option position varies between questions and exercise variants. Learners select an option and validate it before continuing; incorrect choices allow another attempt. Radio inputs support keyboard navigation, and instructions and feedback are translated in all seven languages.
 
 ### Complete training history
 
 The history table now displays every captured iteration instead of every other row, in a scrollable container. Python loop snapshots preserve iterations even when parameters stop changing, so convergence no longer shortens the recorded training run. Initial and final snapshots remain deduplicated. The existing capture limit remains 500 iterations plus the initial state. The five animation phases describe operations within one iteration, not the number of training iterations.
 
 New training histories automatically play through all captured iterations. The explicit "Play all training steps" control starts continuous playback even while the single inspected iteration is animating, and pauses continuous playback when active. Manual inspection and replay still animate one selected iteration. A localized label distinguishes five animation phases per iteration from the total training iteration count.
+
+### Alignment with the class lecture
+
+The guided exercise follows the worked example in Backpropagation_20_Minute_Lecture.pptx. Separate post-update questions for z₁′ and h′ were removed because the lecture proceeds directly to the new prediction and loss. These intermediate values are still calculated internally as required for the output. The exercise now contains 18 questions; questions 6–18 remain multiple choice. The separate Python experiment still defaults to 20 training iterations.
+
+| Guided questions | Lecture slide | Topic |
+| --- | --- | --- |
+| 1–3 | 5 | z₁, hidden activation, prediction |
+| 4–6 | 6 | Prediction error, loss, loss sensitivity |
+| 7–9 | 8 | Output-layer gradients |
+| 10–12 | 9 | Hidden-layer gradients |
+| 13–18 | 10 | Four parameter updates, new prediction and loss |
