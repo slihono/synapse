@@ -100,3 +100,20 @@ test('formula inputs retain every digit of the computed values', () => {
   assert.ok(steps[6].formula.includes(String(n.prediction - n.target)))
   assert.ok(steps[14].formula.includes(String(n.dw2)))
 })
+
+test('negative answers accept calculator and formula minus signs', () => {
+  const error = manualNetwork().prediction - manualNetwork().target
+  for (const minus of ['-', '−', '﹣', '－']) {
+    assert.equal(checkManualAnswer(`${minus}0.2689414213699951`, error), true)
+    for (let decimals = 1; decimals <= 8; decimals++) {
+      const rounded = error.toFixed(decimals).replace('-', minus)
+      assert.equal(checkManualAnswer(rounded, error), true)
+      assert.equal(checkManualAnswer(rounded.replace('.', ','), error), true)
+    }
+  }
+  assert.equal(checkManualAnswer('0.2689', error), false)
+  assert.equal(checkManualAnswer('−0.2', error), false)
+  assert.equal(checkManualAnswer('− 0.2689', error), true)
+  assert.equal(checkManualAnswer('−\u00a00,2689', error), true)
+  assert.equal(checkManualAnswer('0.26 89', error), false)
+})

@@ -206,3 +206,7 @@ The old four-decimal answer tolerance was replaced with a relative numerical tol
 ### Flexible answer precision
 
 Learners can now submit correctly rounded answers with one to eight decimal places, using either a decimal point or comma. Validation compares the submitted number with the expected value rounded to the number of decimal places entered. It does not accept an arbitrary nearby value. Full-precision answers remain supported, and displayed results and formula inputs remain unrounded. The precision guidance is translated in all seven languages.
+
+### Negative answer input
+
+Answer validation now normalizes mathematical and full-width minus signs copied from formulas or calculators, and accepts whitespace between the leading sign and the number (for example, `− 0.2689`). Decimal commas and points remain supported. Spaces inside the digits and incorrect positive answers remain invalid.

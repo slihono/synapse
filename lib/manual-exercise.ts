@@ -33,7 +33,8 @@ export function manualSteps(n: ManualNetwork) {
 }
 
 export function checkManualAnswer(input: string, expected: number) {
-  const normalized = input.trim().replace(',', '.')
+  // Formulas and calculators may use a typographic minus instead of ASCII '-'.
+  const normalized = input.trim().replace(/[−﹣－]/g, '-').replace(/^([+-])\s+/, '$1').replace(',', '.')
   if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(normalized)) return false
   const answer = Number(normalized)
   if (!Number.isFinite(answer) || !Number.isFinite(expected)) return false
