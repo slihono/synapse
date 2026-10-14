@@ -416,7 +416,16 @@ const visualizationTranslations: Record<Exclude<Language, 'fr'>, Record<string, 
   },
 }
 
-const englishFallbackTranslations = { ...translations.en, ...commonTranslations.en, ...visualizationTranslations.en }
+const pythonRunnerTranslations: Record<Exclude<Language, 'fr'>, Record<string, string>> = {
+  en: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'Edit the program, check your formulas, and run real Python code in an isolated environment.' },
+  es: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'Modifica el programa, comprueba tus fórmulas y ejecuta código Python real en un entorno aislado.' },
+  ar: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'عدّل البرنامج، وتحقق من الصيغ، وشغّل كود Python حقيقيًا في بيئة معزولة.' },
+  hi: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'प्रोग्राम बदलें, फ़ॉर्मूलों की जाँच करें और अलग वातावरण में असली Python कोड चलाएँ।' },
+  tr: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'Programı düzenleyin, formüllerinizi kontrol edin ve yalıtılmış bir ortamda gerçek Python kodu çalıştırın.' },
+  pt: { 'Modifie le programme, valide tes formules et exécute du vrai code Python dans un environnement isolé.': 'Altera o programa, verifica as fórmulas e executa código Python real num ambiente isolado.' },
+}
+
+const englishFallbackTranslations = { ...translations.en, ...commonTranslations.en, ...visualizationTranslations.en, ...pythonRunnerTranslations.en }
 
 const translateString = (source: string, language: Language, dictionary: Record<string, string>) => {
   if (language === 'fr') return source
@@ -432,7 +441,7 @@ const translateString = (source: string, language: Language, dictionary: Record<
 }
 
 const translateTree = (language: Language) => {
-  const dictionary = language === 'fr' ? {} : { ...translations[language], ...commonTranslations[language], ...visualizationTranslations[language] }
+  const dictionary = language === 'fr' ? {} : { ...translations[language], ...commonTranslations[language], ...visualizationTranslations[language], ...pythonRunnerTranslations[language] }
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   const nodes: Text[] = []
   let node: Node | null
